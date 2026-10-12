@@ -167,6 +167,33 @@
     $("dockBtn").href = readerURL(b, last.page);
   }
 
+  /* ---------- Greeting from the author ---------- */
+  function renderGreeting() {
+    const store = {
+      get: (k) => { try { return localStorage.getItem(k); } catch { return null; } },
+      set: (k, v) => { try { localStorage.setItem(k, v); } catch {} },
+    };
+    if (store.get("books.greetingHidden")) return;
+    const visits = (+store.get("books.visits") || 0) + 1;
+    store.set("books.visits", String(visits));
+    const el = $("greeting");
+    if (visits > 1) {
+      el.classList.add("is-compact");
+      $("greetingTitle").textContent = "Welcome back! Thanks for coming again.";
+    }
+    el.hidden = false;
+    el.querySelector("[data-start]").addEventListener("click", () => {
+      sfx.tick();
+      $("feature").scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+    el.querySelector(".greeting-close").addEventListener("click", () => {
+      sfx.soft();
+      store.set("books.greetingHidden", "1");
+      el.classList.add("is-leaving");
+      setTimeout(() => (el.hidden = true), 300);
+    });
+  }
+
   /* ---------- Reading room ---------- */
   let activeTopic = "All";
   function renderRoom() {
@@ -275,6 +302,7 @@
   });
 
   /* ---------- Start ---------- */
+  renderGreeting();
   renderFeature();
   renderIndex();
   renderDock();

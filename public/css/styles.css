@@ -860,3 +860,90 @@ body.no-scroll { overflow: hidden; }
 .field-error { margin: -8px 0 14px; font-size: 15px; color: var(--hi); }
 .request-done { margin-top: 16px; font-size: 15px; line-height: 1.6; }
 .request-done a { color: var(--ink); }
+
+/* ============ Phone header: brand + icons on one row, full-width menu below ============ */
+@media (max-width: 650px) {
+  .site-header {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas: "brand acts" "nav nav";
+    align-items: center;
+    gap: 10px 8px;
+    height: auto;
+    padding: 12px 20px 4px;
+  }
+  .brand { grid-area: brand; min-width: 0; }
+  .brand > span { min-width: 0; }
+  .brand small { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; letter-spacing: .02em; }
+  /* the icons sit in 38px boxes; pull the row out so the last glyph lines up with the page margin */
+  .acts { grid-area: acts; gap: 0; margin: 0 -11px 0 0; }
+  .ib { width: 38px; height: 40px; }
+  .main-nav {
+    grid-area: nav;
+    order: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4px;
+    margin: 0;
+    padding: 4px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--raised) 55%, transparent);
+    overflow: visible;
+  }
+  .main-nav button,
+  .main-nav a { justify-content: center; min-height: 40px; padding: 8px 6px; font-size: 16px; text-align: center; }
+  .main-nav button.active,
+  .main-nav a.active { background: var(--accent); color: var(--accent-ink); box-shadow: 0 2px 8px rgba(60, 45, 30, .18); }
+  .feature { margin-inline: 0; }
+  .dock { width: calc(100% - 32px); }
+}
+
+/* ============ Greeting from the author ============ */
+.greeting {
+  position: relative;
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr) 40px;
+  align-items: start;
+  gap: 0 20px;
+  max-width: 760px;
+  margin: 28px 0 8px;
+  padding: 24px 20px 24px 24px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: var(--panel);
+  box-shadow: 0 24px 48px -40px rgba(60, 45, 30, .5);
+  animation: rise .8s var(--ease) both;
+  transition: opacity .3s, transform .3s var(--ease);
+}
+.greeting[hidden] { display: none; }
+.greeting.is-leaving { opacity: 0; transform: translateY(-8px); }
+.greeting-photo { width: 64px; height: 64px; border-radius: 50%; object-fit: cover; border: 3px solid var(--bg); box-shadow: var(--shadow-photo); }
+.greeting-title { font: 400 clamp(26px, 3vw, 34px)/1.15 var(--display); letter-spacing: -.01em; text-wrap: balance; padding-top: 4px; }
+.greeting-note > p:first-child { margin-top: 10px; font-size: 18px; line-height: 1.6; max-width: 54ch; }
+.greeting-note a { color: var(--ink); text-underline-offset: 3px; text-decoration-thickness: 1px; }
+.greeting-sign { margin-top: 10px; font: italic 400 22px/1 var(--display); color: var(--hi); }
+.greeting-sign::before { content: "— "; }
+.greeting-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+.greeting-close { margin: -6px -6px 0 0; }
+.greeting.is-compact { grid-template-columns: 44px minmax(0, 1fr) 40px; align-items: center; padding: 12px 12px 12px 14px; border-radius: 999px; }
+.greeting.is-compact .greeting-photo { width: 44px; height: 44px; border-width: 2px; }
+.greeting.is-compact .greeting-title { font-size: 20px; padding-top: 0; }
+.greeting.is-compact .greeting-note { display: none; }
+.greeting.is-compact .greeting-close { margin: 0; }
+@media (max-width: 650px) {
+  .greeting { grid-template-columns: 52px minmax(0, 1fr) 36px; gap: 0 14px; margin-top: 18px; padding: 20px 14px 20px 18px; }
+  .greeting-photo { width: 52px; height: 52px; }
+  .greeting-title { font-size: 24px; }
+  .greeting { align-items: center; }
+  .greeting-copy { display: contents; }
+  .greeting-title { grid-column: 2; grid-row: 1; padding-top: 0; }
+  .greeting-close { grid-column: 3; grid-row: 1; margin: 0; }
+  .greeting-note { grid-column: 1 / -1; grid-row: 2; }
+  .greeting-note > p:first-child { margin-top: 14px; font-size: 17px; }
+  .greeting-actions .btn { flex: 1 1 auto; }
+  .greeting-close { width: 36px; }
+  .greeting.is-compact { grid-template-columns: 40px minmax(0, 1fr) 36px; border-radius: 22px; }
+  .greeting.is-compact .greeting-photo { width: 40px; height: 40px; }
+  .greeting.is-compact .greeting-title { font-size: 18px; }
+}

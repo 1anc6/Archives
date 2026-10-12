@@ -31,7 +31,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=STIX+Two+Text:ital@0;1&family=Noto+Sans+Math&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css?v=14">
+  <link rel="stylesheet" href="css/styles.css?v=16">
 </head>
 <body>
   <div class="stage">
@@ -67,6 +67,23 @@
       <!-- ============ Essays ============ -->
       <section class="screen in" data-screen="essays" aria-label="Essays">
         <main class="page-wrap home">
+          <!-- Greeting from the author: full note on a first visit, a short line after that -->
+          <section class="greeting" id="greeting" aria-label="A note from Lanchenba" hidden>
+            <img class="greeting-photo" src="images/author.jpg" alt="" width="64" height="64">
+            <div class="greeting-copy">
+              <p class="greeting-title" id="greetingTitle">Hey, thanks for stopping by!</p>
+              <div class="greeting-note">
+                <p>I'm Lanchenba, but everyone calls me Lance. This is where I turn anime, LEGO and Secret Santa into maths (on purpose, mostly). Grab an essay, get comfy, and if anything breaks your brain, <a href="mailto:lanchenba613500@gmail.com">email me</a> lol.</p>
+                <p class="greeting-sign">Lance</p>
+                <div class="greeting-actions">
+                  <button class="btn primary" type="button" data-start>Start reading<svg class="arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14m-5-5 5 5 5-5"/></svg></button>
+                  <button class="btn ghost" type="button" data-go="about">More about me</button>
+                </div>
+              </div>
+            </div>
+            <button class="ib greeting-close" type="button" aria-label="Hide this note" title="Hide this note"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+          </section>
+
           <header class="masthead">
             <h1>Lance's Unorthodox Essay Papers</h1>
             <p class="standfirst">A collection of mathematical essays by Lanchenba Mutum, available to read online or download as PDF.</p>
@@ -127,14 +144,14 @@
           -->
           <div class="author-photo"><img src="images/author.jpg" alt="Lanchenba Mutum in a dark suit and patterned tie, seated on a green sofa" width="480" height="480"></div>
           <h1>Lanchenba Mutum</h1>
-          <p class="author-role"><!-- e.g. Student of Mathematics · City, Country --></p>
+          <p class="author-role">Author · Lance's Unorthodox Essay Papers</p>
           <p class="lead">Lanchenba Mutum is the author of this collection of twelve mathematical essays. The work explores unconventional questions in mathematics, from the different sizes of infinity and the equality 0.999… = 1 to the limits of proof, probability, and patterns in nature. By connecting foundational ideas with anime, music, LEGO and Secret Santa, Lanchenba offers clear, original perspectives that make complex mathematics engaging and accessible.</p>
           <div class="about-grid" id="aboutStats"></div>
 
           <div class="about-card author-card">
             <h2>About me</h2>
             <div class="author-bio">
-              <p>Hi, I'm Lanchenba Mutum, and this is where my maths essays live. Full disclosure: the <i>Jujutsu Kaisen</i> one exists purely because I was enjoying the anime way too much and thought, "wait, Gojo's Infinity is basically a convergent series" lol. The rest happened the same way. A box of LEGO, a Secret Santa draw, the number 73, and suddenly I'm writing pages about limits, the sizes of infinity, Gödel and game theory.</p>
+              <p>Hi, I'm Lanchenba Mutum, or just Lance if you'd rather not wrestle with all those syllables (most people don't, and honestly, fair lol). This is where my maths essays live. Full disclosure: the <i>Jujutsu Kaisen</i> one exists purely because I was enjoying the anime way too much and thought, "wait, Gojo's Infinity is basically a convergent series" lol. The rest happened the same way. A box of LEGO, a Secret Santa draw, the number 73, and suddenly I'm writing pages about limits, the sizes of infinity, Gödel and game theory.</p>
               <p>They're written for anyone who's curious, no maths degree required (there are fewer scary symbols than it looks, I promise lol). Want a PDF? Tap download and send me a quick email, I'm happy to share. Questions, corrections and ideas for the next essay are very welcome too: <a href="mailto:lanchenba613500@gmail.com">lanchenba613500@gmail.com</a>.</p>
             </div>
           </div>
@@ -187,7 +204,7 @@
   <script src="js/common.js?v=14"></script>
   <script src="js/sfx.js?v=14"></script>
   <script src="js/site.js?v=14"></script>
-  <script src="js/app.js?v=14"></script>
+  <script src="js/app.js?v=16"></script>
   <script src="js/request.js?v=14"></script>
   <script src="js/music.js?v=14"></script>
 </body>

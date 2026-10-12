@@ -149,7 +149,7 @@ def og_home():
     d.rounded_rectangle((70, 120, 70 + 470, 158), radius=19, outline=LINE, width=2, fill=(61, 54, 46))
     d.text((92, 128), "A COLLECTION OF MATHEMATICAL ESSAYS", font=MONO(18), fill=MUTED)
     y = 190
-    for line in ["Lance's Unorthodox", "Research Papers"]:
+    for line in ["Lance's Unorthodox", "Essay Papers"]:
         d.text((70, y), line, font=SERIF(72), fill=INK)
         y += 80
     d.text((72, y + 24), f"curated by {CURATOR}  ·  {len(books)} essays", font=SANS(24), fill=MUTED)

@@ -523,21 +523,21 @@ svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width:
 
 /* ============ Phone ============ */
 @media (max-width: 650px) {
-  .site-header { flex-wrap: wrap; height: auto; padding: 16px 20px 0; gap: 10px; }
+  .site-header { flex-wrap: wrap; height: auto; padding: 14px 20px 0; gap: 8px; }
   .brand strong { font-size: 12px; }
   .brand small { font-size: 8px; }
   .brand svg { width: 28px; height: 28px; }
   .acts { margin-left: auto; gap: 0; }
   .ib { width: 30px; }
-  .main-nav { order: 3; flex-basis: 100%; margin: 0; gap: 8px; padding-bottom: 8px; }
+  .main-nav { order: 3; flex-basis: 100%; margin: 0; gap: 6px; padding-bottom: 6px; }
   .main-nav button { padding: 8px 12px; font-size: 12px; }
 
   .page-wrap { padding-inline: 20px; }
-  .hero { padding: 22px 0 14px; gap: 12px; }
-  .hero h1 { font-size: 44px; max-width: 340px; }
+  .hero { padding: 18px 0 12px; gap: 10px; }
+  .hero h1 { font-size: 40px; line-height: 1.02; max-width: 320px; }
   .kicker { font-size: 9px; }
   .hero > p { font-size: 12px; max-width: 300px; }
-  .fine { font-size: 9px; max-width: 280px; }
+  .fine { font-size: 9px; max-width: 280px; line-height: 1.35; }
   .hero-numbers { gap: 8px; }
   .hero-numbers > span { padding: 6px 12px; gap: 6px; }
   .hero-numbers b { font-size: 11px; }
@@ -589,6 +589,13 @@ svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width:
   .row-title strong { font-size: 19px; }
   .row-progress { grid-column: 2 / 4; grid-row: 2; }
   .row-acts { grid-column: 3; grid-row: 1; }
+  .about-page { padding-top: 28px; padding-bottom: 56px; }
+  .about-page h1 { font-size: 42px; line-height: 1.04; }
+  .author-photo { width: 112px; margin-bottom: 16px; }
+  .author-photo .monogram { font-size: 44px; }
+  .kicker.plain { margin-bottom: 10px; }
+  .lead { margin: 14px auto 24px; max-width: 34ch; font-size: 15px; line-height: 1.65; }
+  .about-grid { gap: 8px; margin-bottom: 28px; }
   .about-card { padding: 22px 20px; }
 }
 

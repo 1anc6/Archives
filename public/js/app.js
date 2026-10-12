@@ -85,9 +85,7 @@
     <span><b>${totalPages}</b>pages</span>
     <span><b>~${hours} h</b>reading time</span>`;
 
-  $("contributors").innerHTML = books
-    .map((b) => `<li><a href="essays/${b.id}/"><strong>${esc(b.author)}</strong><span>${esc(b.shortTitle)}</span></a></li>`)
-    .join("");
+  $("contributors").innerHTML = "<li><strong>Lanchenba Mutum</strong></li>";
 
   /* ---------- Carousel ---------- */
   const track = $("track");

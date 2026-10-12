@@ -1,0 +1,25 @@
+# Render Blueprint: deploys /public as a free static site.
+services:
+  - type: web
+    name: bookshelf
+    runtime: static
+    buildCommand: ""
+    staticPublishPath: ./public
+    headers:
+      - path: /books/*
+        name: Cache-Control
+        value: public, max-age=3600
+      - path: /data/*
+        name: Cache-Control
+        value: no-cache
+      # Pages are always re-checked so visitors see updates straight away.
+      # (CSS/JS are versioned with ?v=N, so they can be cached.)
+      - path: /
+        name: Cache-Control
+        value: no-cache
+      - path: /*.html
+        name: Cache-Control
+        value: no-cache
+      - path: /essays/*
+        name: Cache-Control
+        value: no-cache

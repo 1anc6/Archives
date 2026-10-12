@@ -1,0 +1,676 @@
+[
+  {
+    "id": "gojo-infinity",
+    "title": "Mathematics Behind Jujutsu Kaisen: Gojo Satoru's Infinity",
+    "shortTitle": "Gojo Satoru's Infinity",
+    "author": "Lanchenba Mutum",
+    "file": "books/gojo-infinity.pdf",
+    "pages": 10,
+    "category": "Infinity",
+    "glyph": "Σ ½ⁿ",
+    "colors": [
+      "#1f2a44",
+      "#3b4f7a"
+    ],
+    "description": "An examination of Zeno's paradox, convergent series and limits through the 'Infinity' technique of Gojo Satoru in Jujutsu Kaisen.",
+    "image": "images/gojo-infinity.jpg",
+    "topics": [
+      "Zeno's paradoxes",
+      "Geometric series and convergence",
+      "The Lebesgue measure",
+      "Riemannian geometry: infinity as a metric transformation",
+      "Mahoraga's adaptation and the World Cutting Slash"
+    ],
+    "year": 2026,
+    "sections": [
+      {
+        "title": "Introduction",
+        "page": 2
+      },
+      {
+        "title": "Zeno's Paradoxes",
+        "page": 3
+      },
+      {
+        "title": "Geometric Series",
+        "page": 3
+      },
+      {
+        "title": "The Lebesgue Measure",
+        "page": 4
+      },
+      {
+        "title": "Riemannian Geometry",
+        "page": 6
+      },
+      {
+        "title": "Mahoraga's Adaptation",
+        "page": 8
+      },
+      {
+        "title": "Conclusion",
+        "page": 9
+      },
+      {
+        "title": "References",
+        "page": 10
+      }
+    ],
+    "imageAlt": "Anime still of Gojo Satoru holding out his hand as an attack stops just short of him.",
+    "added": "2026-10-12",
+    "placeholder": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA0JCgsKCA0LCgsODg0PEyAVExISEyccHhcgLikxMC4pLSwzOko+MzZGNywtQFdBRkxOUlNSMj5aYVpQYEpRUk//2wBDAQ4ODhMREyYVFSZPNS01T09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0//wAARCAARABgDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDlYb8/2e0AUeZnjHWqokuyruA2E6mqSNImDkhqmguLpXPyMyN94etbczIsiWQ3DQiVgxB9qK2bK8haDyJ/k4wAaKydWz1A5+6/4+jWpY/coorojuZVPhRV1X/j5T6UUUVjP4maU/hR/9k="
+  },
+  {
+    "id": "tale-of-two-infinities",
+    "title": "A Tale of Two Infinities",
+    "shortTitle": "A Tale of Two Infinities",
+    "author": "Lanchenba Mutum",
+    "file": "books/tale-of-two-infinities.pdf",
+    "pages": 8,
+    "category": "Infinity",
+    "glyph": "ℵ₀ < 𝔠",
+    "colors": [
+      "#2c1810",
+      "#5a3a28"
+    ],
+    "description": "An introduction to Cantor's discovery that infinite sets can differ in size, and to the distinction between countable and uncountable infinity.",
+    "image": "images/tale-of-two-infinities.jpg",
+    "topics": [
+      "Infinity as a concept rather than a number",
+      "Hilbert's Grand Hotel",
+      "Countable infinity",
+      "Cantor's argument for larger infinities"
+    ],
+    "year": 2026,
+    "sections": [
+      {
+        "title": "Introduction",
+        "page": 1
+      },
+      {
+        "title": "Hilbert's Hotel",
+        "page": 2
+      },
+      {
+        "title": "Countable infinity",
+        "page": 7
+      },
+      {
+        "title": "Uncountable infinity",
+        "page": 7
+      },
+      {
+        "title": "Conclusion",
+        "page": 8
+      }
+    ],
+    "imageAlt": "A pink grand hotel façade beneath the title 'Hilbert's Hotel Paradox' and an infinity symbol.",
+    "added": "2026-10-12",
+    "placeholder": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA0JCgsKCA0LCgsODg0PEyAVExISEyccHhcgLikxMC4pLSwzOko+MzZGNywtQFdBRkxOUlNSMj5aYVpQYEpRUk//2wBDAQ4ODhMREyYVFSZPNS01T09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0//wAARCAARABgDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwC4k+XAIAq6GBUNngU3ADf6r8cVKJcHGB+VTzHdKDK8lwoyAQaKk3Rl+UFFO4uUst0quf8AW0UVmi2V5f8AW/jRRRW/Qwj1P//Z"
+  },
+  {
+    "id": "a-paradox-that-isnt",
+    "title": "0.999… = 1: A Paradox That Isn't",
+    "shortTitle": "A Paradox That Isn't",
+    "author": "Lanchenba Mutum",
+    "file": "books/a-paradox-that-isnt.pdf",
+    "pages": 4,
+    "category": "Infinity",
+    "glyph": "0.9̅ = 1",
+    "colors": [
+      "#6b2d2d",
+      "#9c4a3c"
+    ],
+    "description": "A careful demonstration that 0.999… is exactly equal to 1, with an explanation of why the result so often surprises students.",
+    "image": "images/a-paradox-that-isnt.jpg",
+    "topics": [
+      "Understanding 0.999…",
+      "A simple algebraic proof",
+      "A geometric perspective",
+      "The historical birth of limits",
+      "Representation versus value"
+    ],
+    "year": 2026,
+    "sections": [
+      {
+        "title": "Introduction",
+        "page": 1
+      },
+      {
+        "title": "Understanding 0.999…",
+        "page": 1
+      },
+      {
+        "title": "A Simple Algebraic Proof",
+        "page": 2
+      },
+      {
+        "title": "A Geometric Perspective",
+        "page": 2
+      },
+      {
+        "title": "Why This Feels Wrong",
+        "page": 3
+      },
+      {
+        "title": "The Birth of Limits",
+        "page": 3
+      },
+      {
+        "title": "Representation vs. Value",
+        "page": 3
+      },
+      {
+        "title": "Why This Matters",
+        "page": 4
+      },
+      {
+        "title": "Conclusion",
+        "page": 4
+      },
+      {
+        "title": "References",
+        "page": 4
+      }
+    ],
+    "imageAlt": "Four bars labelled 0.9, 0.99, 0.999 and 0.9999, each closer to a dashed line marked 1.",
+    "added": "2026-10-12",
+    "placeholder": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA0JCgsKCA0LCgsODg0PEyAVExISEyccHhcgLikxMC4pLSwzOko+MzZGNywtQFdBRkxOUlNSMj5aYVpQYEpRUk//2wBDAQ4ODhMREyYVFSZPNS01T09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0//wAARCAARABgDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDjY7Z5F3L0qU2j44WrVje20UASQHd9Ks/2jZf3W/KuZynfRHWkjFlheI/MKKu6jdW88aiEHIPcUVpFtrUlmeOtOooqgGnrRRRQB//Z"
+  },
+  {
+    "id": "proof-for-the-unprovable",
+    "title": "A Proof for the Unprovable",
+    "shortTitle": "A Proof for the Unprovable",
+    "author": "Lanchenba Mutum",
+    "file": "books/proof-for-the-unprovable.pdf",
+    "pages": 8,
+    "category": "Logic",
+    "glyph": "⊬ G",
+    "colors": [
+      "#23403a",
+      "#3e6b5f"
+    ],
+    "description": "An account of Hilbert's programme and Gödel's incompleteness theorems, which showed that not every mathematical truth can be proved.",
+    "image": "images/proof-for-the-unprovable.jpg",
+    "topics": [
+      "Hilbert's programme and the Königsberg conference of 1930",
+      "Consistency of formal systems",
+      "Gödel's first incompleteness theorem",
+      "The Goodstein sequence",
+      "Gödel's second incompleteness theorem"
+    ],
+    "year": 2026,
+    "sections": [
+      {
+        "title": "Introduction",
+        "page": 1
+      },
+      {
+        "title": "Hilbert's Programme",
+        "page": 1
+      },
+      {
+        "title": "Consistency",
+        "page": 2
+      },
+      {
+        "title": "The First Incompleteness Theorem",
+        "page": 2
+      },
+      {
+        "title": "The Goodstein Sequence",
+        "page": 4
+      },
+      {
+        "title": "The Second Incompleteness Theorem",
+        "page": 7
+      }
+    ],
+    "imageAlt": "Cartoon of two knights holding signs reading 'True!' and 'False!' around the words 'This statement is false.'",
+    "added": "2026-10-12",
+    "placeholder": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA0JCgsKCA0LCgsODg0PEyAVExISEyccHhcgLikxMC4pLSwzOko+MzZGNywtQFdBRkxOUlNSMj5aYVpQYEpRUk//2wBDAQ4ODhMREyYVFSZPNS01T09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0//wAARCAARABgDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDuIzhck7vpSNcKpwVNRWqtEcuM1bIQ8lRXMzYhlkwoI4zRTbhd+NoxiimhEn8NOHSiikMRuhooopoR/9k="
+  },
+  {
+    "id": "glitch-in-the-fourth-wall",
+    "title": "A Mathematical Glitch in the Fourth Wall",
+    "shortTitle": "Glitch in the Fourth Wall",
+    "author": "Lanchenba Mutum",
+    "file": "books/glitch-in-the-fourth-wall.pdf",
+    "pages": 6,
+    "category": "Number Theory",
+    "glyph": "73",
+    "colors": [
+      "#4a2f5c",
+      "#7a5290"
+    ],
+    "description": "An exploration of the number 73, from a well-known television reference to the proof by Pomerance and Spicer of its unique properties.",
+    "image": "images/glitch-in-the-fourth-wall.jpg",
+    "topics": [
+      "Sheldon primes and the number 73",
+      "Proving an upper bound for Sheldon primes",
+      "Reducing the number of candidates",
+      "Narrowing the search to a single prime"
+    ],
+    "year": 2026,
+    "sections": [
+      {
+        "title": "Abstract",
+        "page": 1
+      },
+      {
+        "title": "Introduction",
+        "page": 2
+      },
+      {
+        "title": "Proof",
+        "page": 2
+      },
+      {
+        "title": "Part 1: An Upper Bound",
+        "page": 3
+      },
+      {
+        "title": "Part 2: Fewer Candidates",
+        "page": 4
+      },
+      {
+        "title": "Part 3: Narrowing Down",
+        "page": 4
+      },
+      {
+        "title": "Conclusion",
+        "page": 5
+      },
+      {
+        "title": "Bibliography",
+        "page": 6
+      }
+    ],
+    "imageAlt": "An Ulam spiral of prime numbers with the prime 73 highlighted in gold.",
+    "added": "2026-10-12",
+    "placeholder": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA0JCgsKCA0LCgsODg0PEyAVExISEyccHhcgLikxMC4pLSwzOko+MzZGNywtQFdBRkxOUlNSMj5aYVpQYEpRUk//2wBDAQ4ODhMREyYVFSZPNS01T09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0//wAARCAARABgDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDhwKUgimins27GBjFaljDRR1ooAKU0UUAIaKKKAP/Z"
+  },
+  {
+    "id": "secret-santa",
+    "title": "'Tis the Season: A Mathematical Foray into Secret Santa",
+    "shortTitle": "A Foray into Secret Santa",
+    "author": "Lanchenba Mutum",
+    "file": "books/secret-santa.pdf",
+    "pages": 10,
+    "category": "Probability",
+    "glyph": "n!/e",
+    "colors": [
+      "#7a2620",
+      "#b0453a"
+    ],
+    "description": "An analysis of the probability that a participant draws their own name in Secret Santa, introducing derangements and the unexpected appearance of e.",
+    "image": "images/secret-santa.jpg",
+    "topics": [
+      "Permutations of a gift exchange",
+      "Derangements",
+      "The inclusion–exclusion principle",
+      "The limit 1/e"
+    ],
+    "year": 2026,
+    "sections": [
+      {
+        "title": "Introduction",
+        "page": 1
+      },
+      {
+        "title": "Derangements",
+        "page": 2
+      },
+      {
+        "title": "Inclusion–Exclusion",
+        "page": 3
+      },
+      {
+        "title": "The Limit 1/e",
+        "page": 5
+      },
+      {
+        "title": "Is the Draw Fair?",
+        "page": 6
+      },
+      {
+        "title": "Conclusion",
+        "page": 10
+      }
+    ],
+    "imageAlt": "Christmas fir branches with gold baubles, red berries and a pine cone.",
+    "added": "2026-10-12",
+    "placeholder": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA0JCgsKCA0LCgsODg0PEyAVExISEyccHhcgLikxMC4pLSwzOko+MzZGNywtQFdBRkxOUlNSMj5aYVpQYEpRUk//2wBDAQ4ODhMREyYVFSZPNS01T09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0//wAARCAARABgDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwCK4gijt2kQl5d21iO9P0i1YXZE9v5m4fLkV2UHh20XTngTLbznceuan0rT5LYGOdVYD7rd6xVMHbm0OH1Lw9KbgGDjcMlfSiu4vtOknPlxfKp6t3op8hDWuhqQ/wCrFPoorRbFhRRRTA//2Q=="
+  },
+  {
+    "id": "ai-is-unintelligent",
+    "title": "AI Is Fundamentally Unintelligent",
+    "shortTitle": "AI Is Fundamentally Unintelligent",
+    "author": "Lanchenba Mutum",
+    "file": "books/ai-is-unintelligent.pdf",
+    "pages": 7,
+    "category": "Probability",
+    "glyph": "P(H | E)",
+    "colors": [
+      "#1d3b4f",
+      "#2f6280"
+    ],
+    "description": "A study of why leading AI models answer a simple conditional-probability question incorrectly, and what this reveals about their reasoning.",
+    "image": "images/ai-is-unintelligent.jpg",
+    "topics": [
+      "A conditional-probability problem",
+      "AI as a probability machine",
+      "When local logic fails globally",
+      "Gödel and self-reference",
+      "Turing and undecidability"
+    ],
+    "year": 2026,
+    "sections": [
+      {
+        "title": "Introduction",
+        "page": 2
+      },
+      {
+        "title": "The Problem",
+        "page": 2
+      },
+      {
+        "title": "AI the Probability Machine",
+        "page": 2
+      },
+      {
+        "title": "When Local Logic Fails Globally",
+        "page": 3
+      },
+      {
+        "title": "Gödel",
+        "page": 3
+      },
+      {
+        "title": "Turing",
+        "page": 4
+      },
+      {
+        "title": "A Glimpse Beyond",
+        "page": 4
+      },
+      {
+        "title": "What This Tells Us About Thought",
+        "page": 6
+      }
+    ],
+    "imageAlt": "A probability tree for three coin tosses with the path heads-heads-heads highlighted.",
+    "added": "2026-10-12",
+    "placeholder": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA0JCgsKCA0LCgsODg0PEyAVExISEyccHhcgLikxMC4pLSwzOko+MzZGNywtQFdBRkxOUlNSMj5aYVpQYEpRUk//2wBDAQ4ODhMREyYVFSZPNS01T09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0//wAARCAARABgDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDjR1qTcA/y8j3qPPrSgDdxzW1jAkRyGYjjIopqdTRTsguMoFFFAD4+p+lFFFAj/9k="
+  },
+  {
+    "id": "prisoners-dilemma",
+    "title": "A Prisoner's Dilemma",
+    "shortTitle": "A Prisoner's Dilemma",
+    "author": "Lanchenba Mutum",
+    "file": "books/prisoners-dilemma.pdf",
+    "pages": 7,
+    "category": "Game Theory",
+    "glyph": "(C, D)",
+    "colors": [
+      "#3a3a3a",
+      "#5e5a52"
+    ],
+    "description": "An introduction to game theory through the Prisoner's Dilemma, examining rational choice when both cooperation and betrayal are possible.",
+    "image": "images/prisoners-dilemma.jpg",
+    "topics": [
+      "The probability of each outcome",
+      "The scoring system",
+      "Combining probabilities with payoffs",
+      "The iterated Prisoner's Dilemma",
+      "Mathematics, ethics and psychology"
+    ],
+    "year": 2026,
+    "sections": [
+      {
+        "title": "Introduction",
+        "page": 2
+      },
+      {
+        "title": "The Probability of Each Outcome",
+        "page": 2
+      },
+      {
+        "title": "The Scoring System",
+        "page": 3
+      },
+      {
+        "title": "Combining Probabilities and Scores",
+        "page": 4
+      },
+      {
+        "title": "The Iterated Prisoner's Dilemma",
+        "page": 5
+      },
+      {
+        "title": "Maths, Ethics and Psychology",
+        "page": 6
+      },
+      {
+        "title": "Conclusion",
+        "page": 6
+      },
+      {
+        "title": "References",
+        "page": 7
+      }
+    ],
+    "imageAlt": "The Prisoner's Dilemma payoff matrix, with the mutual-betrayal outcome highlighted as the Nash equilibrium.",
+    "added": "2026-10-12",
+    "placeholder": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA0JCgsKCA0LCgsODg0PEyAVExISEyccHhcgLikxMC4pLSwzOko+MzZGNywtQFdBRkxOUlNSMj5aYVpQYEpRUk//2wBDAQ4ODhMREyYVFSZPNS01T09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0//wAARCAARABgDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDjo1DOAehNXJ7aNUBXrVFfvCtXSmha+jE7Ap33VEnZXKSu7GbKgXGKK3PEa2QSP7Lsz320UoS5lcclZ2Ofp6feFFFUSLL2ooooQH//2Q=="
+  },
+  {
+    "id": "lego-maths",
+    "title": "A Deep Dive into the Possibilities of LEGO",
+    "shortTitle": "The Possibilities of LEGO",
+    "author": "Lanchenba Mutum",
+    "file": "books/lego-maths.pdf",
+    "pages": 4,
+    "category": "Combinatorics",
+    "glyph": "C(n, k)",
+    "colors": [
+      "#a5521f",
+      "#d0803a"
+    ],
+    "description": "A combinatorial investigation into the number of ways in which a small set of LEGO bricks can be combined.",
+    "image": "images/lego-maths.jpg",
+    "topics": [
+      "The rapid escalation of combinations",
+      "The calculation behind the 812-million difference",
+      "The modern, correct calculation"
+    ],
+    "year": 2026,
+    "sections": [
+      {
+        "title": "Introduction",
+        "page": 1
+      },
+      {
+        "title": "The Escalation of Combinations",
+        "page": 1
+      },
+      {
+        "title": "The 812 Million Difference",
+        "page": 2
+      },
+      {
+        "title": "The Modern Calculation",
+        "page": 4
+      },
+      {
+        "title": "Conclusion",
+        "page": 4
+      },
+      {
+        "title": "References",
+        "page": 4
+      }
+    ],
+    "imageAlt": "Rows of red two-by-four LEGO bricks alongside the number of possible combinations for one to six bricks.",
+    "added": "2026-10-12",
+    "placeholder": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA0JCgsKCA0LCgsODg0PEyAVExISEyccHhcgLikxMC4pLSwzOko+MzZGNywtQFdBRkxOUlNSMj5aYVpQYEpRUk//2wBDAQ4ODhMREyYVFSZPNS01T09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0//wAARCAARABgDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDvLC4kurVZXTYW6DNEkkyHkrjtmqjPcQQLDaQEKowCaoG31GWZWlDEZqXKx2Ro31bsdBEWK5cjPtRVSD7RHJgqSpoqjGxfooopgJRRRQB//9k="
+  },
+  {
+    "id": "planet-of-fractal-geometry",
+    "title": "A Voyage to the Planet of Fractal Geometry",
+    "shortTitle": "Planet of Fractal Geometry",
+    "author": "Lanchenba Mutum",
+    "file": "books/planet-of-fractal-geometry.pdf",
+    "pages": 9,
+    "category": "Geometry",
+    "glyph": "D ≈ 1.26",
+    "colors": [
+      "#1e4a52",
+      "#2f7a7a"
+    ],
+    "description": "An illustrated journey through the branches of geometry, culminating in fractals: self-similar shapes with non-integer dimensions.",
+    "image": "images/planet-of-fractal-geometry.jpg",
+    "topics": [
+      "The branches of geometry",
+      "Fractal geometry",
+      "Fractals in nature",
+      "Equations of fractal geometry",
+      "Fractals in human creativity"
+    ],
+    "year": 2026,
+    "sections": [
+      {
+        "title": "Introduction",
+        "page": 2
+      },
+      {
+        "title": "Geometry",
+        "page": 2
+      },
+      {
+        "title": "Fractal Geometry",
+        "page": 3
+      },
+      {
+        "title": "Fractals in Nature",
+        "page": 4
+      },
+      {
+        "title": "Equations of Fractal Geometry",
+        "page": 5
+      },
+      {
+        "title": "Fractals in Human Creativity",
+        "page": 7
+      },
+      {
+        "title": "References",
+        "page": 8
+      }
+    ],
+    "imageAlt": "Illustrated solar system whose planets are named after branches of geometry.",
+    "added": "2026-10-12",
+    "placeholder": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA0JCgsKCA0LCgsODg0PEyAVExISEyccHhcgLikxMC4pLSwzOko+MzZGNywtQFdBRkxOUlNSMj5aYVpQYEpRUk//2wBDAQ4ODhMREyYVFSZPNS01T09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0//wAARCAARABgDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDnNUjaDVHR4wCp+6KfdGO6fc0fk7Vxj1qS/uPtV6bw4y5zj0oS2lv2bDAEDPNejRmvZpvdGrw71bM+ARKzeapI7UVdgYRRPbOq/McFj2orCrBTldtlQqOkuXlX3Fc/6tav6d0P0ooroWzOrp8ilJ99qKKKmW5Ej//Z"
+  },
+  {
+    "id": "patterns-in-nature",
+    "title": "How Do Patterns in Nature Relate to Mathematical Laws?",
+    "shortTitle": "Patterns in Nature",
+    "author": "Lanchenba Mutum",
+    "file": "books/patterns-in-nature.pdf",
+    "pages": 5,
+    "category": "Nature",
+    "glyph": "∇²u",
+    "colors": [
+      "#3d4f2a",
+      "#62783f"
+    ],
+    "description": "An examination of Alan Turing's work on morphogenesis, showing how the spots and stripes of animal markings arise from reaction–diffusion between activators and inhibitors.",
+    "image": "images/patterns-in-nature.jpg",
+    "topics": [
+      "Turing's theory of morphogenesis",
+      "Morphogens: activators and inhibitors",
+      "Reaction–diffusion equations",
+      "Spots and stripes in animal markings"
+    ],
+    "year": 2026,
+    "sections": [
+      {
+        "title": "Introduction",
+        "page": 1
+      },
+      {
+        "title": "Morphogens and Reaction–Diffusion",
+        "page": 2
+      },
+      {
+        "title": "Leopard Spots and Rosettes",
+        "page": 3
+      },
+      {
+        "title": "Bibliography",
+        "page": 4
+      }
+    ],
+    "imageAlt": "A Turing reaction–diffusion pattern of golden spots on a dark green background.",
+    "added": "2026-10-12",
+    "placeholder": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA0JCgsKCA0LCgsODg0PEyAVExISEyccHhcgLikxMC4pLSwzOko+MzZGNywtQFdBRkxOUlNSMj5aYVpQYEpRUk//2wBDAQ4ODhMREyYVFSZPNS01T09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0//wAARCAARABgDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDGAxxRigEHoaCcCuMAAwaKAwPQ0UwIbb7tSn7tFFD3ERQ/6xqKKKGCP//Z"
+  },
+  {
+    "id": "absolute-cinema-of-math",
+    "title": "Absolute Cinema of Math",
+    "shortTitle": "Absolute Cinema of Math",
+    "author": "Lanchenba Mutum",
+    "file": "books/absolute-cinema-of-math.pdf",
+    "pages": 7,
+    "category": "Music",
+    "glyph": "♪ f·2ⁿ",
+    "colors": [
+      "#5c2340",
+      "#8a3a62"
+    ],
+    "description": "An exploration of the mathematics underlying music, from the physics of vibrating strings to harmonics and the equation of a wave.",
+    "image": "images/absolute-cinema-of-math.jpg",
+    "topics": [
+      "Foundations of wave theory",
+      "How a wave is shaped",
+      "Fundamental wave equations",
+      "Advanced wave equations",
+      "Applying wave mathematics to robotics"
+    ],
+    "year": 2026,
+    "sections": [
+      {
+        "title": "Introduction",
+        "page": 1
+      },
+      {
+        "title": "Foundations of Wave Knowledge",
+        "page": 1
+      },
+      {
+        "title": "How a Wave Is Shaped",
+        "page": 2
+      },
+      {
+        "title": "Fundamental Wave Equations",
+        "page": 3
+      },
+      {
+        "title": "Advanced Equations",
+        "page": 5
+      },
+      {
+        "title": "Training a Robot",
+        "page": 6
+      },
+      {
+        "title": "Conclusion",
+        "page": 7
+      }
+    ],
+    "imageAlt": "Several harmonic sine waves above the combined waveform they produce.",
+    "added": "2026-10-12",
+    "placeholder": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA0JCgsKCA0LCgsODg0PEyAVExISEyccHhcgLikxMC4pLSwzOko+MzZGNywtQFdBRkxOUlNSMj5aYVpQYEpRUk//2wBDAQ4ODhMREyYVFSZPNS01T09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0//wAARCAARABgDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDiCPejbx1pM+tHbimdQbR60UDBPNFACUUUUwAdaKKKQH//2Q=="
+  }
+]

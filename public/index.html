@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#eee9e3">
+  <title>Lance's Unorthodox Research Papers</title>
+  <meta name="description" content="A collection of mathematical essays by Lanchenba Mutum, available to read online or download as PDF.">
+  <!-- og:start -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Lance&#x27;s Unorthodox Research Papers">
+  <meta property="og:title" content="Lance&#x27;s Unorthodox Research Papers">
+  <meta property="og:description" content="A collection of mathematical essays by Lanchenba Mutum, available to read online or download as PDF.">
+  <meta property="og:image" content="/og/home.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Lance&#x27;s Unorthodox Research Papers">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Lance&#x27;s Unorthodox Research Papers">
+  <meta name="twitter:description" content="A collection of mathematical essays by Lanchenba Mutum, available to read online or download as PDF.">
+  <meta name="twitter:image" content="/og/home.jpg">
+  <!-- og:end -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%23544c40'/><path d='M8 10c3-1 6-1 8 1 2-2 5-2 8-1v13c-3-1-6-1-8 1-2-2-5-2-8-1z' fill='none' stroke='%23f7f3ed' stroke-width='1.6'/></svg>">
+  <script>
+    // Apply the saved theme before first paint to avoid a flash.
+    try {
+      const t = localStorage.getItem("books.theme") || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+      document.documentElement.dataset.theme = t;
+    } catch (e) {}
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css?v=9">
+</head>
+<body>
+  <div class="stage">
+    <header class="site-header">
+      <button class="brand" data-go="essays" aria-label="Home">
+        <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M4 8c4-1.6 8-1.4 12 1.4C20 6.6 24 6.4 28 8v17c-4-1.6-8-1.4-12 1.4C12 23.6 8 23.4 4 25z"/><path d="M16 9.4v17"/><path d="M8 13c1.8-.5 3.6-.4 5 .4M8 17c1.8-.5 3.6-.4 5 .4M19 13.4c1.4-.8 3.2-.9 5-.4"/></svg>
+        <span><strong>LANCHENBA MUTUM</strong><small>MATHEMATICAL ESSAYS</small></span>
+      </button>
+      <nav class="main-nav" aria-label="Main navigation">
+        <button class="active" data-go="essays">Essays</button>
+        <button data-go="room">Library<span aria-hidden="true">↗</span></button>
+        <button data-go="about">About</button>
+      </nav>
+      <span class="acts">
+        <button class="ib music-btn" data-music aria-pressed="false" aria-label="Background music" title="Music">
+          <span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+        </button>
+        <button class="ib" id="sfxBtn" aria-label="Sound effects" aria-pressed="true" title="Sound effects on">
+          <svg class="ic-sound" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M17 9.5a4 4 0 0 1 0 5"/></svg>
+          <svg class="ic-mute" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="m17 10 4 4m0-4-4 4"/></svg>
+        </button>
+        <button class="ib" id="shareBtn" aria-label="Share" title="Share">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3m0 0L7.5 7.5M12 3l4.5 4.5M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7"/></svg>
+        </button>
+        <button class="ib" id="themeBtn" aria-label="Toggle theme" title="Toggle theme">
+          <svg class="ic-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M2 12h2m16 0h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+          <svg class="ic-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5Z"/></svg>
+        </button>
+      </span>
+    </header>
+
+    <div class="screens">
+      <!-- ============ Essays ============ -->
+      <section class="screen in" data-screen="essays" aria-label="Essays">
+        <main class="page-wrap">
+          <div class="hero">
+            <div class="kicker">A COLLECTION OF MATHEMATICAL ESSAYS</div>
+            <h1>Lance's Unorthodox Research Papers</h1>
+            <div class="fine">READ ONLINE OR DOWNLOAD AS PDF</div>
+            <div class="hero-numbers" id="heroNumbers"></div>
+          </div>
+
+          <div class="chips home-chips" id="homeChips" role="toolbar" aria-label="Filter by subject"></div>
+
+          <div class="section-heading">
+            <div><span class="section-index">01 /</span><h2>Featured essays</h2></div>
+          </div>
+
+          <section class="carousel" aria-label="Essay carousel" aria-roledescription="carousel">
+            <div class="track" id="track"></div>
+            <div class="carousel-footer">
+              <span class="carousel-hint">The collection<small>Scroll to browse all twelve essays</small></span>
+              <div class="carousel-controls">
+                <span class="carousel-position" id="position" aria-live="polite" aria-atomic="true"></span>
+                <button class="carousel-arrow" id="prevBtn" aria-label="Previous essay"><span aria-hidden="true">←</span></button>
+                <button class="carousel-arrow" id="nextBtn" aria-label="Next essay"><span aria-hidden="true">→</span></button>
+              </div>
+            </div>
+          </section>
+
+          <div class="editorial-note">
+            <span>Independent essays written for the curious reader.</span>
+            <button class="link" data-go="about">Image credits ↗</button>
+          </div>
+        </main>
+
+      </section>
+
+      <!-- ============ Reading room ============ -->
+      <section class="screen" data-screen="room" aria-label="Library" hidden>
+        <main class="page-wrap room-page">
+          <div class="room-heading">
+            <div>
+              <div class="kicker plain">LIBRARY</div>
+              <h1 id="roomTitle">Continue Reading</h1>
+              <p id="roomSub">Your reading progress is saved on this device.</p>
+            </div>
+            <div class="total-display"><strong id="pagesRead">0</strong><span>pages read</span></div>
+          </div>
+
+          <div class="podium" id="podium"></div>
+
+          <div class="section-heading list-heading">
+            <div><span class="section-index">02 /</span><h2>All essays</h2></div>
+            <label class="mini-search">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+              <input id="search" type="search" placeholder="Search by title or subject" autocomplete="off">
+            </label>
+          </div>
+          <div class="chips" id="chips" role="toolbar" aria-label="Filter by topic"></div>
+          <div class="shelf-list" id="shelfList"></div>
+          <p class="empty" id="empty" hidden>No essays match your search.</p>
+        </main>
+      </section>
+
+      <!-- ============ About ============ -->
+      <section class="screen" data-screen="about" aria-label="About" hidden>
+        <main class="page-wrap about-page">
+          <!--
+            ABOUT THE AUTHOR — write your own text here.
+            • Photo: put it in public/images/ and replace the <span class="monogram">LM</span>
+              below with <img src="images/your-photo.jpg" alt="Portrait of Lanchenba Mutum">
+            • Role line, bio paragraphs and links: fill in the marked spots.
+              Anything left empty stays hidden on the site.
+          -->
+          <div class="author-photo"><span class="monogram" aria-hidden="true">LM</span></div>
+          <div class="kicker plain center">THE AUTHOR</div>
+          <h1>Lanchenba Mutum</h1>
+          <p class="author-role"><!-- e.g. Student of Mathematics · City, Country --></p>
+          <p class="lead">A collection of twelve essays exploring unconventional questions in mathematics: the different sizes of infinity, the equality 0.999… = 1, the limits of proof, and the mathematics underlying anime, music, LEGO and Secret Santa.</p>
+          <div class="about-grid" id="aboutStats"></div>
+
+          <div class="about-card author-card">
+            <h2>About me</h2>
+            <div class="author-bio"><!-- <p>Your first paragraph…</p><p>Your second paragraph…</p> --></div>
+          </div>
+
+          <div class="about-card author-card">
+            <h2>Find me online</h2>
+            <ul class="author-links"><!-- <li><a href="mailto:you@example.com">Email</a></li><li><a href="https://instagram.com/yourname">Instagram</a></li> --></ul>
+          </div>
+
+          <div class="about-card">
+            <h2>Using this site</h2>
+            <ul>
+              <li><b>Reading online.</b> Select any essay to open it in the reader. Your place is saved automatically, so you may return to it at any time.</li>
+              <li><b>Reading list.</b> Select <span class="plus">+</span> on an essay to add it to your reading list in the Library.</li>
+              <li><b>Downloading.</b> Every essay is available as a PDF from the reader or the Library.</li>
+              <li><b>Reading comfort.</b> The reader offers light, sepia and dark modes. Optional background music and sound effects can be switched on or off in the header.</li>
+            </ul>
+          </div>
+
+          <div class="about-card">
+            <h2>Image credits</h2>
+            <p>The images for <i>Gojo Satoru's Infinity</i>, <i>A Tale of Two Infinities</i>, <i>A Proof for the Unprovable</i>, <i>The Possibilities of LEGO</i>, <i>Planet of Fractal Geometry</i> and <i>A Foray into Secret Santa</i> are taken from the illustrations within each essay. The remaining images were generated for this site: the convergence of 0.999… to 1, an Ulam prime spiral highlighting 73, the Prisoner's Dilemma payoff matrix, a Turing reaction–diffusion pattern, the harmonics of a vibrating string, and a probability tree for three coin tosses.</p>
+          </div>
+        </main>
+      </section>
+    </div>
+
+    <footer class="site-footer">
+      <span>© 2026 Lanchenba Mutum · Lance's Unorthodox Research Papers</span>
+      <button class="link" data-go="about">About the author ↗</button>
+    </footer>
+
+    <!-- Fixed to the bottom of the screen; shown on the Essays screen only -->
+    <div class="dock" id="dock">
+      <div class="dock-copy">
+        <strong id="dockTitle">Select an essay</strong>
+        <span id="dockSub">Choose a title above to begin reading</span>
+      </div>
+      <a class="btn primary" id="dockBtn" aria-disabled="true">Select an essay<span aria-hidden="true">↗</span></a>
+    </div>
+
+    <div class="toast" id="toast" role="status" hidden></div>
+  </div>
+
+  <script src="js/common.js?v=9"></script>
+  <script src="js/sfx.js?v=9"></script>
+  <script src="js/site.js?v=9"></script>
+  <script src="js/app.js?v=9"></script>
+  <script src="js/music.js?v=9"></script>
+</body>
+</html>

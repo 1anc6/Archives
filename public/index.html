@@ -5,19 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#eee9e3">
   <title>Lance's Unorthodox Research Papers</title>
-  <meta name="description" content="A collection of mathematical essays by Lanchenba Mutum, available to read online or download as PDF.">
+  <meta name="description" content="A collection of mathematical essays curated by Lanchenba Mutum, available to read online or download as PDF.">
   <!-- og:start -->
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Lance&#x27;s Unorthodox Research Papers">
   <meta property="og:title" content="Lance&#x27;s Unorthodox Research Papers">
-  <meta property="og:description" content="A collection of mathematical essays by Lanchenba Mutum, available to read online or download as PDF.">
+  <meta property="og:description" content="A collection of mathematical essays curated by Lanchenba Mutum, available to read online or download as PDF.">
   <meta property="og:image" content="/og/home.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="Lance&#x27;s Unorthodox Research Papers">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Lance&#x27;s Unorthodox Research Papers">
-  <meta name="twitter:description" content="A collection of mathematical essays by Lanchenba Mutum, available to read online or download as PDF.">
+  <meta name="twitter:description" content="A collection of mathematical essays curated by Lanchenba Mutum, available to read online or download as PDF.">
   <meta name="twitter:image" content="/og/home.jpg">
   <!-- og:end -->
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%23544c40'/><path d='M8 10c3-1 6-1 8 1 2-2 5-2 8-1v13c-3-1-6-1-8 1-2-2-5-2-8-1z' fill='none' stroke='%23f7f3ed' stroke-width='1.6'/></svg>">
@@ -31,14 +31,14 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css?v=9">
+  <link rel="stylesheet" href="css/styles.css?v=10">
 </head>
 <body>
   <div class="stage">
     <header class="site-header">
       <button class="brand" data-go="essays" aria-label="Home">
         <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M4 8c4-1.6 8-1.4 12 1.4C20 6.6 24 6.4 28 8v17c-4-1.6-8-1.4-12 1.4C12 23.6 8 23.4 4 25z"/><path d="M16 9.4v17"/><path d="M8 13c1.8-.5 3.6-.4 5 .4M8 17c1.8-.5 3.6-.4 5 .4M19 13.4c1.4-.8 3.2-.9 5-.4"/></svg>
-        <span><strong>LANCHENBA MUTUM</strong><small>MATHEMATICAL ESSAYS</small></span>
+        <span><strong>LANCE'S</strong><small>MATHEMATICAL ESSAYS</small></span>
       </button>
       <nav class="main-nav" aria-label="Main navigation">
         <button class="active" data-go="essays">Essays</button>
@@ -70,7 +70,7 @@
           <div class="hero">
             <div class="kicker">A COLLECTION OF MATHEMATICAL ESSAYS</div>
             <h1>Lance's Unorthodox Research Papers</h1>
-            <div class="fine">READ ONLINE OR DOWNLOAD AS PDF</div>
+            <div class="fine">CURATED BY LANCHENBA MUTUM · READ ONLINE OR DOWNLOAD AS PDF</div>
             <div class="hero-numbers" id="heroNumbers"></div>
           </div>
 
@@ -93,7 +93,7 @@
           </section>
 
           <div class="editorial-note">
-            <span>Independent essays written for the curious reader.</span>
+            <span>Essays by twelve writers, published with their permission.</span>
             <button class="link" data-go="about">Image credits ↗</button>
           </div>
         </main>
@@ -138,10 +138,10 @@
               Anything left empty stays hidden on the site.
           -->
           <div class="author-photo"><span class="monogram" aria-hidden="true">LM</span></div>
-          <div class="kicker plain center">THE AUTHOR</div>
+          <div class="kicker plain center">THE CURATOR</div>
           <h1>Lanchenba Mutum</h1>
           <p class="author-role"><!-- e.g. Student of Mathematics · City, Country --></p>
-          <p class="lead">A collection of twelve essays exploring unconventional questions in mathematics: the different sizes of infinity, the equality 0.999… = 1, the limits of proof, and the mathematics underlying anime, music, LEGO and Secret Santa.</p>
+          <p class="lead">Lanchenba Mutum curates this collection of twelve essays exploring unconventional questions in mathematics: the different sizes of infinity, the equality 0.999… = 1, the limits of proof, and the mathematics underlying anime, music, LEGO and Secret Santa. It includes Lanchenba's own essay, <i>Mathematics Behind Jujutsu Kaisen: Gojo Satoru's Infinity</i>, alongside work by eleven other writers, published with their permission.</p>
           <div class="about-grid" id="aboutStats"></div>
 
           <div class="about-card author-card">
@@ -152,6 +152,11 @@
           <div class="about-card author-card">
             <h2>Find me online</h2>
             <ul class="author-links"><!-- <li><a href="mailto:you@example.com">Email</a></li><li><a href="https://instagram.com/yourname">Instagram</a></li> --></ul>
+          </div>
+
+          <div class="about-card">
+            <h2>Contributors</h2>
+            <ul class="contributors" id="contributors"></ul>
           </div>
 
           <div class="about-card">
@@ -173,7 +178,7 @@
     </div>
 
     <footer class="site-footer">
-      <span>© 2026 Lanchenba Mutum · Lance's Unorthodox Research Papers</span>
+      <span>© 2026 Lance's Unorthodox Research Papers · curated by Lanchenba Mutum · essays © their authors</span>
       <button class="link" data-go="about">About the author ↗</button>
     </footer>
 
@@ -189,10 +194,10 @@
     <div class="toast" id="toast" role="status" hidden></div>
   </div>
 
-  <script src="js/common.js?v=9"></script>
-  <script src="js/sfx.js?v=9"></script>
-  <script src="js/site.js?v=9"></script>
-  <script src="js/app.js?v=9"></script>
-  <script src="js/music.js?v=9"></script>
+  <script src="js/common.js?v=10"></script>
+  <script src="js/sfx.js?v=10"></script>
+  <script src="js/site.js?v=10"></script>
+  <script src="js/app.js?v=10"></script>
+  <script src="js/music.js?v=10"></script>
 </body>
 </html>

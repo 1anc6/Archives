@@ -85,6 +85,10 @@
     <span><b>${totalPages}</b>pages</span>
     <span><b>~${hours} h</b>reading time</span>`;
 
+  $("contributors").innerHTML = books
+    .map((b) => `<li><a href="essays/${b.id}/"><strong>${esc(b.author)}</strong><span>${esc(b.shortTitle)}</span></a></li>`)
+    .join("");
+
   /* ---------- Carousel ---------- */
   const track = $("track");
   let selected = null;
@@ -103,6 +107,7 @@
         <span class="copy">
           <span class="meta"><span>${esc(b.category)}</span><span class="num">${pad(b.num)}</span></span>
           <span class="name">${esc(b.shortTitle)}</span>
+          <span class="by">by ${esc(b.author)}</span>
           <span class="desc">${esc(b.description)}</span>
           ${p ? `<span class="progress-line" title="${pct}% read"><i style="width:${pct}%"></i></span>` : ""}
           <a class="action" href="essays/${b.id}/">${isDone(p) ? "Completed · view essay" : p ? `Page ${p.page} of ${p.total} · view essay` : "View essay"}<span aria-hidden="true">↗</span></a>
@@ -274,6 +279,7 @@
             <div class="podium-copy">
               <span class="meta"><span>${esc(b.category)}</span><span class="num">${pad(b.num)}</span></span>
               <h2>${esc(b.shortTitle)}</h2>
+              <p class="by">by ${esc(b.author)}</p>
               <div class="pg"><b>${p ? p.page : 0}</b><small>of ${p ? p.total : b.pages} pages</small><span>${pct}%</span></div>
               <div class="bar"><i style="width:${pct}%"></i></div>
             </div>
@@ -307,7 +313,7 @@
       if (activeTopic === "Saved" && !savedIds.includes(b.id)) return false;
       if (activeTopic !== "All" && activeTopic !== "Saved" && b.category !== activeTopic) return false;
       if (!q) return true;
-      const hay = `${b.title} ${b.category} ${b.description}`.toLowerCase();
+      const hay = `${b.title} ${b.author} ${b.category} ${b.description}`.toLowerCase();
       return q.split(/\s+/).every((t) => hay.includes(t));
     });
     $("shelfList").innerHTML = list
@@ -320,7 +326,7 @@
           <div class="row" data-id="${b.id}" style="--i:${i}" role="link" tabindex="0" aria-label="Read ${esc(b.title)}">
             <span class="n">${pad(b.num)}</span>
             ${photo(b)}
-            <div class="row-title"><a href="essays/${b.id}/" class="row-link"><strong>${esc(b.shortTitle)}</strong></a><span>${esc(b.category)}</span></div>
+            <div class="row-title"><a href="essays/${b.id}/" class="row-link"><strong>${esc(b.shortTitle)}</strong></a><span>${esc(b.category)} · ${esc(b.author)}</span></div>
             <div class="row-progress"><small>${status}</small><div class="bar"><i style="width:${pct}%"></i></div></div>
             <div class="row-acts">
               <button class="ib save-toggle${on ? " on" : ""}" aria-label="${on ? "Remove from" : "Add to"} reading list" title="${on ? "In your reading list" : "Add to reading list"}">${on ? "✓" : "+"}</button>

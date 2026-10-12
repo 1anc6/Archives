@@ -47,6 +47,7 @@ Then open http://localhost:8080. Opening `index.html` by double-clicking won't w
 }
 ```
 
+- `author` is the essay's real writer. It shows on the card, the essay page, citations and link previews. Set `"permission": true` for essays by other writers; the essay page then says "Published with the author's permission".
 - `image` is the card picture, e.g. `"image": "images/my-essay.jpg"`. See "Card pictures" below.
 - To add a new book, put its PDF in `source-pdfs/` as well and run `python scripts/build_pdfs.py <id>`. That shrinks it and sets `pages` for you.
 
@@ -72,7 +73,7 @@ The About page lives in `public/index.html`, in the section marked `<!-- =======
 
 `python scripts/make_images.py` rebuilds `public/images/`. Six essays reuse a picture from inside the PDF. The other six get maths artwork generated in the site's colours. To use your own picture, save it as `public/images/<id>.jpg`, ideally 1200×845.
 
-When you change CSS or JS, bump the `?v=9` tags in `index.html` and `reader.html` so phones load the new files instead of old cached copies.
+When you change CSS or JS, bump the `?v=10` tags in `index.html` and `reader.html` so phones load the new files instead of old cached copies.
 
 ## Making the PDFs smaller
 

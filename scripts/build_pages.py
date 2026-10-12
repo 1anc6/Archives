@@ -19,13 +19,14 @@ from PIL import Image, ImageDraw, ImageFilter, ImageFont
 
 ROOT = Path(__file__).resolve().parent.parent
 PUBLIC = ROOT / "public"
-VERSION = "9"  # bump to make browsers fetch new CSS/JS
+VERSION = "10"  # bump to make browsers fetch new CSS/JS
 
 books = json.loads((PUBLIC / "data/books.json").read_text(encoding="utf-8"))
 site = json.loads((PUBLIC / "data/site.json").read_text(encoding="utf-8"))
 BASE = site.get("url", "").rstrip("/")
 TITLE = site["title"]
 AUTHOR = site["author"]
+CURATOR = site.get("curator", AUTHOR)
 for i, b in enumerate(books, start=1):
     b["num"] = i
 
@@ -151,7 +152,7 @@ def og_home():
     for line in ["Lance's Unorthodox", "Research Papers"]:
         d.text((70, y), line, font=SERIF(72), fill=INK)
         y += 80
-    d.text((72, y + 24), f"by {AUTHOR}  ·  {len(books)} essays", font=SANS(24), fill=MUTED)
+    d.text((72, y + 24), f"curated by {CURATOR}  ·  {len(books)} essays", font=SANS(24), fill=MUTED)
     img.convert("RGB").save(PUBLIC / "og" / "home.jpg", quality=85, optimize=True, progressive=True)
 
 
@@ -178,7 +179,7 @@ def og_tags(title, desc, path, image, kind="website"):
     return "\n  ".join(tags)
 
 
-def head(title, desc, prefix, og):
+def head(title, desc, prefix, og, author=None):
     return f"""<!doctype html>
 <html lang="en">
 <head>
@@ -187,7 +188,7 @@ def head(title, desc, prefix, og):
   <meta name="theme-color" content="#eee9e3">
   <title>{e(title)}</title>
   <meta name="description" content="{e(desc)}">
-  <meta name="author" content="{e(AUTHOR)}">
+  <meta name="author" content="{e(author or AUTHOR)}">
   <!-- og:start -->
   {og}
   <!-- og:end -->
@@ -216,7 +217,7 @@ def header(prefix, active):
     <header class="site-header">
       <a class="brand" href="{prefix}" aria-label="Home">
         <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M4 8c4-1.6 8-1.4 12 1.4C20 6.6 24 6.4 28 8v17c-4-1.6-8-1.4-12 1.4C12 23.6 8 23.4 4 25z"/><path d="M16 9.4v17"/><path d="M8 13c1.8-.5 3.6-.4 5 .4M8 17c1.8-.5 3.6-.4 5 .4M19 13.4c1.4-.8 3.2-.9 5-.4"/></svg>
-        <span><strong>LANCHENBA MUTUM</strong><small>MATHEMATICAL ESSAYS</small></span>
+        <span><strong>LANCE'S</strong><small>MATHEMATICAL ESSAYS</small></span>
       </a>
       <nav class="main-nav" aria-label="Main navigation">
         {item("Essays", prefix, "essays")}
@@ -246,7 +247,7 @@ def footer(prefix, scripts):
     tags = "\n".join(f'  <script src="{prefix}js/{s}?v={VERSION}"></script>' for s in ["common.js", "sfx.js", "site.js", *scripts, "music.js"])
     return f"""
     <footer class="site-footer">
-      <span>© 2026 {e(AUTHOR)} · {e(TITLE)}</span>
+      <span>© 2026 {e(TITLE)} · curated by {e(CURATOR)} · essays © their authors</span>
       <a href="{prefix}#about">About the author ↗</a>
     </footer>
     <div class="toast" id="toast" role="status" hidden></div>
@@ -272,6 +273,12 @@ def photo(b, prefix, eager=False, name=False, sizes="(max-width: 650px) 80vw, 42
 
 # ---------------------------------------------------------------- essay pages
 MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+
+
+def permission_note(b):
+    if not b.get("permission"):
+        return ""
+    return f'<p class="permission-note">Published with the author\'s permission · curated by {e(CURATOR)}</p>'
 
 
 def added_line(b):
@@ -300,7 +307,7 @@ def essay_page(b):
         "datePublished": str(b.get("year", "")),
         "description": b["description"],
         "about": b["topics"],
-        "isPartOf": {"@type": "CreativeWorkSeries", "name": TITLE},
+        "isPartOf": {"@type": "CreativeWorkSeries", "name": TITLE, "editor": {"@type": "Person", "name": CURATOR}},
         "image": absolute(b["image"]),
         "encoding": {"@type": "MediaObject", "encodingFormat": "application/pdf", "contentUrl": absolute(b["file"])},
     }
@@ -316,7 +323,7 @@ def essay_page(b):
           </a>"""
         for i, x in enumerate(related(b))
     )
-    return f"""{head(title, b['description'], prefix, og)}
+    return f"""{head(title, b['description'], prefix, og, author=b['author'])}
 <body>
 {header(prefix, "essays")}
     <main class="page-wrap essay-page">
@@ -327,6 +334,7 @@ def essay_page(b):
           <div class="kicker">{e(b['category'].upper())} · ESSAY NO. {b['num']:02d}</div>
           <h1>{e(b['title'])}</h1>
           <p class="byline">By {e(b['author'])} · {b.get('year', '')}{added_line(b)}</p>
+          {permission_note(b)}
           <p class="summary">{e(b['description'])}</p>
           <div class="hero-numbers left">
             <span><b>{b['pages']}</b><small>pages</small></span>

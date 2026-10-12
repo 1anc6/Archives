@@ -258,7 +258,12 @@ def ai():
 
 def main():
     OUT.mkdir(parents=True, exist_ok=True)
+    # Existing pictures are kept (e.g. the fractal essay's solar-system artwork came
+    # from a page that is no longer in the PDF). Delete a picture to regenerate it.
     for name, spec in FROM_PDF.items():
+        if (OUT / f"{name}.jpg").exists():
+            print(f"  {name}.jpg kept")
+            continue
         from_pdf(name, spec)
     paradox()
     glitch()

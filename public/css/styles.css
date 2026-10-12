@@ -817,3 +817,14 @@ body.no-scroll { overflow: hidden; }
   .home-chips .chip { flex: none; }
   .new-badge { top: 12px; left: 12px; }
 }
+
+/* ============ Author credits ============ */
+.card .by { font: 10px var(--mono); letter-spacing: .03em; color: var(--muted); margin: -4px 0 8px; }
+.podium-copy .by { font: 10px var(--mono); color: var(--muted); margin: -8px 0 12px; }
+.permission-note { margin-top: 8px; font-size: 11px; font-style: italic; color: var(--muted); }
+.contributors { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 6px 18px; }
+.contributors a { display: flex; flex-direction: column; padding: 8px 0; border-bottom: 1px solid var(--line-soft); text-decoration: none; color: inherit; }
+.contributors strong { font: 400 19px/1.2 var(--display); }
+.contributors span { font-size: 11px; color: var(--muted); margin-top: 2px; }
+.contributors a:hover strong { text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+@media (max-width: 650px) { .card .by { margin: -2px 0 6px; } }

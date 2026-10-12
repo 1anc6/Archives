@@ -173,7 +173,7 @@ svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width:
   text-wrap: balance;
 }
 .hero > p { font-size: 13px; line-height: 1.7; max-width: 520px; color: var(--muted); }
-.fine { font: 10px var(--mono); letter-spacing: .04em; color: var(--muted); }
+.fine { font: 10px var(--mono); letter-spacing: .04em; color: var(--muted); text-align: center; }
 .hero-numbers { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
 .hero-numbers > span { display: flex; align-items: center; gap: 8px; padding: 7px 14px; border-radius: 999px; background: var(--panel); }
 .hero-numbers b { font: 12px var(--mono); }

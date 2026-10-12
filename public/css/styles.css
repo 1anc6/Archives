@@ -836,3 +836,27 @@ body.no-scroll { overflow: hidden; }
   .entry-pp { display: inline; }
   .entry-desc { font-size: 15px; }
 }
+
+/* ============ PDF request form ============ */
+.request-intro { margin: 14px 0 20px; font-size: 16px; line-height: 1.6; color: var(--muted); max-width: 52ch; }
+.request-form .field { display: block; margin-bottom: 16px; }
+.request-form .field > span { display: block; margin-bottom: 6px; font-size: 15px; }
+.request-form .field small { font-size: 14px; color: var(--muted); }
+.request-form input,
+.request-form textarea {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--bg);
+  color: var(--ink);
+  font: 17px/1.4 var(--sans);
+  resize: vertical;
+  transition: border-color .2s, box-shadow .2s;
+}
+.request-form input:focus,
+.request-form textarea:focus { outline: none; border-color: var(--ink); box-shadow: 0 0 0 1px var(--ink); }
+.request-form input[aria-invalid="true"] { border-color: var(--hi); box-shadow: 0 0 0 1px var(--hi); }
+.field-error { margin: -8px 0 14px; font-size: 15px; color: var(--hi); }
+.request-done { margin-top: 16px; font-size: 15px; line-height: 1.6; }
+.request-done a { color: var(--ink); }

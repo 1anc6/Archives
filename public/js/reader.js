@@ -45,8 +45,9 @@
   $("title").textContent = book.title;
   $("author").textContent = book.author;
   $("download").href = book.file;
+  $("download").dataset.title = book.title;
 
-  if (!window.pdfjsLib) return fail("The PDF viewer failed to load. Check your connection, or download the PDF instead.");
+  if (!window.pdfjsLib) return fail("The PDF viewer failed to load. Check your connection and try again.");
   pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
 
   let pdf;

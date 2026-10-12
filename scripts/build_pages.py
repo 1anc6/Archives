@@ -19,7 +19,7 @@ from PIL import Image, ImageDraw, ImageFilter, ImageFont
 
 ROOT = Path(__file__).resolve().parent.parent
 PUBLIC = ROOT / "public"
-VERSION = "13"  # bump to make browsers fetch new CSS/JS
+VERSION = "14"  # bump to make browsers fetch new CSS/JS
 
 books = json.loads((PUBLIC / "data/books.json").read_text(encoding="utf-8"))
 site = json.loads((PUBLIC / "data/site.json").read_text(encoding="utf-8"))
@@ -244,7 +244,7 @@ def header(prefix, active):
 
 
 def footer(prefix, scripts):
-    tags = "\n".join(f'  <script src="{prefix}js/{s}?v={VERSION}"></script>' for s in ["common.js", "sfx.js", "site.js", *scripts, "music.js"])
+    tags = "\n".join(f'  <script src="{prefix}js/{s}?v={VERSION}"></script>' for s in ["common.js", "sfx.js", "site.js", *scripts, "request.js", "music.js"])
     return f"""
     <footer class="site-footer">
       <span>© 2026 {e(TITLE)} · curated by {e(CURATOR)} · essays © their authors</span>
@@ -350,7 +350,7 @@ def essay_page(b):
           </div>
           <div class="essay-actions">
             <a class="btn primary" data-read href="{prefix}reader.html?id={b['id']}">Read essay<svg class="arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a>
-            <a class="btn ghost" href="{prefix}{e(b['file'])}" download>Download PDF</a>
+            <a class="btn ghost" href="{prefix}{e(b['file'])}" download data-title="{e(b['title'])}">Download PDF</a>
             <button class="btn ghost" data-cite>Cite</button>
             <button class="btn ghost" data-share>Share</button>
           </div>

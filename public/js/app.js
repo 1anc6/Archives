@@ -247,7 +247,7 @@
             <div class="row-acts">
               <button class="ib save-toggle${on ? " on" : ""}" aria-pressed="${on}" aria-label="Add ${esc(b.shortTitle)} to reading list" title="${on ? "In your reading list" : "Add to reading list"}">${BOOKMARK}</button>
               <button class="ib cite-btn" aria-label="Cite this essay" title="Cite this essay"><svg viewBox="0 0 24 24"><path d="M7 7h4v4c0 3-1.5 5-4 6M14 7h4v4c0 3-1.5 5-4 6"/></svg></button>
-              <a class="ib" href="${esc(b.file)}" download aria-label="Download PDF" title="Download PDF"><svg viewBox="0 0 24 24"><path d="M12 4v11m0 0-4-4m4 4 4-4M5 20h14"/></svg></a>
+              <a class="ib" href="${esc(b.file)}" download data-title="${esc(b.title)}" aria-label="Download PDF" title="Download PDF"><svg viewBox="0 0 24 24"><path d="M12 4v11m0 0-4-4m4 4 4-4M5 20h14"/></svg></a>
             </div>
           </div>`;
       })

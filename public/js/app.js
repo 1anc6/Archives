@@ -155,6 +155,59 @@
     reveal.observe($("feature"));
   }
 
+  /* ---------- Start here: three suggested first essays ---------- */
+  function renderStart() {
+    const picks = books.filter((b) => b.startHere).sort((a, b) => a.startHere.order - b.startHere.order);
+    $("startList").innerHTML = picks
+      .map((b) => `
+        <li class="start-card">
+          <h3 class="start-ask">${esc(b.startHere.ask)}</h3>
+          <a class="start-link" href="essays/${b.id}/"><span class="start-glyph" aria-hidden="true">${notation(b.glyph)}</span><span class="start-title">${esc(b.shortTitle)}</span></a>
+          <p class="start-meta">${b.pages} pages · ~${b.pages * MIN_PER_PAGE} min · ${esc(b.category)}</p>
+        </li>`)
+      .join("");
+    $("startList").querySelectorAll(".start-card").forEach((el) => {
+      inkify(el.querySelector(".start-glyph"));
+      reveal.observe(el);
+    });
+  }
+  $("startList").addEventListener("click", (e) => {
+    if (e.target.closest("a")) sfx.tick();
+  });
+
+  /* ---------- Surprise me: shuffle through titles, then open one at random ---------- */
+  let lastSurprise = null;
+  $("surpriseBtn").addEventListener("click", () => {
+    const btn = $("surpriseBtn");
+    if (btn.classList.contains("is-rolling")) return;
+    const pool = books.filter((b) => b.id !== lastSurprise);
+    const pick = pool[Math.floor(Math.random() * pool.length)];
+    lastSurprise = pick.id;
+    const label = btn.querySelector(".surprise-label");
+    const url = `essays/${pick.id}/`;
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) return goTo(url);
+    btn.classList.add("is-rolling");
+    btn.style.width = `${btn.offsetWidth}px`;
+    sfx.soft();
+    let n = 0;
+    const roll = setInterval(() => {
+      label.textContent = books[Math.floor(Math.random() * books.length)].shortTitle;
+      if (++n >= 9) {
+        clearInterval(roll);
+        label.textContent = pick.shortTitle;
+        btn.classList.add("is-picked");
+        setTimeout(() => goTo(url), 350);
+      }
+    }, 75);
+  });
+  // Coming back with the browser's back button restores the button.
+  window.addEventListener("pageshow", () => {
+    const btn = $("surpriseBtn");
+    btn.classList.remove("is-rolling", "is-picked");
+    btn.style.width = "";
+    btn.querySelector(".surprise-label").textContent = "Surprise me";
+  });
+
   /* ---------- Contents ---------- */
   function entryHTML(b, i) {
     const p = progress.get(b.id);
@@ -344,6 +397,7 @@
   /* ---------- Start ---------- */
   renderGreeting();
   renderFeature();
+  renderStart();
   renderIndex();
   renderDock();
   const startAt = location.hash.slice(1);

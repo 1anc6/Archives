@@ -94,6 +94,40 @@
       .replace(/[⁰¹²³⁴⁵⁶⁷⁸⁹ⁿ⁺⁻]+/g, (m) => `<sup>${[...m].map((c) => PLAIN[SUP.indexOf(c)]).join("")}</sup>`)
       .replace(/[₀₁₂₃₄₅₆₇₈₉]+/g, (m) => `<sub>${[...m].map((c) => PLAIN[SUB.indexOf(c)]).join("")}</sub>`);
 
+  // Split a symbol into one span per character so each stroke can be
+  // "written" in turn (see .ink in styles.css).
+  function inkify(root) {
+    let i = 0;
+    const walk = (node) => {
+      for (const child of [...node.childNodes]) {
+        if (child.nodeType === 3) {
+          const frag = document.createDocumentFragment();
+          for (const ch of child.textContent) {
+            if (/\s/.test(ch)) { frag.append(ch); continue; }
+            const span = document.createElement("span");
+            span.className = "ink";
+            span.style.setProperty("--d", i++);
+            span.textContent = ch;
+            frag.append(span);
+          }
+          child.replaceWith(frag);
+        } else walk(child);
+      }
+    };
+    walk(root);
+  }
+
+  // Reveal elements once they scroll into view (adds .is-seen).
+  const reveal = "IntersectionObserver" in window
+    ? new IntersectionObserver((entries) => {
+        for (const e of entries) {
+          if (!e.isIntersecting) continue;
+          e.target.classList.add("is-seen");
+          reveal.unobserve(e.target);
+        }
+      }, { rootMargin: "0px 0px -8% 0px", threshold: 0.15 })
+    : { observe: (el) => el.classList.add("is-seen"), unobserve() {} };
+
   /* ---------- Featured essay ---------- */
   function renderFeature() {
     const b = books.find((x) => x.excerpt) || books[0];
@@ -117,6 +151,8 @@
         <span class="feature-glyph" aria-hidden="true">${notation(b.glyph)}</span>
         ${photo(b, true, true)}
       </figure>`;
+    inkify($("feature").querySelector(".feature-glyph"));
+    reveal.observe($("feature"));
   }
 
   /* ---------- Contents ---------- */
@@ -138,6 +174,10 @@
   }
   function renderIndex() {
     $("indexList").innerHTML = books.map(entryHTML).join("");
+    $("indexList").querySelectorAll(".entry").forEach((el) => {
+      inkify(el.querySelector(".entry-glyph"));
+      reveal.observe(el);
+    });
   }
   $("indexList").addEventListener("click", (e) => {
     const btn = e.target.closest(".entry-save");

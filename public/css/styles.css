@@ -772,8 +772,6 @@ body.no-scroll { overflow: hidden; }
   gap: 0 14px;
   padding: 26px 0 24px;
   border-bottom: 1px solid var(--line);
-  animation: rise .6s var(--ease) both;
-  animation-delay: calc(.2s + var(--i, 0) * 40ms);
 }
 .entry-num { padding-top: 9px; font: 13px var(--mono); color: var(--muted); }
 .entry-glyph { padding-top: 5px; font: italic 400 20px/1.3 var(--math); color: var(--hi); white-space: nowrap; transition: transform .3s var(--ease); }
@@ -946,4 +944,62 @@ body.no-scroll { overflow: hidden; }
   .greeting.is-compact { grid-template-columns: 40px minmax(0, 1fr) 36px; border-radius: 22px; }
   .greeting.is-compact .greeting-photo { width: 40px; height: 40px; }
   .greeting.is-compact .greeting-title { font-size: 18px; }
+}
+
+/* ============ Handwritten symbols + scroll reveal ============ */
+/* Hidden starting states only apply when motion is welcome, so the page
+   still shows everything with reduced motion or without JavaScript. */
+@media (prefers-reduced-motion: no-preference) {
+  .ink {
+    display: inline-block;
+    line-height: 1;
+    clip-path: inset(-25% 100% -25% -25%);
+    filter: blur(1.5px);
+    transform: translateY(3px) rotate(-3deg);
+  }
+  .feature.is-seen .ink,
+  .entry.is-seen .ink {
+    animation: write .55s cubic-bezier(.3, .7, .25, 1) forwards;
+    animation-delay: calc(.35s + var(--d, 0) * .17s);
+  }
+  .entry.is-seen .ink { animation-duration: .4s; animation-delay: calc(.25s + var(--d, 0) * .07s); }
+  @keyframes write {
+    60% { filter: blur(.4px); }
+    to { clip-path: inset(-25% -25% -25% -25%); filter: none; transform: none; }
+  }
+
+  .index-list .entry { opacity: 0; transform: translateY(16px); transition: opacity .6s var(--ease), transform .6s var(--ease); }
+  .index-list .entry.is-seen { opacity: 1; transform: none; }
+  /* entries side by side on desktop arrive a beat apart */
+  @media (min-width: 1001px) { .index-list .entry:nth-child(even) { transition-delay: .08s; } }
+}
+
+/* ============ Zeno's hover ============ */
+/* A dot (the attacker) runs along the dotted line towards the page count,
+   covering half of the remaining distance each step. It never arrives. */
+.entry-leader { position: relative; }
+.entry-leader::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 100%;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--hi);
+  transform: translate(-50%, -40%) scale(0);
+  transition: transform .2s var(--ease);
+}
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .entry:hover .entry-leader::after,
+  .entry:focus-within .entry-leader::after { animation: zeno 2.6s forwards; }
+}
+@keyframes zeno {
+  0% { left: 0; transform: translate(-50%, -40%) scale(1); }
+  16% { left: 50%; transform: translate(-50%, -40%) scale(1); }
+  32% { left: 75%; transform: translate(-50%, -40%) scale(1); }
+  48% { left: 87.5%; transform: translate(-50%, -40%) scale(1); }
+  64% { left: 93.75%; transform: translate(-50%, -40%) scale(1); }
+  80% { left: 96.875%; transform: translate(-50%, -40%) scale(1); }
+  100% { left: 98.4375%; transform: translate(-50%, -40%) scale(1); }
 }

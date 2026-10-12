@@ -1,7 +1,7 @@
 # Render Blueprint: deploys /public as a free static site.
 services:
   - type: web
-    name: bookshelf
+    name: archives
     runtime: static
     buildCommand: ""
     staticPublishPath: ./public

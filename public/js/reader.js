@@ -42,6 +42,7 @@
   if (!book) return fail("That book isn't on the shelf.");
 
   document.title = `${book.shortTitle || book.title} · Lanchenba Mutum`;
+  window.ReaderBook = book; // used by quote.js
   $("title").textContent = book.title;
   $("author").textContent = book.author;
   $("download").href = book.file;

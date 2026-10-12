@@ -300,3 +300,35 @@
 
 /* end-of-essay spacing so the last page can be brought fully into view */
 .pages { padding-bottom: max(130px, 30vh); }
+
+/* ---------- Quote sharing toolbar (js/quote.js) ---------- */
+.quote-bar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 40;
+  display: flex;
+  gap: 2px;
+  padding: 4px;
+  border-radius: 999px;
+  background: var(--r-ink);
+  color: var(--r-bg);
+  box-shadow: 0 14px 30px -12px rgba(30, 20, 12, .55);
+  animation: quote-in .18s ease-out;
+}
+.quote-bar[hidden] { display: none; }
+.quote-bar button {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 40px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  font: 15px var(--sans);
+  color: inherit;
+  white-space: nowrap;
+}
+.quote-bar button:hover { background: color-mix(in srgb, var(--r-bg) 16%, transparent); }
+.quote-bar button:focus-visible { outline: 2px solid var(--r-bg); outline-offset: -3px; }
+.quote-bar svg { width: 16px; height: 16px; }
+@keyframes quote-in { from { opacity: 0; scale: .94; } }

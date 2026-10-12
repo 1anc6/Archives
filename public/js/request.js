@@ -104,5 +104,24 @@
     open(a.dataset.title || document.querySelector("h1")?.textContent || "your essay");
   }, true);
 
+  // "Email me new essays": the visitor sends a short request from their own
+  // email app, so the reply address is theirs.
+  const notifyForm = document.getElementById("notifyForm");
+  notifyForm?.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const name = notifyForm.elements.name.value.trim().replace(/\s+/g, " ");
+    const body = [
+      "Hi Lance,",
+      "",
+      "Please email me when there's a new essay on Lance's Unorthodox Essay Papers.",
+      ...(name ? ["", `Name: ${name}`] : []),
+      "",
+      "Thanks!",
+    ].join("\n");
+    window.Sfx?.pop?.();
+    location.href = `mailto:${EMAIL}?subject=${encodeURIComponent("New essay alerts")}&body=${encodeURIComponent(body)}`;
+    notifyForm.querySelector(".notify-done").hidden = false;
+  });
+
   window.RequestPDF = { open };
 })();

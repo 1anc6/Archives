@@ -19,7 +19,7 @@ from PIL import Image, ImageDraw, ImageFilter, ImageFont
 
 ROOT = Path(__file__).resolve().parent.parent
 PUBLIC = ROOT / "public"
-VERSION = "15"  # bump to make browsers fetch new CSS/JS
+VERSION = "21"  # bump to make browsers fetch new CSS/JS
 
 books = json.loads((PUBLIC / "data/books.json").read_text(encoding="utf-8"))
 site = json.loads((PUBLIC / "data/site.json").read_text(encoding="utf-8"))
@@ -49,10 +49,23 @@ def font(name, size):
         return ImageFont.load_default(size)
 
 
-SERIF = lambda s: font("GeorgiaPro-CondRegular.ttf", s)
+SERIF = lambda s: font("GeorgiaPro-Regular.ttf", s)
+SERIF_I = lambda s: font("GeorgiaPro-Italic.ttf", s)
 MONO = lambda s: font("consola.ttf", s)
-SANS = lambda s: font("segoeui.ttf", s)
-BG, INK, MUTED, HI, LINE = (40, 37, 31), (238, 228, 214), (192, 179, 161), (206, 144, 118), (85, 74, 62)
+
+
+def MATH(s):
+    """Cambria Math (inside cambria.ttc) draws the essays' notation."""
+    try:
+        return ImageFont.truetype(str(FONTS / "cambria.ttc"), s, index=1)
+    except OSError:
+        return SERIF_I(s)
+
+
+# The site's light "notebook" palette
+PAPER, BG, INK, MUTED, HI, LINE = (247, 243, 237), (238, 233, 227), (84, 76, 64), (101, 92, 80), (164, 85, 63), (215, 206, 194)
+GRID = (231, 224, 214)
+MARGIN_X = 92
 
 
 def wrap(draw, text, fnt, width):
@@ -80,80 +93,100 @@ def cover_fit(img, w, h):
     return img.resize((w, h), Image.LANCZOS)
 
 
-def framed(photo, w, h, border=10, radius=18):
-    """Photo with a light frame and soft shadow, like the cards on the site."""
+def framed(photo, w, h, border=12, radius=16, angle=0):
+    """Photo in a light frame with a soft shadow, like the featured essay on the site."""
     card = Image.new("RGBA", (w + 2 * border, h + 2 * border), (0, 0, 0, 0))
     mask = Image.new("L", card.size, 0)
     ImageDraw.Draw(mask).rounded_rectangle((0, 0, *card.size), radius=radius, fill=255)
-    frame = Image.new("RGBA", card.size, (51, 46, 39, 255))
-    card.paste(frame, (0, 0), mask)
+    card.paste(Image.new("RGBA", card.size, (*PAPER, 255)), (0, 0), mask)
     inner = Image.new("L", (w, h), 0)
     ImageDraw.Draw(inner).rounded_rectangle((0, 0, w, h), radius=radius - 6, fill=255)
     card.paste(cover_fit(photo, w, h), (border, border), inner)
-    shadow = Image.new("RGBA", (card.width + 80, card.height + 80), (0, 0, 0, 0))
-    ImageDraw.Draw(shadow).rounded_rectangle((40, 52, 40 + card.width, 52 + card.height), radius=radius, fill=(0, 0, 0, 150))
-    shadow = shadow.filter(ImageFilter.GaussianBlur(18))
-    shadow.alpha_composite(card, (40, 40))
-    return shadow
+    pad = 60
+    out = Image.new("RGBA", (card.width + 2 * pad, card.height + 2 * pad), (0, 0, 0, 0))
+    ImageDraw.Draw(out).rounded_rectangle((pad, pad + 16, pad + card.width, pad + 16 + card.height), radius=radius, fill=(84, 66, 43, 70))
+    out = out.filter(ImageFilter.GaussianBlur(16))
+    out.alpha_composite(card, (pad, pad))
+    return out.rotate(angle, resample=Image.BICUBIC, expand=True) if angle else out
 
 
 def base_canvas():
-    img = Image.new("RGB", (1200, 630), BG)
-    glow = Image.new("RGB", (1200, 630), (0, 0, 0))
-    gd = ImageDraw.Draw(glow)
-    gd.ellipse((-200, 250, 500, 800), fill=(70, 45, 32))
-    gd.ellipse((800, -250, 1400, 250), fill=(62, 44, 34))
-    glow = glow.filter(ImageFilter.GaussianBlur(120))
-    return Image.blend(img, glow, 0.45).convert("RGBA")
+    """Squared notebook paper with a terracotta margin rule."""
+    img = Image.new("RGBA", (1200, 630), (*PAPER, 255))
+    d = ImageDraw.Draw(img)
+    for x in range(0, 1200, 30):
+        d.line((x, 0, x, 630), fill=GRID, width=1)
+    for y in range(0, 630, 30):
+        d.line((0, y, 1200, y), fill=GRID, width=1)
+    d.line((MARGIN_X, 0, MARGIN_X, 630), fill=(214, 168, 150), width=2)
+    return img
+
+
+def draw_glyph(d, xy, glyph, size, fill=HI):
+    """Notation with superscripts/subscripts drawn small and raised/lowered."""
+    sup, sub = "⁰¹²³⁴⁵⁶⁷⁸⁹ⁿ⁺⁻", "₀₁₂₃₄₅₆₇₈₉"
+    plain = "0123456789n+-"
+    x, y = xy
+    big, small = MATH(size), MATH(int(size * .6))
+    for ch in glyph:
+        if ch in sup:
+            c = plain[sup.index(ch)]
+            d.text((x, y - size * .02), c, font=small, fill=fill)
+            x += d.textlength(c, font=small)
+        elif ch in sub:
+            c = plain[sub.index(ch)]
+            d.text((x, y + size * .42), c, font=small, fill=fill)
+            x += d.textlength(c, font=small)
+        else:
+            d.text((x, y), ch, font=big, fill=fill)
+            x += d.textlength(ch, font=big)
 
 
 def og_essay(b):
     img = base_canvas()
     photo = Image.open(PUBLIC / b["image"]).convert("RGB")
-    card = framed(photo, 470, 470)
-    img.alpha_composite(card, (650 - 40, 70 - 40))
+    card = framed(photo, 400, 282, angle=-2.5)
+    img.alpha_composite(card, (1200 - card.width + 20, (630 - card.height) // 2 + 6))
     d = ImageDraw.Draw(img)
-    x, w = 70, 520
-    d.text((x, 78), f"{b['category'].upper()}  ·  NO. {b['num']:02d}", font=MONO(20), fill=MUTED)
-    y = 130
-    size = 64 if len(b["title"]) < 40 else 54
-    for line in wrap(d, b["title"], SERIF(size), w)[:4]:
+    x, w = MARGIN_X + 44, 560
+    draw_glyph(d, (x, 52), b["glyph"], 58)
+    y = 150
+    title = b["shortTitle"]
+    size = 70 if len(title) < 24 else 60
+    for line in wrap(d, title, SERIF(size), w)[:3]:
         d.text((x, y), line, font=SERIF(size), fill=INK)
         y += int(size * 1.08)
-    y += 18
-    d.text((x, y), f"By {b['author']}", font=SANS(24), fill=MUTED)
-    d.line((x, 520, x + 56, 520), fill=HI, width=3)
-    d.text((x, 540), TITLE, font=SERIF(28), fill=INK)
+    y += 12
+    if b["title"] != b["shortTitle"]:
+        for line in wrap(d, b["title"], SERIF_I(26), w)[:2]:
+            d.text((x, y), line, font=SERIF_I(26), fill=MUTED)
+            y += 34
+    d.text((x, 512), f"No. {b['num']:02d}  ·  {b['category']}  ·  {b['pages']} pages", font=MONO(22), fill=MUTED)
+    d.text((x, 550), f"By {b['author']}  ·  {TITLE}", font=SERIF(24), fill=INK)
     out = PUBLIC / "og" / f"{b['id']}.jpg"
-    img.convert("RGB").save(out, quality=85, optimize=True, progressive=True)
+    img.convert("RGB").save(out, quality=86, optimize=True, progressive=True)
 
 
 def og_home():
     img = base_canvas()
-    picks = [b for b in books][:6]
-    for i, b in enumerate(picks):
+    picks = [books[0], books[5], books[8]]
+    spots = [(800, 20, 3), (880, 230, -4), (730, 340, 2)]
+    for b, (px, py, a) in zip(picks, spots):
         photo = Image.open(PUBLIC / b["image"]).convert("RGB")
-        card = framed(photo, 300, 211, border=7, radius=14)
-        col, row = i % 3, i // 3
-        x = 660 + col * 180 - 40 + (row * 50)
-        y = 70 + row * 250 + (col % 2) * 30 - 40
-        card = card.rotate([-4, 3, -2, 2, -3, 4][i], resample=Image.BICUBIC, expand=True)
-        img.alpha_composite(card, (min(x, 1200 - 200), y))
-    shade = Image.new("RGBA", (1200, 630), (0, 0, 0, 0))
-    sd = ImageDraw.Draw(shade)
-    for i in range(700):
-        a = int(255 * max(0, min(1, (720 - i) / 220)))
-        sd.line((i, 0, i, 630), fill=(*BG, a))
-    img.alpha_composite(shade)
+        img.alpha_composite(framed(photo, 270, 190, border=9, radius=14, angle=a), (px, py))
     d = ImageDraw.Draw(img)
-    d.rounded_rectangle((70, 120, 70 + 470, 158), radius=19, outline=LINE, width=2, fill=(61, 54, 46))
-    d.text((92, 128), "A COLLECTION OF MATHEMATICAL ESSAYS", font=MONO(18), fill=MUTED)
-    y = 190
+    x = MARGIN_X + 44
+    draw_glyph(d, (x, 60), "Σ ½ⁿ", 54)
+    y = 150
     for line in ["Lance's Unorthodox", "Essay Papers"]:
-        d.text((70, y), line, font=SERIF(72), fill=INK)
-        y += 80
-    d.text((72, y + 24), f"curated by {CURATOR}  ·  {len(books)} essays", font=SANS(24), fill=MUTED)
-    img.convert("RGB").save(PUBLIC / "og" / "home.jpg", quality=85, optimize=True, progressive=True)
+        d.text((x, y), line, font=SERIF(68), fill=INK)
+        y += 76
+    y += 20
+    for line in wrap(d, "Mathematical essays about infinity, proof, probability and patterns, to read online.", SERIF_I(28), 520):
+        d.text((x, y), line, font=SERIF_I(28), fill=MUTED)
+        y += 38
+    d.text((x, 550), f"By {AUTHOR}  ·  {len(books)} essays", font=MONO(22), fill=MUTED)
+    img.convert("RGB").save(PUBLIC / "og" / "home.jpg", quality=86, optimize=True, progressive=True)
 
 
 # ---------------------------------------------------------------- page parts
@@ -247,7 +280,7 @@ def footer(prefix, scripts):
     tags = "\n".join(f'  <script src="{prefix}js/{s}?v={VERSION}"></script>' for s in ["common.js", "sfx.js", "site.js", *scripts, "request.js", "music.js"])
     return f"""
     <footer class="site-footer">
-      <span>© 2026 {e(TITLE)} · curated by {e(CURATOR)} · essays © their authors</span>
+      <span>© 2026 {e(AUTHOR)} · {e(TITLE)}</span>
       <a href="{prefix}#about">About the author</a>
     </footer>
     <div class="toast" id="toast" role="status" hidden></div>
@@ -293,7 +326,7 @@ def excerpt(b):
         return ""
     x = b["excerpt"]
     return (f'\n          <blockquote class="excerpt"><p>{e(x["text"])}</p>'
-            f'<footer>From the {e(x["from"].lower())}</footer></blockquote>')
+            f'<footer>From page {x["page"]}</footer></blockquote>')
 
 
 def related(b):
@@ -315,7 +348,7 @@ def essay_page(b):
         "datePublished": str(b.get("year", "")),
         "description": b["description"],
         "about": b["topics"],
-        "isPartOf": {"@type": "CreativeWorkSeries", "name": TITLE, "editor": {"@type": "Person", "name": CURATOR}},
+        "isPartOf": {"@type": "CreativeWorkSeries", "name": TITLE, "author": {"@type": "Person", "name": AUTHOR}},
         "image": absolute(b["image"]),
         "encoding": {"@type": "MediaObject", "encodingFormat": "application/pdf", "contentUrl": absolute(b["file"])},
     }

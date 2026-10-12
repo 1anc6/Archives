@@ -77,7 +77,12 @@
     <span><b>${topics}</b>subject areas</span>
     <span><b>${totalPages}</b>pages</span>
     <span><b>~${hours} h</b>reading time</span>`;
-  $("contentsSum").textContent = `${books.length} essays · ${totalPages} pages · about ${hours} hours of reading`;
+  const contentsTotals = `${books.length} essays · ${totalPages} pages · about ${hours} hours of reading`;
+  function renderContentsSum() {
+    const all = progress.all();
+    const done = books.filter((b) => isDone(all[b.id])).length;
+    $("contentsSum").textContent = done ? `${done} of ${books.length} read · ${contentsTotals}` : contentsTotals;
+  }
 
   $("contributors").innerHTML = "<li><strong>Lanchenba Mutum</strong></li>";
 
@@ -130,17 +135,20 @@
 
   /* ---------- Featured essay ---------- */
   function renderFeature() {
-    const b = books.find((x) => x.excerpt) || books[0];
+    // A different essay each day (by the visitor's local date), the same all day.
+    const featurable = books.filter((x) => x.excerpt);
+    const day = Math.floor((Date.now() - new Date().getTimezoneOffset() * 6e4) / 864e5);
+    const b = featurable.length ? featurable[day % featurable.length] : books[0];
     const p = progress.get(b.id);
     const resume = p && !isDone(p);
     const quote = b.excerpt
-      ? `<blockquote class="excerpt"><p>${esc(b.excerpt.text)}</p><footer>From the ${esc(b.excerpt.from.toLowerCase())}</footer></blockquote>`
+      ? `<blockquote class="excerpt"><p>${esc(b.excerpt.text)}</p><footer>From page ${b.excerpt.page}</footer></blockquote>`
       : `<p class="excerpt-plain">${esc(b.description)}</p>`;
     $("feature").innerHTML = `
       <div class="feature-copy">
         <h2 class="feature-title" id="featureTitle"><a href="essays/${b.id}/">${esc(b.shortTitle)}</a></h2>
         ${b.title !== b.shortTitle ? `<p class="feature-sub">${esc(b.title)}</p>` : ""}
-        <p class="feature-meta"><span>No. ${pad(b.num)}</span><span>${esc(b.category)}</span><span>${b.pages} pages · ~${b.pages * MIN_PER_PAGE} min</span></p>
+        <p class="feature-meta"><span class="feature-today">Today's essay</span><span>No. ${pad(b.num)}</span><span>${esc(b.category)}</span><span>${b.pages} pages · ~${b.pages * MIN_PER_PAGE} min</span></p>
         ${quote}
         <div class="feature-actions">
           <a class="btn primary" data-read href="${readerURL(b, resume ? p.page : null)}">${resume ? `Continue from page ${p.page}` : "Read the essay"}<svg class="arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a>
@@ -214,8 +222,8 @@
     const on = saved.has(b.id);
     const st = status(b, p);
     return `
-      <li class="entry${p ? " is-started" : ""}" data-id="${b.id}" style="--i:${i}">
-        <span class="entry-num">${pad(b.num)}</span>
+      <li class="entry${p ? " is-started" : ""}${isDone(p) ? " is-done" : ""}" data-id="${b.id}" style="--i:${i}">
+        <span class="entry-num">${isDone(p) ? `<svg class="tick" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>` : pad(b.num)}</span>
         <span class="entry-glyph" aria-hidden="true">${notation(b.glyph)}</span>
         <div class="entry-body">
           <h3 class="entry-title"><a href="essays/${b.id}/">${esc(b.shortTitle)}</a><span class="entry-leader" aria-hidden="true"></span><span class="entry-pages">${b.pages} pp.</span></h3>
@@ -227,6 +235,8 @@
   }
   function renderIndex() {
     $("indexList").innerHTML = books.map(entryHTML).join("");
+    renderContentsSum();
+    filterIndex();
     $("indexList").querySelectorAll(".entry").forEach((el) => {
       inkify(el.querySelector(".entry-glyph"));
       reveal.observe(el);
@@ -247,6 +257,37 @@
     void btn.offsetWidth;
     btn.classList.add("pop");
     toast(now ? "Added to your reading list" : "Removed from your reading list");
+  });
+
+  /* ---------- Search the contents ---------- */
+  function filterIndex() {
+    const q = $("indexSearch").value.trim().toLowerCase();
+    let shown = 0;
+    $("indexList").querySelectorAll(".entry").forEach((el) => {
+      const b = byId[el.dataset.id];
+      const hay = `${b.title} ${b.description} ${b.category} ${(b.topics || []).join(" ")}`.toLowerCase();
+      const match = !q || q.split(/\s+/).every((t) => hay.includes(t));
+      el.hidden = !match;
+      if (match) {
+        shown++;
+        if (q) el.classList.add("is-seen"); // skip the scroll-in fade while searching
+      }
+    });
+    $("indexEmpty").hidden = shown > 0;
+    if (!shown) $("indexEmptyQuery").textContent = $("indexSearch").value.trim();
+  }
+  $("indexSearch").addEventListener("input", filterIndex);
+  $("indexEmpty").querySelector("button").addEventListener("click", () => {
+    $("indexSearch").value = "";
+    filterIndex();
+    $("indexSearch").focus();
+  });
+  // "/" jumps to the search box, as on many sites.
+  document.addEventListener("keydown", (e) => {
+    if (e.key !== "/" || screen !== "essays" || e.ctrlKey || e.metaKey) return;
+    if (/^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement?.tagName)) return;
+    e.preventDefault();
+    $("indexSearch").focus();
   });
 
   /* ---------- Resume dock ---------- */

@@ -33,9 +33,10 @@
     $("title").textContent = "Not found";
   }
 
-  let book;
+  let book, allBooks;
   try {
-    book = (await loadBooks()).find((b) => b.id === id);
+    allBooks = await loadBooks();
+    book = allBooks.find((b) => b.id === id);
   } catch {
     return fail("Couldn't load the book list.");
   }
@@ -135,6 +136,7 @@
   }
   layout();
   pagesEl.removeAttribute("aria-busy");
+  endCard();
 
   // Lazily render pages near the viewport.
   const visible = new Set();
@@ -151,6 +153,50 @@
     { rootMargin: "800px 0px" }
   );
   pages.forEach((p) => io.observe(p.el));
+
+  /* ---------- "You made it!" card after the last page ---------- */
+  function endCard() {
+    const EMAIL = "lanchenba613500@gmail.com";
+    const i = allBooks.findIndex((b) => b.id === book.id);
+    const next = allBooks[(i + 1) % allBooks.length];
+    const reactions = [["🤯", "Broke my brain"], ["🙂", "Loved it"], ["😴", "Bit much for me"]];
+    const card = document.createElement("section");
+    card.className = "end-card";
+    card.setAttribute("aria-labelledby", "endTitle");
+    card.innerHTML = `
+      <p class="end-qed" aria-hidden="true">∎</p>
+      <h2 id="endTitle">You made it to the end!</h2>
+      <p class="end-lead">Thanks for reading <i>${escapeHTML(book.shortTitle || book.title)}</i>. So, how was it?</p>
+      <div class="end-reactions">${reactions.map(([e, label]) => `<button type="button" data-reaction="${label}"><span aria-hidden="true">${e}</span>${label}</button>`).join("")}</div>
+      <p class="end-sent" role="status" hidden>Your email app should be open with your reaction. Just press send, and thank you!</p>
+      <div class="end-next">
+        <p class="end-next-label">Up next</p>
+        <a class="end-next-title" href="essays/${next.id}/">${escapeHTML(next.shortTitle)}</a>
+        <p class="end-next-meta">${next.pages} pages · ~${next.pages * 2} min · ${escapeHTML(next.category)}</p>
+        <div class="end-actions">
+          <a class="btn primary" href="reader.html?id=${encodeURIComponent(next.id)}">Read it next<svg class="arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a>
+          <a class="btn ghost" href="./">All essays</a>
+        </div>
+      </div>`;
+    pagesEl.appendChild(card);
+    card.querySelector(".end-reactions").addEventListener("click", (e) => {
+      const btn = e.target.closest("[data-reaction]");
+      if (!btn) return;
+      const body = `Hi Lance,\n\nI just finished "${book.title}".\n\nMy verdict: ${btn.querySelector("span").textContent} ${btn.dataset.reaction}\n\n`;
+      location.href = `mailto:${EMAIL}?subject=${encodeURIComponent(`Reaction: ${book.shortTitle || book.title}`)}&body=${encodeURIComponent(body)}`;
+      card.querySelector(".end-sent").hidden = false;
+    });
+    // Reaching the card means the essay is finished, even if the last page is short.
+    if ("IntersectionObserver" in window) {
+      const seen = new IntersectionObserver((entries) => {
+        if (entries.some((x) => x.isIntersecting)) {
+          progress.set(book.id, total, total);
+          seen.disconnect();
+        }
+      }, { threshold: 0.3 });
+      seen.observe(card);
+    }
+  }
 
   /* ---------- Current page, progress & time left ---------- */
   let current = 1;

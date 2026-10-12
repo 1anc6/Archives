@@ -1113,3 +1113,20 @@ body.no-scroll { overflow: hidden; }
   .author-links a svg { width: 20px; height: 20px; }
 }
 .about-card .contributors { padding: 0; }
+
+/* ============ Contents: search, progress ticks, today's essay ============ */
+.contents-head { align-items: flex-end; }
+.contents-head .contents-sum { margin-top: 6px; }
+.contents-search { min-width: 260px; }
+.contents-search kbd { padding: 1px 7px; border: 1px solid var(--line); border-radius: 6px; font: 12px var(--mono); color: var(--muted); }
+.contents-search:focus-within kbd { display: none; }
+.index-empty { padding: 28px 0 8px; font-size: 17px; color: var(--muted); }
+.index-empty .link { color: var(--ink); }
+.entry[hidden] { display: none; }
+.entry-num .tick { width: 18px; height: 18px; color: var(--hi); stroke-width: 2.2; }
+.feature-today { color: var(--hi); }
+@media (hover: none) { .contents-search kbd { display: none; } }
+@media (max-width: 650px) {
+  .contents-head { flex-direction: column; align-items: stretch; }
+  .contents-search { min-width: 0; }
+}

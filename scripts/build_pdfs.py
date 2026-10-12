@@ -25,6 +25,21 @@ BOOKS_JSON = PUBLIC / "data" / "books.json"
 pymupdf.TOOLS.mupdf_display_errors(False)
 
 
+def embed_missing_fonts(doc, name):
+    """Some PDFs name a font (e.g. Times New Roman) without including it, so each
+    browser substitutes its own and the text comes out garbled or misaligned.
+    Re-writing the document through MuPDF embeds the fonts it draws with; the
+    text stays real, selectable text."""
+    missing = {f[3] for page in doc for f in page.get_fonts() if f[1] == "n/a"}
+    if not missing:
+        return doc
+    meta = doc.metadata
+    fixed = pymupdf.open("pdf", doc.convert_to_pdf())
+    fixed.set_metadata(meta)
+    print(f"  {name}: embedded fonts {sorted(missing)}")
+    return fixed
+
+
 def main(only):
     books = json.loads(BOOKS_JSON.read_text(encoding="utf-8"))
     ORIGINALS.mkdir(exist_ok=True)
@@ -38,6 +53,7 @@ def main(only):
             shutil.copy2(target, original)  # first run: keep the untouched PDF
 
         doc = pymupdf.open(original)
+        doc = embed_missing_fonts(doc, book["id"])
         # Downsample big images to 150 dpi and re-encode them as JPEG.
         doc.rewrite_images(dpi_threshold=200, dpi_target=150, quality=78)
         # Keep only the characters each embedded font actually uses

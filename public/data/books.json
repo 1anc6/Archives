@@ -15,7 +15,7 @@
     "description": "An examination of Zeno's paradox, convergent series and limits through the 'Infinity' technique of Gojo Satoru in Jujutsu Kaisen.",
     "excerpt": {
       "text": "Between any attacker and Gojo, there is always a distance. That distance can be halved, then halved again, then again, forever. No matter how fast the attack travels, it must first cross half the remaining distance, then half of that, then half of that, an infinite sequence of steps that, Gojo claims, can never be completed.",
-      "from": "Introduction"
+      "page": 2
     },
     "image": "images/gojo-infinity.jpg",
     "topics": [
@@ -79,6 +79,10 @@
       "#5a3a28"
     ],
     "description": "An introduction to Cantor's discovery that infinite sets can differ in size, and to the distinction between countable and uncountable infinity.",
+    "excerpt": {
+      "text": "Numbers, our whole world is dominated by numbers, all of which are finite – even if some are simply too large to comprehend. However, there is one “number” which defies all others: infinity.",
+      "page": 1
+    },
     "image": "images/tale-of-two-infinities.jpg",
     "topics": [
       "Infinity as a concept rather than a number",
@@ -112,7 +116,7 @@
     "imageAlt": "A pink grand hotel façade beneath the title 'Hilbert's Hotel Paradox' and an infinity symbol.",
     "added": "2026-10-12",
     "placeholder": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA0JCgsKCA0LCgsODg0PEyAVExISEyccHhcgLikxMC4pLSwzOko+MzZGNywtQFdBRkxOUlNSMj5aYVpQYEpRUk//2wBDAQ4ODhMREyYVFSZPNS01T09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0//wAARCAARABgDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwC4k+XAIAq6GBUNngU3ADf6r8cVKJcHGB+VTzHdKDK8lwoyAQaKk3Rl+UFFO4uUst0quf8AW0UVmi2V5f8AW/jRRRW/Qwj1P//Z",
-    "permission": true
+    "permission": false
   },
   {
     "id": "a-paradox-that-isnt",
@@ -128,6 +132,10 @@
       "#9c4a3c"
     ],
     "description": "A careful demonstration that 0.999… is exactly equal to 1, with an explanation of why the result so often surprises students.",
+    "excerpt": {
+      "text": "This shows that the infinite sum represented by 0.999… is exactly equal to 1. It does not merely approach 1—it reaches it in a precise mathematical sense.",
+      "page": 2
+    },
     "image": "images/a-paradox-that-isnt.jpg",
     "topics": [
       "Understanding 0.999…",
@@ -182,7 +190,7 @@
     "imageAlt": "Four bars labelled 0.9, 0.99, 0.999 and 0.9999, each closer to a dashed line marked 1.",
     "added": "2026-10-12",
     "placeholder": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA0JCgsKCA0LCgsODg0PEyAVExISEyccHhcgLikxMC4pLSwzOko+MzZGNywtQFdBRkxOUlNSMj5aYVpQYEpRUk//2wBDAQ4ODhMREyYVFSZPNS01T09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0//wAARCAARABgDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDjY7Z5F3L0qU2j44WrVje20UASQHd9Ks/2jZf3W/KuZynfRHWkjFlheI/MKKu6jdW88aiEHIPcUVpFtrUlmeOtOooqgGnrRRRQB//Z",
-    "permission": true,
+    "permission": false,
     "startHere": {
       "order": 1,
       "ask": "Got five minutes?"
@@ -202,6 +210,10 @@
       "#3e6b5f"
     ],
     "description": "An account of Hilbert's programme and Gödel's incompleteness theorems, which showed that not every mathematical truth can be proved.",
+    "excerpt": {
+      "text": "Let me break a rule, mathematics can't prove everything…",
+      "page": 1
+    },
     "image": "images/proof-for-the-unprovable.jpg",
     "topics": [
       "Hilbert's programme and the Königsberg conference of 1930",
@@ -240,7 +252,7 @@
     "imageAlt": "Cartoon of two knights holding signs reading 'True!' and 'False!' around the words 'This statement is false.'",
     "added": "2026-10-12",
     "placeholder": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA0JCgsKCA0LCgsODg0PEyAVExISEyccHhcgLikxMC4pLSwzOko+MzZGNywtQFdBRkxOUlNSMj5aYVpQYEpRUk//2wBDAQ4ODhMREyYVFSZPNS01T09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0//wAARCAARABgDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDuIzhck7vpSNcKpwVNRWqtEcuM1bIQ8lRXMzYhlkwoI4zRTbhd+NoxiimhEn8NOHSiikMRuhooopoR/9k=",
-    "permission": true,
+    "permission": false,
     "startHere": {
       "order": 3,
       "ask": "Ready to melt your brain?"
@@ -260,6 +272,10 @@
       "#7a5290"
     ],
     "description": "An exploration of the number 73, from a well-known television reference to the proof by Pomerance and Spicer of its unique properties.",
+    "excerpt": {
+      "text": "A journey through the improbable mathematics of 73. From a sitcom gag to a rigorous proof by Pomerance and Spicer, this essay explores why a single prime number stands unique in the infinite sea of integers, explained for curious minds.",
+      "page": 1
+    },
     "image": "images/glitch-in-the-fourth-wall.jpg",
     "topics": [
       "Sheldon primes and the number 73",
@@ -305,7 +321,7 @@
     "imageAlt": "An Ulam spiral of prime numbers with the prime 73 highlighted in gold.",
     "added": "2026-10-12",
     "placeholder": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA0JCgsKCA0LCgsODg0PEyAVExISEyccHhcgLikxMC4pLSwzOko+MzZGNywtQFdBRkxOUlNSMj5aYVpQYEpRUk//2wBDAQ4ODhMREyYVFSZPNS01T09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0//wAARCAARABgDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDhwKUgimins27GBjFaljDRR1ooAKU0UUAIaKKKAP/Z",
-    "permission": true
+    "permission": false
   },
   {
     "id": "secret-santa",
@@ -321,6 +337,10 @@
       "#b0453a"
     ],
     "description": "An analysis of the probability that a participant draws their own name in Secret Santa, introducing derangements and the unexpected appearance of e.",
+    "excerpt": {
+      "text": "Yet, anyone who’s played the game before knows only too well how much of a hassle picking names can be, going to the extent of crumbling the holiday cheer. In this essay, we’ll explore the mathematics behind why the way we usually play this game is the stuff of nightmares.",
+      "page": 1
+    },
     "image": "images/secret-santa.jpg",
     "topics": [
       "Permutations of a gift exchange",
@@ -358,7 +378,7 @@
     "imageAlt": "Christmas fir branches with gold baubles, red berries and a pine cone.",
     "added": "2026-10-12",
     "placeholder": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA0JCgsKCA0LCgsODg0PEyAVExISEyccHhcgLikxMC4pLSwzOko+MzZGNywtQFdBRkxOUlNSMj5aYVpQYEpRUk//2wBDAQ4ODhMREyYVFSZPNS01T09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0//wAARCAARABgDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwCK4gijt2kQl5d21iO9P0i1YXZE9v5m4fLkV2UHh20XTngTLbznceuan0rT5LYGOdVYD7rd6xVMHbm0OH1Lw9KbgGDjcMlfSiu4vtOknPlxfKp6t3op8hDWuhqQ/wCrFPoorRbFhRRRTA//2Q==",
-    "permission": true,
+    "permission": false,
     "startHere": {
       "order": 2,
       "ask": "Want something fun?"
@@ -378,6 +398,10 @@
       "#2f6280"
     ],
     "description": "A study of why leading AI models answer a simple conditional-probability question incorrectly, and what this reveals about their reasoning.",
+    "excerpt": {
+      "text": "Nowadays, AI is considered to be a near-flawless calculator capable of solving any question. Yet, a simple probability question can highlight a surprising weakness.",
+      "page": 2
+    },
     "image": "images/ai-is-unintelligent.jpg",
     "topics": [
       "A conditional-probability problem",
@@ -424,7 +448,7 @@
     "imageAlt": "A probability tree for three coin tosses with the path heads-heads-heads highlighted.",
     "added": "2026-10-12",
     "placeholder": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA0JCgsKCA0LCgsODg0PEyAVExISEyccHhcgLikxMC4pLSwzOko+MzZGNywtQFdBRkxOUlNSMj5aYVpQYEpRUk//2wBDAQ4ODhMREyYVFSZPNS01T09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0//wAARCAARABgDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDjR1qTcA/y8j3qPPrSgDdxzW1jAkRyGYjjIopqdTRTsguMoFFFAD4+p+lFFFAj/9k=",
-    "permission": true
+    "permission": false
   },
   {
     "id": "prisoners-dilemma",
@@ -440,6 +464,10 @@
       "#5e5a52"
     ],
     "description": "An introduction to game theory through the Prisoner's Dilemma, examining rational choice when both cooperation and betrayal are possible.",
+    "excerpt": {
+      "text": "In Game Theory, one of the most important thought experiments is the Prisoner’s Dilemma. It entails two rational agents who have been arrested and are being interrogated separately (i.e., communication is not allowed between them).",
+      "page": 2
+    },
     "image": "images/prisoners-dilemma.jpg",
     "topics": [
       "The probability of each outcome",
@@ -486,7 +514,7 @@
     "imageAlt": "The Prisoner's Dilemma payoff matrix, with the mutual-betrayal outcome highlighted as the Nash equilibrium.",
     "added": "2026-10-12",
     "placeholder": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA0JCgsKCA0LCgsODg0PEyAVExISEyccHhcgLikxMC4pLSwzOko+MzZGNywtQFdBRkxOUlNSMj5aYVpQYEpRUk//2wBDAQ4ODhMREyYVFSZPNS01T09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0//wAARCAARABgDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDjo1DOAehNXJ7aNUBXrVFfvCtXSmha+jE7Ap33VEnZXKSu7GbKgXGKK3PEa2QSP7Lsz320UoS5lcclZ2Ofp6feFFFUSLL2ooooQH//2Q==",
-    "permission": true
+    "permission": false
   },
   {
     "id": "lego-maths",
@@ -502,6 +530,10 @@
       "#d0803a"
     ],
     "description": "A combinatorial investigation into the number of ways in which a small set of LEGO bricks can be combined.",
+    "excerpt": {
+      "text": "LEGO. It's such a simple childhood toy that I have played with from a very young age, and I'm sure most of the people reading this would have as well. However, most don't realise how much maths can be behind such a simple plastic block.",
+      "page": 1
+    },
     "image": "images/lego-maths.jpg",
     "topics": [
       "The rapid escalation of combinations",
@@ -538,7 +570,7 @@
     "imageAlt": "Rows of red two-by-four LEGO bricks alongside the number of possible combinations for one to six bricks.",
     "added": "2026-10-12",
     "placeholder": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA0JCgsKCA0LCgsODg0PEyAVExISEyccHhcgLikxMC4pLSwzOko+MzZGNywtQFdBRkxOUlNSMj5aYVpQYEpRUk//2wBDAQ4ODhMREyYVFSZPNS01T09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0//wAARCAARABgDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDvLC4kurVZXTYW6DNEkkyHkrjtmqjPcQQLDaQEKowCaoG31GWZWlDEZqXKx2Ro31bsdBEWK5cjPtRVSD7RHJgqSpoqjGxfooopgJRRRQB//9k=",
-    "permission": true
+    "permission": false
   },
   {
     "id": "planet-of-fractal-geometry",
@@ -554,6 +586,10 @@
       "#2f7a7a"
     ],
     "description": "An illustrated journey through the branches of geometry, culminating in fractals: self-similar shapes with non-integer dimensions.",
+    "excerpt": {
+      "text": "Welcome to the solar system of geometry created by our father of geometry, known as Euclid. In the vast universe of mathematics, the solar system of geometry stands as the most notable and elegant solar system.",
+      "page": 1
+    },
     "image": "images/planet-of-fractal-geometry.jpg",
     "topics": [
       "The branches of geometry",
@@ -596,7 +632,7 @@
     "imageAlt": "Illustrated solar system whose planets are named after branches of geometry.",
     "added": "2026-10-12",
     "placeholder": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA0JCgsKCA0LCgsODg0PEyAVExISEyccHhcgLikxMC4pLSwzOko+MzZGNywtQFdBRkxOUlNSMj5aYVpQYEpRUk//2wBDAQ4ODhMREyYVFSZPNS01T09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0//wAARCAARABgDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDnNUjaDVHR4wCp+6KfdGO6fc0fk7Vxj1qS/uPtV6bw4y5zj0oS2lv2bDAEDPNejRmvZpvdGrw71bM+ARKzeapI7UVdgYRRPbOq/McFj2orCrBTldtlQqOkuXlX3Fc/6tav6d0P0ooroWzOrp8ilJ99qKKKmW5Ej//Z",
-    "permission": true
+    "permission": false
   },
   {
     "id": "patterns-in-nature",
@@ -612,6 +648,10 @@
       "#62783f"
     ],
     "description": "An examination of Alan Turing's work on morphogenesis, showing how the spots and stripes of animal markings arise from reaction–diffusion between activators and inhibitors.",
+    "excerpt": {
+      "text": "Many people associate Alan Turing with the Enigma machine, but in this essay, I shall be exploring one of his later works where he discovered the connection between nature and mathematics.",
+      "page": 1
+    },
     "image": "images/patterns-in-nature.jpg",
     "topics": [
       "Turing's theory of morphogenesis",
@@ -641,7 +681,7 @@
     "imageAlt": "A Turing reaction–diffusion pattern of golden spots on a dark green background.",
     "added": "2026-10-12",
     "placeholder": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA0JCgsKCA0LCgsODg0PEyAVExISEyccHhcgLikxMC4pLSwzOko+MzZGNywtQFdBRkxOUlNSMj5aYVpQYEpRUk//2wBDAQ4ODhMREyYVFSZPNS01T09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0//wAARCAARABgDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDGAxxRigEHoaCcCuMAAwaKAwPQ0UwIbb7tSn7tFFD3ERQ/6xqKKKGCP//Z",
-    "permission": true
+    "permission": false
   },
   {
     "id": "absolute-cinema-of-math",
@@ -657,6 +697,10 @@
       "#8a3a62"
     ],
     "description": "An exploration of the mathematics underlying music, from the physics of vibrating strings to harmonics and the equation of a wave.",
+    "excerpt": {
+      "text": "Hearing the heartbreaking melody gives you goosebumps, you might wonder why? Well, math is the answer.",
+      "page": 1
+    },
     "image": "images/absolute-cinema-of-math.jpg",
     "topics": [
       "Foundations of wave theory",
@@ -699,6 +743,6 @@
     "imageAlt": "Several harmonic sine waves above the combined waveform they produce.",
     "added": "2026-10-12",
     "placeholder": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA0JCgsKCA0LCgsODg0PEyAVExISEyccHhcgLikxMC4pLSwzOko+MzZGNywtQFdBRkxOUlNSMj5aYVpQYEpRUk//2wBDAQ4ODhMREyYVFSZPNS01T09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0//wAARCAARABgDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDiCPejbx1pM+tHbimdQbR60UDBPNFACUUUUwAdaKKKQH//2Q==",
-    "permission": true
+    "permission": false
   }
 ]

@@ -5,20 +5,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#eee9e3">
   <title>Lance's Unorthodox Essay Papers</title>
-  <meta name="description" content="A collection of mathematical essays curated by Lanchenba Mutum, available to read online or download as PDF.">
+  <meta name="description" content="A collection of mathematical essays by Lanchenba Mutum, available to read online or download as PDF.">
   <!-- og:start -->
+  <link rel="canonical" href="https://theopenarchive.onrender.com/">
+  <meta property="og:url" content="https://theopenarchive.onrender.com/">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Lance&#x27;s Unorthodox Essay Papers">
   <meta property="og:title" content="Lance&#x27;s Unorthodox Essay Papers">
   <meta property="og:description" content="A collection of mathematical essays by Lanchenba Mutum, available to read online or download as PDF.">
-  <meta property="og:image" content="/og/home.jpg">
+  <meta property="og:image" content="https://theopenarchive.onrender.com/og/home.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="Lance&#x27;s Unorthodox Essay Papers">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Lance&#x27;s Unorthodox Essay Papers">
   <meta name="twitter:description" content="A collection of mathematical essays by Lanchenba Mutum, available to read online or download as PDF.">
-  <meta name="twitter:image" content="/og/home.jpg">
+  <meta name="twitter:image" content="https://theopenarchive.onrender.com/og/home.jpg">
   <!-- og:end -->
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%23544c40'/><path d='M8 10c3-1 6-1 8 1 2-2 5-2 8-1v13c-3-1-6-1-8 1-2-2-5-2-8-1z' fill='none' stroke='%23f7f3ed' stroke-width='1.6'/></svg>">
   <script>
@@ -31,7 +33,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=STIX+Two+Text:ital@0;1&family=Noto+Sans+Math&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css?v=19">
+  <link rel="stylesheet" href="css/styles.css?v=21">
 </head>
 <body>
   <div class="stage">
@@ -101,10 +103,18 @@
 
           <section class="contents" aria-labelledby="contentsTitle">
             <div class="contents-head">
-              <h2 id="contentsTitle">Contents</h2>
-              <p class="contents-sum" id="contentsSum"></p>
+              <div>
+                <h2 id="contentsTitle">Contents</h2>
+                <p class="contents-sum" id="contentsSum"></p>
+              </div>
+              <label class="mini-search contents-search">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+                <input id="indexSearch" type="search" placeholder="Search essays" aria-label="Search essays" aria-controls="indexList" autocomplete="off">
+                <kbd aria-hidden="true">/</kbd>
+              </label>
             </div>
             <ol class="index-list" id="indexList"></ol>
+            <p class="index-empty" id="indexEmpty" role="status" hidden>No essays match “<span id="indexEmptyQuery"></span>”. <button class="link" type="button">Clear the search</button></p>
           </section>
 
           <!-- New-essay alerts: opens the visitor's email app with a request to be notified -->
@@ -124,7 +134,7 @@
           </section>
 
           <div class="editorial-note">
-            <span>Essays by twelve writers, published with their permission.</span>
+            <span>All twelve essays are written by Lanchenba Mutum.</span>
             <button class="link" data-go="about">Image credits</button>
           </div>
         </main>
@@ -210,7 +220,7 @@
     </div>
 
     <footer class="site-footer">
-      <span>© 2026 Lance's Unorthodox Essay Papers · essays © their author</span>
+      <span>© 2026 Lanchenba Mutum · Lance's Unorthodox Essay Papers</span>
       <button class="link" data-go="about">About the author</button>
     </footer>
 
@@ -226,11 +236,11 @@
     <div class="toast" id="toast" role="status" hidden></div>
   </div>
 
-  <script src="js/common.js?v=14"></script>
-  <script src="js/sfx.js?v=14"></script>
-  <script src="js/site.js?v=14"></script>
-  <script src="js/app.js?v=18"></script>
-  <script src="js/request.js?v=19"></script>
-  <script src="js/music.js?v=14"></script>
+  <script src="js/common.js?v=21"></script>
+  <script src="js/sfx.js?v=21"></script>
+  <script src="js/site.js?v=21"></script>
+  <script src="js/app.js?v=21"></script>
+  <script src="js/request.js?v=21"></script>
+  <script src="js/music.js?v=21"></script>
 </body>
 </html>

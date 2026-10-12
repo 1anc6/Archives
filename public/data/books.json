@@ -13,6 +13,10 @@
       "#3b4f7a"
     ],
     "description": "An examination of Zeno's paradox, convergent series and limits through the 'Infinity' technique of Gojo Satoru in Jujutsu Kaisen.",
+    "excerpt": {
+      "text": "Between any attacker and Gojo, there is always a distance. That distance can be halved, then halved again, then again, forever. No matter how fast the attack travels, it must first cross half the remaining distance, then half of that, then half of that, an infinite sequence of steps that, Gojo claims, can never be completed.",
+      "from": "Introduction"
+    },
     "image": "images/gojo-infinity.jpg",
     "topics": [
       "Zeno's paradoxes",

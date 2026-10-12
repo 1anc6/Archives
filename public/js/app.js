@@ -11,7 +11,7 @@
   try {
     books = await loadBooks();
   } catch (err) {
-    $("track").innerHTML = `<p class="empty">The essays could not be loaded. Please refresh the page.</p>`;
+    $("indexList").outerHTML = `<p class="empty">The essays could not be loaded. Check your connection and refresh the page.</p>`;
     console.error(err);
     return;
   }
@@ -24,7 +24,7 @@
     setTimeout(() => (location.href = url), sfx.muted ? 0 : 230);
   }
   document.addEventListener("click", (e) => {
-    const a = e.target.closest("a.podium-card, #dockBtn[href]");
+    const a = e.target.closest("a.podium-card, #dockBtn[href], a[data-read]");
     if (!a || e.metaKey || e.ctrlKey || e.shiftKey) return;
     e.preventDefault();
     goTo(a.href);
@@ -39,9 +39,6 @@
     const style = (b.placeholder ? `background-image:url(${b.placeholder})` : "") + (named ? `;view-transition-name:ph-${b.id}` : "");
     return `<span class="photo" style="${style}"><img src="${esc(small)}" srcset="${esc(small)} 640w, ${esc(b.image)} 1200w" sizes="(max-width: 650px) 80vw, 420px" alt="${esc(b.imageAlt || "")}" loading="${eager ? "eager" : "lazy"}" decoding="async" onload="this.classList.add('loaded')"></span>`;
   };
-  // "New" for essays added in the last 45 days.
-  const isNew = (b) => b.added && Date.now() - new Date(b.added).getTime() < 45 * 864e5;
-
   /* ---------- Screens ---------- */
   const ORDER = ["essays", "room", "about"];
   let screen = "essays";
@@ -71,182 +68,103 @@
   });
   window.addEventListener("popstate", () => go(location.hash.slice(1) || "essays", false));
 
-  /* ---------- Hero numbers ---------- */
+  /* ---------- Totals ---------- */
   const topics = new Set(books.map((b) => b.category)).size;
   const totalPages = books.reduce((n, b) => n + b.pages, 0);
   const hours = Math.round((totalPages * MIN_PER_PAGE) / 60);
-  $("heroNumbers").innerHTML = `
-    <span><b>${pad(books.length)}</b><small>essays</small></span>
-    <span><b>${pad(topics)}</b><small>subject areas</small></span>
-    <span><b>${totalPages}</b><small>pages</small></span>`;
   $("aboutStats").innerHTML = `
     <span><b>${books.length}</b>essays</span>
     <span><b>${topics}</b>subject areas</span>
     <span><b>${totalPages}</b>pages</span>
     <span><b>~${hours} h</b>reading time</span>`;
+  $("contentsSum").textContent = `${books.length} essays · ${totalPages} pages · about ${hours} hours of reading`;
 
   $("contributors").innerHTML = "<li><strong>Lanchenba Mutum</strong></li>";
 
-  /* ---------- Carousel ---------- */
-  const track = $("track");
-  let selected = null;
-  let homeTopic = "All";
-  let shown = books;
+  // Bookmark icon for the reading list; filled when the essay is saved.
+  const BOOKMARK = `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4h10v16l-5-3.6L7 20z"/></svg>`;
+  const status = (b, p) => (isDone(p) ? "Completed" : p ? `Page ${p.page} of ${p.total}` : "");
 
-  function cardHTML(b, i) {
+  // Notation for an essay's symbol: superscript/subscript characters become
+  // <sup>/<sub> so the math font draws them instead of a system fallback.
+  const SUP = "⁰¹²³⁴⁵⁶⁷⁸⁹ⁿ⁺⁻", SUB = "₀₁₂₃₄₅₆₇₈₉";
+  const PLAIN = "0123456789n+-";
+  const notation = (g) =>
+    esc(g)
+      .replace(/[⁰¹²³⁴⁵⁶⁷⁸⁹ⁿ⁺⁻]+/g, (m) => `<sup>${[...m].map((c) => PLAIN[SUP.indexOf(c)]).join("")}</sup>`)
+      .replace(/[₀₁₂₃₄₅₆₇₈₉]+/g, (m) => `<sub>${[...m].map((c) => PLAIN[SUB.indexOf(c)]).join("")}</sub>`);
+
+  /* ---------- Featured essay ---------- */
+  function renderFeature() {
+    const b = books.find((x) => x.excerpt) || books[0];
     const p = progress.get(b.id);
-    const pct = p ? Math.round((p.page / p.total) * 100) : 0;
+    const resume = p && !isDone(p);
+    const quote = b.excerpt
+      ? `<blockquote class="excerpt"><p>${esc(b.excerpt.text)}</p><footer>From the ${esc(b.excerpt.from.toLowerCase())}</footer></blockquote>`
+      : `<p class="excerpt-plain">${esc(b.description)}</p>`;
+    $("feature").innerHTML = `
+      <div class="feature-copy">
+        <h2 class="feature-title" id="featureTitle"><a href="essays/${b.id}/">${esc(b.shortTitle)}</a></h2>
+        ${b.title !== b.shortTitle ? `<p class="feature-sub">${esc(b.title)}</p>` : ""}
+        <p class="feature-meta"><span>No. ${pad(b.num)}</span><span>${esc(b.category)}</span><span>${b.pages} pages · ~${b.pages * MIN_PER_PAGE} min</span></p>
+        ${quote}
+        <div class="feature-actions">
+          <a class="btn primary" data-read href="${readerURL(b, resume ? p.page : null)}">${resume ? `Continue from page ${p.page}` : "Read the essay"}<svg class="arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a>
+          <a class="btn ghost" href="essays/${b.id}/">About this essay</a>
+        </div>
+      </div>
+      <figure class="feature-figure">
+        <span class="feature-glyph" aria-hidden="true">${notation(b.glyph)}</span>
+        ${photo(b, true, true)}
+      </figure>`;
+  }
+
+  /* ---------- Contents ---------- */
+  function entryHTML(b, i) {
+    const p = progress.get(b.id);
     const on = saved.has(b.id);
+    const st = status(b, p);
     return `
-      <div class="card" role="button" tabindex="0" aria-pressed="false" data-id="${b.id}" style="--i:${i}" aria-label="${esc(b.title)}">
-        ${photo(b, i < 3, true)}
-        ${isNew(b) ? `<span class="new-badge">NEW</span>` : ""}
-        <button class="save-mark${on ? " on" : ""}" aria-label="${on ? "Remove from" : "Add to"} reading list" title="${on ? "In your reading list" : "Add to reading list"}">${on ? "✓" : "+"}</button>
-        <span class="copy">
-          <span class="meta"><span>${esc(b.category)}</span><span class="num">${pad(b.num)}</span></span>
-          <span class="name">${esc(b.shortTitle)}</span>
-          <span class="by">by ${esc(b.author)}</span>
-          <span class="desc">${esc(b.description)}</span>
-          ${p ? `<span class="progress-line" title="${pct}% read"><i style="width:${pct}%"></i></span>` : ""}
-          <a class="action" href="essays/${b.id}/">${isDone(p) ? "Completed · view essay" : p ? `Page ${p.page} of ${p.total} · view essay` : "View essay"}<span aria-hidden="true">↗</span></a>
-        </span>
-      </div>`;
+      <li class="entry${p ? " is-started" : ""}" data-id="${b.id}" style="--i:${i}">
+        <span class="entry-num">${pad(b.num)}</span>
+        <span class="entry-glyph" aria-hidden="true">${notation(b.glyph)}</span>
+        <div class="entry-body">
+          <h3 class="entry-title"><a href="essays/${b.id}/">${esc(b.shortTitle)}</a><span class="entry-leader" aria-hidden="true"></span><span class="entry-pages">${b.pages} pp.</span></h3>
+          <p class="entry-desc">${esc(b.description)}</p>
+          <p class="entry-meta"><span class="entry-pp">${b.pages} pages</span><span>${esc(b.category)}</span>${st ? `<span class="entry-status">${st}</span>` : ""}</p>
+        </div>
+        <button class="entry-save${on ? " on" : ""}" aria-pressed="${on}" aria-label="Add ${esc(b.shortTitle)} to reading list" title="${on ? "In your reading list" : "Add to reading list"}">${BOOKMARK}</button>
+      </li>`;
   }
-  function renderCarousel() {
-    track.innerHTML = shown.map(cardHTML).join("");
-    if (selected) track.querySelector(`[data-id="${selected}"]`)?.classList.add("is-selected");
-    updatePosition();
+  function renderIndex() {
+    $("indexList").innerHTML = books.map(entryHTML).join("");
   }
-
-  function select(id) {
-    sfx.tick();
-    selected = selected === id ? null : id;
-    track.querySelectorAll(".card").forEach((c) => {
-      const on = c.dataset.id === selected;
-      c.classList.toggle("is-selected", on);
-      c.setAttribute("aria-pressed", String(on));
-    });
-    renderDock();
-  }
-  track.addEventListener("click", (e) => {
-    const card = e.target.closest(".card");
-    if (!card) return;
-    if (e.target.closest("a.action")) {
-      sfx.tick();
+  $("indexList").addEventListener("click", (e) => {
+    const btn = e.target.closest(".entry-save");
+    if (!btn) {
+      if (e.target.closest("a")) sfx.tick();
       return;
     }
-    if (e.target.closest(".save-mark")) {
-      const now = saved.toggle(card.dataset.id);
-      now ? sfx.pop() : sfx.unpop();
-      const m = e.target.closest(".save-mark");
-      m.classList.toggle("on", now);
-      m.textContent = now ? "✓" : "+";
-      m.classList.remove("pop");
-      void m.offsetWidth;
-      m.classList.add("pop");
-      toast(now ? "Added to your reading list" : "Removed from your reading list");
-      return;
-    }
-    select(card.dataset.id);
-  });
-  track.addEventListener("dblclick", (e) => {
-    const card = e.target.closest(".card");
-    if (card && !e.target.closest(".save-mark")) openReader(byId[card.dataset.id]);
-  });
-  track.addEventListener("keydown", (e) => {
-    const card = e.target.closest(".card");
-    if (card && e.target === card && (e.key === "Enter" || e.key === " ")) {
-      e.preventDefault();
-      select(card.dataset.id);
-    }
+    const now = saved.toggle(btn.closest(".entry").dataset.id);
+    now ? sfx.pop() : sfx.unpop();
+    btn.classList.toggle("on", now);
+    btn.setAttribute("aria-pressed", String(now));
+    btn.title = now ? "In your reading list" : "Add to reading list";
+    btn.classList.remove("pop");
+    void btn.offsetWidth;
+    btn.classList.add("pop");
+    toast(now ? "Added to your reading list" : "Removed from your reading list");
   });
 
-  function cardStep() {
-    const c = track.querySelector(".card");
-    return c ? c.getBoundingClientRect().width + (parseFloat(getComputedStyle(track).columnGap) || 24) : 300;
-  }
-  function updatePosition() {
-    const step = cardStep();
-    const n = shown.length;
-    const first = Math.min(n, Math.round(track.scrollLeft / step) + 1);
-    const visible = Math.max(1, Math.round(track.clientWidth / step));
-    const last = Math.min(n, first + visible - 1);
-    $("position").innerHTML = `${pad(first)}${last > first ? ` — ${pad(last)}` : ""} <i>/ ${pad(n)}</i>`;
-    $("prevBtn").disabled = track.scrollLeft <= 2;
-    $("nextBtn").disabled = track.scrollLeft + track.clientWidth >= track.scrollWidth - 2;
-  }
-  let posRaf;
-  track.addEventListener("scroll", () => {
-    cancelAnimationFrame(posRaf);
-    posRaf = requestAnimationFrame(updatePosition);
-  }, { passive: true });
-  $("prevBtn").addEventListener("click", () => { sfx.soft(); track.scrollBy({ left: -cardStep() }); });
-  $("nextBtn").addEventListener("click", () => { sfx.soft(); track.scrollBy({ left: cardStep() }); });
-  // Re-measure whenever the carousel changes size (window resize, or the screen being shown again).
-  if ("ResizeObserver" in window) new ResizeObserver(updatePosition).observe(track);
-  else window.addEventListener("resize", updatePosition);
-
-  /* ---------- Subject filter on the home page ---------- */
-  function renderHomeChips() {
-    const cats = ["All", ...new Set(books.map((b) => b.category))];
-    $("homeChips").innerHTML = cats
-      .map((c) => `<button class="chip${c === homeTopic ? " is-active" : ""}" data-topic="${esc(c)}" aria-pressed="${c === homeTopic}">${esc(c)}${c === "All" ? "" : ` <i>${books.filter((b) => b.category === c).length}</i>`}</button>`)
-      .join("");
-  }
-  $("homeChips").addEventListener("click", (e) => {
-    const c = e.target.closest(".chip");
-    if (!c || c.dataset.topic === homeTopic) return;
-    sfx.soft();
-    homeTopic = c.dataset.topic;
-    shown = homeTopic === "All" ? books : books.filter((b) => b.category === homeTopic);
-    renderHomeChips();
-    track.scrollTo({ left: 0, behavior: "auto" });
-    renderCarousel();
-  });
-  renderHomeChips();
-
-  /* ---------- Dock ---------- */
-  function openReader(b) {
-    const p = progress.get(b.id);
-    goTo(readerURL(b, p && !isDone(p) ? p.page : null));
-  }
+  /* ---------- Resume dock ---------- */
   function renderDock() {
-    const btn = $("dockBtn");
-    let b = selected && byId[selected];
-    let title, sub, label;
-    if (b) {
-      const p = progress.get(b.id);
-      title = `Selected · ${b.shortTitle}`;
-      sub = p && !isDone(p) ? `Page ${p.page} of ${p.total}` : `${b.pages} pages · approx. ${b.pages * MIN_PER_PAGE} min read`;
-      label = p && !isDone(p) ? "Continue reading" : "Begin reading";
-    } else {
-      const last = progress.latest();
-      b = last && !isDone(last) && byId[last.id];
-      if (b) {
-        title = `Resume reading · ${b.shortTitle}`;
-        sub = `Page ${last.page} of ${last.total} · or select another essay above`;
-        label = "Resume";
-      }
-    }
-    const dock = $("dock");
-    dock.classList.remove("changed", "is-active");
-    void dock.offsetWidth;
-    dock.classList.add("changed");
-    if (selected) dock.classList.add("is-active");
-    if (!b) {
-      $("dockTitle").textContent = "Select an essay";
-      $("dockSub").textContent = "Choose a title above to begin reading";
-      btn.setAttribute("aria-disabled", "true");
-      btn.removeAttribute("href");
-      btn.innerHTML = `Select an essay<span aria-hidden="true">↗</span>`;
-      return;
-    }
-    $("dockTitle").textContent = title;
-    $("dockSub").textContent = sub;
-    const p = progress.get(b.id);
-    btn.href = readerURL(b, p && !isDone(p) ? p.page : null);
-    btn.setAttribute("aria-disabled", "false");
-    btn.innerHTML = `${label}<span aria-hidden="true">↗</span>`;
+    const last = progress.latest();
+    const b = last && !isDone(last) && byId[last.id];
+    $("dock").hidden = !b;
+    if (!b) return;
+    $("dockTitle").textContent = b.shortTitle;
+    $("dockSub").textContent = `Page ${last.page} of ${last.total} · ~${(last.total - last.page + 1) * MIN_PER_PAGE} min left`;
+    $("dockBtn").href = readerURL(b, last.page);
   }
 
   /* ---------- Reading room ---------- */
@@ -255,6 +173,7 @@
     const all = progress.all();
     const read = Object.entries(all).reduce((n, [id, p]) => n + (byId[id] ? p.page : 0), 0);
     $("pagesRead").textContent = read;
+    $("pagesReadLabel").textContent = read === 1 ? "page read" : "pages read";
 
     const started = books.filter((b) => all[b.id]).sort((a, b) => all[b.id].at - all[a.id].at);
     const inProgress = started.filter((b) => !isDone(all[b.id]));
@@ -272,7 +191,6 @@
         return `
           <a class="podium-card" href="${readerURL(b, p && !isDone(p) ? p.page : null)}" style="--i:${i}">
             ${photo(b, true)}
-            <div class="rank">${pad(i + 1)}</div>
             ${badge ? `<span class="badge">${badge}</span>` : ""}
             <div class="podium-copy">
               <span class="meta"><span>${esc(b.category)}</span><span class="num">${pad(b.num)}</span></span>
@@ -321,13 +239,13 @@
         const on = savedIds.includes(b.id);
         const status = isDone(p) ? "Completed" : p ? `Page ${p.page} of ${p.total}` : `${b.pages} pages · Not started`;
         return `
-          <div class="row" data-id="${b.id}" style="--i:${i}" role="link" tabindex="0" aria-label="Read ${esc(b.title)}">
+          <div class="row" data-id="${b.id}" style="--i:${i}">
             <span class="n">${pad(b.num)}</span>
             ${photo(b)}
             <div class="row-title"><a href="essays/${b.id}/" class="row-link"><strong>${esc(b.shortTitle)}</strong></a><span>${esc(b.category)} · ${esc(b.author)}</span></div>
             <div class="row-progress"><small>${status}</small><div class="bar"><i style="width:${pct}%"></i></div></div>
             <div class="row-acts">
-              <button class="ib save-toggle${on ? " on" : ""}" aria-label="${on ? "Remove from" : "Add to"} reading list" title="${on ? "In your reading list" : "Add to reading list"}">${on ? "✓" : "+"}</button>
+              <button class="ib save-toggle${on ? " on" : ""}" aria-pressed="${on}" aria-label="Add ${esc(b.shortTitle)} to reading list" title="${on ? "In your reading list" : "Add to reading list"}">${BOOKMARK}</button>
               <button class="ib cite-btn" aria-label="Cite this essay" title="Cite this essay"><svg viewBox="0 0 24 24"><path d="M7 7h4v4c0 3-1.5 5-4 6M14 7h4v4c0 3-1.5 5-4 6"/></svg></button>
               <a class="ib" href="${esc(b.file)}" download aria-label="Download PDF" title="Download PDF"><svg viewBox="0 0 24 24"><path d="M12 4v11m0 0-4-4m4 4 4-4M5 20h14"/></svg></a>
             </div>
@@ -345,7 +263,7 @@
       now ? sfx.pop() : sfx.unpop();
       toast(now ? "Added to your reading list" : "Removed from your reading list");
       renderList();
-      renderCarousel();
+      renderIndex();
       return;
     }
     if (e.target.closest(".cite-btn")) {
@@ -353,19 +271,12 @@
       window.Site.cite(b, new URL(`essays/${b.id}/`, location.href.split("#")[0]).href);
       return;
     }
-    if (e.target.closest("a")) {
-      sfx.tick();
-      return; // essay page or download link
-    }
-    openReader(byId[row.dataset.id]);
-  });
-  $("shelfList").addEventListener("keydown", (e) => {
-    const row = e.target.closest(".row");
-    if (row && e.target === row && e.key === "Enter") openReader(byId[row.dataset.id]);
+    if (e.target.closest("a")) sfx.tick(); // essay page or download link
   });
 
   /* ---------- Start ---------- */
-  renderCarousel();
+  renderFeature();
+  renderIndex();
   renderDock();
   const startAt = location.hash.slice(1);
   if (ORDER.includes(startAt) && startAt !== "essays") go(startAt, false);
@@ -373,7 +284,8 @@
   // Refresh progress when coming back from the reader with the back button.
   window.addEventListener("pageshow", (e) => {
     if (e.persisted) {
-      renderCarousel();
+      renderFeature();
+      renderIndex();
       renderDock();
       if (screen === "room") renderRoom();
     }

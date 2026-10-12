@@ -95,7 +95,8 @@
     p.task = p.page.render({ canvasContext: canvas.getContext("2d"), viewport: vp });
     try {
       await p.task.promise;
-      p.el.replaceChildren(canvas);
+      const text = await textLayer(p, cssWidth);
+      p.el.replaceChildren(canvas, ...(text ? [text] : []));
       p.el.classList.add("is-rendered");
       p.renderedAt = cssWidth;
     } catch (err) {
@@ -105,14 +106,33 @@
     }
   }
 
+  // The page's words as invisible, selectable text over the canvas.
+  async function textLayer(p, cssWidth) {
+    if (!pdfjsLib.renderTextLayer) return null;
+    const vp = p.page.getViewport({ scale: cssWidth / p.w });
+    const layer = document.createElement("div");
+    layer.className = "textLayer";
+    layer.style.setProperty("--scale-factor", vp.scale);
+    try {
+      await pdfjsLib.renderTextLayer({ textContentSource: p.page.streamTextContent(), container: layer, viewport: vp, textDivs: [] }).promise;
+      return layer;
+    } catch (err) {
+      console.error(err);
+      return null;
+    }
+  }
+
   pagesEl.innerHTML = "";
   for (const p of pages) {
     p.el = document.createElement("div");
     p.el.className = "page";
     p.el.dataset.num = p.num;
+    p.el.setAttribute("role", "region");
+    p.el.setAttribute("aria-label", `Page ${p.num} of ${total}`);
     pagesEl.appendChild(p.el);
   }
   layout();
+  pagesEl.removeAttribute("aria-busy");
 
   // Lazily render pages near the viewport.
   const visible = new Set();
@@ -332,7 +352,8 @@
 
   /* ---------- Start where the reader left off (or ?page=N) ---------- */
   const start = Math.min(total, +params.get("page") || (progress.get(book.id) || {}).page || 1);
-  progress.set(book.id, start, total);
+  // Only count an essay as started once the reader moves past the first page.
+  if (start > 1) progress.set(book.id, start, total);
   current = start;
   showPage(start);
   if (start > 1) requestAnimationFrame(() => goTo(start, false));

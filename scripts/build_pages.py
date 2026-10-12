@@ -19,7 +19,7 @@ from PIL import Image, ImageDraw, ImageFilter, ImageFont
 
 ROOT = Path(__file__).resolve().parent.parent
 PUBLIC = ROOT / "public"
-VERSION = "10"  # bump to make browsers fetch new CSS/JS
+VERSION = "13"  # bump to make browsers fetch new CSS/JS
 
 books = json.loads((PUBLIC / "data/books.json").read_text(encoding="utf-8"))
 site = json.loads((PUBLIC / "data/site.json").read_text(encoding="utf-8"))
@@ -201,7 +201,7 @@ def head(title, desc, prefix, og, author=None):
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=STIX+Two+Text:ital@0;1&family=Noto+Sans+Math&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{prefix}css/styles.css?v={VERSION}">
 </head>"""
 
@@ -221,7 +221,7 @@ def header(prefix, active):
       </a>
       <nav class="main-nav" aria-label="Main navigation">
         {item("Essays", prefix, "essays")}
-        {item("Library", prefix + "#room", "room", arrow=True)}
+        {item("Library", prefix + "#room", "room")}
         {item("About", prefix + "#about", "about")}
       </nav>
       <span class="acts">
@@ -248,7 +248,7 @@ def footer(prefix, scripts):
     return f"""
     <footer class="site-footer">
       <span>© 2026 {e(TITLE)} · curated by {e(CURATOR)} · essays © their authors</span>
-      <a href="{prefix}#about">About the author ↗</a>
+      <a href="{prefix}#about">About the author</a>
     </footer>
     <div class="toast" id="toast" role="status" hidden></div>
   </div>
@@ -286,6 +286,14 @@ def added_line(b):
         return ""
     y, m, d = map(int, b["added"].split("-"))
     return f' · Added {d} {MONTHS[m - 1]} {y}<span class="new-badge" data-added="{b["added"]}" hidden>NEW</span>'
+
+
+def excerpt(b):
+    if not b.get("excerpt"):
+        return ""
+    x = b["excerpt"]
+    return (f'\n          <blockquote class="excerpt"><p>{e(x["text"])}</p>'
+            f'<footer>From the {e(x["from"].lower())}</footer></blockquote>')
 
 
 def related(b):
@@ -331,18 +339,17 @@ def essay_page(b):
 
       <article class="essay-hero">
         <div class="essay-copy">
-          <div class="kicker">{e(b['category'].upper())} · ESSAY NO. {b['num']:02d}</div>
           <h1>{e(b['title'])}</h1>
           <p class="byline">By {e(b['author'])} · {b.get('year', '')}{added_line(b)}</p>
           {permission_note(b)}
-          <p class="summary">{e(b['description'])}</p>
+          <p class="summary">{e(b['description'])}</p>{excerpt(b)}
           <div class="hero-numbers left">
             <span><b>{b['pages']}</b><small>pages</small></span>
             <span><b>~{minutes}</b><small>min read</small></span>
             <span><b>PDF</b><small>format</small></span>
           </div>
           <div class="essay-actions">
-            <a class="btn primary" data-read href="{prefix}reader.html?id={b['id']}">Read essay<span aria-hidden="true">↗</span></a>
+            <a class="btn primary" data-read href="{prefix}reader.html?id={b['id']}">Read essay<svg class="arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a>
             <a class="btn ghost" href="{prefix}{e(b['file'])}" download>Download PDF</a>
             <button class="btn ghost" data-cite>Cite</button>
             <button class="btn ghost" data-share>Share</button>
@@ -353,14 +360,14 @@ def essay_page(b):
       </article>
 
       <section class="essay-section">
-        <div class="section-heading plain"><div><span class="section-index">01 /</span><h2>Topics covered</h2></div></div>
+        <div class="section-heading plain"><h2>Topics covered</h2></div>
         <ol class="topic-list">
 {topics}
         </ol>
       </section>
 
       <section class="essay-section">
-        <div class="section-heading plain"><div><span class="section-index">02 /</span><h2>Further reading</h2></div><a class="link small" href="{prefix}#room">All essays ↗</a></div>
+        <div class="section-heading plain"><h2>Further reading</h2><a class="link small" href="{prefix}#room">All essays</a></div>
         <div class="related-grid">
 {rel}
         </div>

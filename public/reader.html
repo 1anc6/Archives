@@ -5,12 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#faf4ec">
   <title>Reader · Lanchenba Mutum</title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%232C1810'/><circle cx='16' cy='16' r='8' fill='none' stroke='%23DAAA63' stroke-width='4'/></svg>">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%23544c40'/><path d='M8 10c3-1 6-1 8 1 2-2 5-2 8-1v13c-3-1-6-1-8 1-2-2-5-2-8-1z' fill='none' stroke='%23f7f3ed' stroke-width='1.6'/></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css?v=10">
-  <link rel="stylesheet" href="css/reader.css?v=10">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=STIX+Two+Text:ital@0;1&family=Noto+Sans+Math&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css?v=13">
+  <link rel="stylesheet" href="css/reader.css?v=13">
 </head>
 <body class="reader-body">
   <header class="reader-bar">
@@ -18,7 +18,7 @@
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 6-6 6 6 6"/></svg>
     </a>
     <div class="reader-titles">
-      <p class="reader-title" id="title">Loading…</p>
+      <h1 class="reader-title" id="title">Loading…</h1>
       <p class="tiny muted" id="author"></p>
     </div>
     <div class="reader-tools">
@@ -67,7 +67,7 @@
     <div class="thumbs-list" id="thumbsList"></div>
   </aside>
 
-  <main class="pages" id="pages" tabindex="-1"></main>
+  <main class="pages" id="pages" tabindex="-1" aria-label="Essay pages" aria-busy="true"></main>
 
   <p class="swipe-hint" id="swipeHint" hidden>Swipe left or right to turn pages</p>
   <p class="swipe-hint rotate-hint" id="rotateHint" hidden>
@@ -85,8 +85,8 @@
   </footer>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
-  <script src="js/common.js?v=10"></script>
-  <script src="js/reader.js?v=10"></script>
-  <script src="js/music.js?v=10"></script>
+  <script src="js/common.js?v=13"></script>
+  <script src="js/reader.js?v=13"></script>
+  <script src="js/music.js?v=13"></script>
 </body>
 </html>

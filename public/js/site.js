@@ -69,7 +69,10 @@
         await navigator.clipboard.writeText(payload.url);
         toast("Link copied to clipboard");
       }
-    } catch {}
+    } catch (err) {
+      // Closing the share sheet is not an error.
+      if (err?.name !== "AbortError") toast("Couldn't share this page. Copy the link from the address bar instead.");
+    }
   }
   document.addEventListener("click", (e) => {
     if (e.target.closest("#shareBtn, [data-share]")) {
@@ -109,6 +112,7 @@
 
   function cite(book, url = canonical()) {
     sfx.tick();
+    const opener = document.activeElement;
     const list = citations(book, url);
     let active = 0;
     const scrim = document.createElement("div");
@@ -116,14 +120,14 @@
     scrim.innerHTML = `
       <div class="cite-dialog" role="dialog" aria-modal="true" aria-labelledby="citeTitle">
         <div class="cite-head">
-          <div><div class="kicker plain">CITE THIS ESSAY</div><h2 id="citeTitle">${esc(book.title)}</h2></div>
+          <div><h2 id="citeTitle"><span class="cite-label">Cite this essay</span>${esc(book.title)}</h2></div>
           <button class="ib" data-close aria-label="Close"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
         </div>
-        <div class="cite-tabs" role="tablist">${list.map((c, i) => `<button role="tab" data-i="${i}" class="${i === 0 ? "active" : ""}">${c.name}</button>`).join("")}</div>
-        <div class="cite-box" id="citeBox"></div>
+        <div class="cite-tabs" role="tablist" aria-label="Citation style">${list.map((c, i) => `<button role="tab" id="citeTab${i}" aria-controls="citeBox" data-i="${i}">${c.name}</button>`).join("")}</div>
+        <div class="cite-box" id="citeBox" role="tabpanel" tabindex="0"></div>
         <div class="cite-foot">
           <span class="muted">Check the format against your institution's style guide.</span>
-          <button class="btn primary" data-copy>Copy citation<span aria-hidden="true">↗</span></button>
+          <button class="btn primary" data-copy>Copy citation</button>
         </div>
       </div>`;
     document.body.appendChild(scrim);
@@ -133,7 +137,12 @@
       const c = list[active];
       box.classList.toggle("mono", !!c.mono);
       box.innerHTML = c.mono ? `<pre>${esc(c.text)}</pre>` : `<p>${c.html}</p>`;
-      scrim.querySelectorAll(".cite-tabs button").forEach((b, i) => b.classList.toggle("active", i === active));
+      scrim.querySelectorAll(".cite-tabs button").forEach((b, i) => {
+        b.classList.toggle("active", i === active);
+        b.setAttribute("aria-selected", String(i === active));
+        b.tabIndex = i === active ? 0 : -1;
+      });
+      box.setAttribute("aria-labelledby", `citeTab${active}`);
     };
     show();
     const close = () => {
@@ -141,8 +150,27 @@
       document.body.classList.remove("no-scroll");
       setTimeout(() => scrim.remove(), 200);
       document.removeEventListener("keydown", onKey);
+      opener?.focus?.();
     };
-    const onKey = (e) => e.key === "Escape" && close();
+    const onKey = (e) => {
+      if (e.key === "Escape") return close();
+      // Arrow keys move between citation styles.
+      const tab = e.target.closest?.(".cite-tabs button");
+      if (tab && (e.key === "ArrowRight" || e.key === "ArrowLeft")) {
+        e.preventDefault();
+        active = (active + (e.key === "ArrowRight" ? 1 : list.length - 1)) % list.length;
+        show();
+        scrim.querySelectorAll(".cite-tabs button")[active].focus();
+        return;
+      }
+      // Keep keyboard focus inside the dialog.
+      if (e.key === "Tab") {
+        const f = [...scrim.querySelectorAll("button, [tabindex='0']")].filter((el) => el.tabIndex >= 0);
+        const first = f[0], last = f[f.length - 1];
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+      }
+    };
     document.addEventListener("keydown", onKey);
     scrim.addEventListener("click", async (e) => {
       if (e.target === scrim || e.target.closest("[data-close]")) return close();
@@ -168,7 +196,7 @@
         }
       }
     });
-    scrim.querySelector(".cite-tabs button").focus();
+    scrim.querySelector(".cite-tabs button.active").focus();
   }
 
   /* ---------- "New" labels (essays added in the last 45 days) ---------- */

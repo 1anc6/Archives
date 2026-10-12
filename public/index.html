@@ -30,8 +30,8 @@
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css?v=10">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=STIX+Two+Text:ital@0;1&family=Noto+Sans+Math&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css?v=13">
 </head>
 <body>
   <div class="stage">
@@ -42,7 +42,7 @@
       </button>
       <nav class="main-nav" aria-label="Main navigation">
         <button class="active" data-go="essays">Essays</button>
-        <button data-go="room">Library<span aria-hidden="true">↗</span></button>
+        <button data-go="room">Library</button>
         <button data-go="about">About</button>
       </nav>
       <span class="acts">
@@ -66,38 +66,27 @@
     <div class="screens">
       <!-- ============ Essays ============ -->
       <section class="screen in" data-screen="essays" aria-label="Essays">
-        <main class="page-wrap">
-          <div class="hero">
-            <div class="kicker">A COLLECTION OF MATHEMATICAL ESSAYS</div>
+        <main class="page-wrap home">
+          <header class="masthead">
             <h1>Lance's Unorthodox Essay Papers</h1>
-            <div class="fine">READ ONLINE · DOWNLOAD AS PDF</div>
-            <div class="hero-numbers" id="heroNumbers"></div>
-          </div>
+            <p class="standfirst">A collection of mathematical essays by Lanchenba Mutum, available to read online or download as PDF.</p>
+          </header>
 
-          <div class="chips home-chips" id="homeChips" role="toolbar" aria-label="Filter by subject"></div>
+          <article class="feature" id="feature" aria-labelledby="featureTitle"></article>
 
-          <div class="section-heading">
-            <div><span class="section-index">01 /</span><h2>Featured essays</h2></div>
-          </div>
-
-          <section class="carousel" aria-label="Essay carousel" aria-roledescription="carousel">
-            <div class="track" id="track"></div>
-            <div class="carousel-footer">
-              <span class="carousel-hint">The collection<small>Scroll to browse all twelve essays</small></span>
-              <div class="carousel-controls">
-                <span class="carousel-position" id="position" aria-live="polite" aria-atomic="true"></span>
-                <button class="carousel-arrow" id="prevBtn" aria-label="Previous essay"><span aria-hidden="true">←</span></button>
-                <button class="carousel-arrow" id="nextBtn" aria-label="Next essay"><span aria-hidden="true">→</span></button>
-              </div>
+          <section class="contents" aria-labelledby="contentsTitle">
+            <div class="contents-head">
+              <h2 id="contentsTitle">Contents</h2>
+              <p class="contents-sum" id="contentsSum"></p>
             </div>
+            <ol class="index-list" id="indexList"></ol>
           </section>
 
           <div class="editorial-note">
             <span>Essays by twelve writers, published with their permission.</span>
-            <button class="link" data-go="about">Image credits ↗</button>
+            <button class="link" data-go="about">Image credits</button>
           </div>
         </main>
-
       </section>
 
       <!-- ============ Reading room ============ -->
@@ -105,20 +94,19 @@
         <main class="page-wrap room-page">
           <div class="room-heading">
             <div>
-              <div class="kicker plain">LIBRARY</div>
               <h1 id="roomTitle">Continue Reading</h1>
               <p id="roomSub">Your reading progress is saved on this device.</p>
             </div>
-            <div class="total-display"><strong id="pagesRead">0</strong><span>pages read</span></div>
+            <div class="total-display"><strong id="pagesRead">0</strong><span id="pagesReadLabel">pages read</span></div>
           </div>
 
           <div class="podium" id="podium"></div>
 
           <div class="section-heading list-heading">
-            <div><span class="section-index">02 /</span><h2>All essays</h2></div>
+            <h2>All essays</h2>
             <label class="mini-search">
               <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-              <input id="search" type="search" placeholder="Search by title or subject" autocomplete="off">
+              <input id="search" type="search" placeholder="Search by title or subject" aria-label="Search essays" autocomplete="off">
             </label>
           </div>
           <div class="chips" id="chips" role="toolbar" aria-label="Filter by topic"></div>
@@ -138,7 +126,6 @@
               Anything left empty stays hidden on the site.
           -->
           <div class="author-photo"><span class="monogram" aria-hidden="true">LM</span></div>
-          <div class="kicker plain center">THE AUTHOR</div>
           <h1>Lanchenba Mutum</h1>
           <p class="author-role"><!-- e.g. Student of Mathematics · City, Country --></p>
           <p class="lead">Lanchenba Mutum is the author of this collection of twelve mathematical essays. The work explores unconventional questions in mathematics, from the different sizes of infinity and the equality 0.999… = 1 to the limits of proof, probability, and patterns in nature. By connecting foundational ideas with anime, music, LEGO and Secret Santa, Lanchenba offers clear, original perspectives that make complex mathematics engaging and accessible.</p>
@@ -162,8 +149,8 @@
           <div class="about-card">
             <h2>Using this site</h2>
             <ul>
-              <li><b>Reading online.</b> Select any essay to open it in the reader. Your place is saved automatically, so you may return to it at any time.</li>
-              <li><b>Reading list.</b> Select <span class="plus">+</span> on an essay to add it to your reading list in the Library.</li>
+              <li><b>Reading online.</b> Select any essay title to open its page, then choose <i>Read essay</i>. Your place is saved automatically, so you may return to it at any time.</li>
+              <li><b>Reading list.</b> Select the bookmark on an essay to add it to your reading list in the Library.</li>
               <li><b>Downloading.</b> Every essay is available as a PDF from the reader or the Library.</li>
               <li><b>Reading comfort.</b> The reader offers light, sepia and dark modes. Optional background music and sound effects can be switched on or off in the header.</li>
             </ul>
@@ -179,25 +166,25 @@
 
     <footer class="site-footer">
       <span>© 2026 Lance's Unorthodox Essay Papers · essays © their author</span>
-      <button class="link" data-go="about">About the author ↗</button>
+      <button class="link" data-go="about">About the author</button>
     </footer>
 
-    <!-- Fixed to the bottom of the screen; shown on the Essays screen only -->
-    <div class="dock" id="dock">
+    <!-- Fixed to the bottom of the Essays screen; only shown when there is an essay to resume -->
+    <aside class="dock" id="dock" aria-label="Resume reading" hidden>
       <div class="dock-copy">
-        <strong id="dockTitle">Select an essay</strong>
-        <span id="dockSub">Choose a title above to begin reading</span>
+        <strong id="dockTitle"></strong>
+        <span id="dockSub"></span>
       </div>
-      <a class="btn primary" id="dockBtn" aria-disabled="true">Select an essay<span aria-hidden="true">↗</span></a>
-    </div>
+      <a class="btn primary" id="dockBtn">Resume<svg class="arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a>
+    </aside>
 
     <div class="toast" id="toast" role="status" hidden></div>
   </div>
 
-  <script src="js/common.js?v=10"></script>
-  <script src="js/sfx.js?v=10"></script>
-  <script src="js/site.js?v=10"></script>
-  <script src="js/app.js?v=10"></script>
-  <script src="js/music.js?v=10"></script>
+  <script src="js/common.js?v=13"></script>
+  <script src="js/sfx.js?v=13"></script>
+  <script src="js/site.js?v=13"></script>
+  <script src="js/app.js?v=13"></script>
+  <script src="js/music.js?v=13"></script>
 </body>
 </html>

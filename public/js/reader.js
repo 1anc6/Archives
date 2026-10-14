@@ -279,7 +279,8 @@
 
   /* ---------- Zoom (remembered between visits) ---------- */
   function setZoom(z) {
-    const keep = current;
+    // the page being scrolled to, so closing a panel mid-jump doesn't snap back
+    const keep = here();
     zoom = Math.max(0.5, Math.min(2.5, z));
     store.set("books.readerZoom", String(zoom));
     layout();

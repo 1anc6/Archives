@@ -13,5 +13,10 @@
     "repoId": "",
     "category": "Comments",
     "categoryId": ""
+  },
+  "_help_reviews": "Reviews: create a free project at supabase.com, run supabase/reviews.sql in its SQL Editor, then paste the Project URL and the anon public key here. Visitor counts: in GoatCounter, Settings → tick \"Allow adding visitor counts on your website\".",
+  "supabase": {
+    "url": "",
+    "anonKey": ""
   }
 }

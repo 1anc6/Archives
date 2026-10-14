@@ -886,8 +886,8 @@ body.no-scroll { overflow: hidden; }
     grid-area: nav;
     order: 0;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 4px;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2px;
     margin: 0;
     padding: 4px;
     border: 1px solid var(--line);
@@ -896,7 +896,7 @@ body.no-scroll { overflow: hidden; }
     overflow: visible;
   }
   .main-nav button,
-  .main-nav a { justify-content: center; min-height: 40px; padding: 8px 6px; font-size: 16px; text-align: center; }
+  .main-nav a { justify-content: center; min-height: 40px; padding: 8px 2px; font-size: 15px; text-align: center; }
   .main-nav button.active,
   .main-nav a.active { background: var(--accent); color: var(--accent-ink); box-shadow: 0 2px 8px rgba(60, 45, 30, .18); }
   .feature { margin-inline: 0; }
@@ -1339,3 +1339,88 @@ body.no-scroll { overflow: hidden; }
 }
 .brand { min-height: 44px; }
 .editorial-note .link { display: inline-flex; align-items: center; min-height: 44px; }
+
+/* ============ Reviews ============ */
+.reviews-page { padding-top: 24px; padding-bottom: 80px; }
+.reviews-page .room-heading { align-items: center; }
+.rev-stats {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 10px 28px;
+  padding: 18px 22px 18px 60px; margin-bottom: 8px;
+  border: 1px solid var(--line); border-radius: 6px;
+  background-color: var(--panel);
+  background-image:
+    linear-gradient(90deg, transparent 37px, var(--rule) 37px, var(--rule) 38px, transparent 38px),
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 100% 100%, 28px 28px, 28px 28px;
+  font-size: 17px; color: var(--muted);
+}
+.rev-stats b { font: 400 30px/1 var(--display); color: var(--ink); margin-right: 6px; }
+.rev-stats .avg { display: inline-flex; align-items: center; gap: 8px; }
+.rev-stats .avg b { margin: 0 4px 0 0; }
+.rev-note { margin-top: 6px; font-size: 14px; color: var(--muted); }
+.rev-h { margin-top: 36px; }
+
+.stars { display: inline-flex; gap: 2px; vertical-align: -2px; }
+.stars .star svg { width: 18px; height: 18px; fill: none; stroke: var(--hi); stroke-width: 1.5; }
+.stars .star.on svg { fill: var(--hi); }
+.stars.sm .star svg { width: 14px; height: 14px; }
+
+.rev-essays { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 32px; }
+.rev-essay {
+  display: flex; flex-direction: column; gap: 4px; width: 100%; min-height: 44px; padding: 14px 4px;
+  border-bottom: 1px solid var(--line); text-align: left; transition: background .2s;
+}
+.rev-essay:hover { background: color-mix(in srgb, var(--panel) 70%, transparent); }
+.rev-essay.is-active { background: var(--hi-soft); }
+.rev-essay-title { font: 400 21px/1.2 var(--display); }
+.rev-essay-meta { display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: 14px; color: var(--muted); }
+.rev-essay-meta > span { display: inline-flex; align-items: center; gap: 6px; }
+
+.rev-list-head { margin-top: 44px; align-items: baseline; }
+.rev-list { list-style: none; margin: 16px 0 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; }
+.rev-card {
+  display: flex; flex-direction: column; gap: 10px; width: 100%; height: 100%; padding: 20px 22px; text-align: left;
+  border: 1px solid var(--line); border-radius: 6px; background: var(--panel);
+  transition: transform .3s var(--ease), border-color .2s;
+  animation: rise .5s var(--ease) both; animation-delay: calc(var(--i, 0) * 50ms);
+}
+.rev-card:hover { transform: translateY(-3px); border-color: var(--muted); }
+.rev-body { font: italic 400 18px/1.5 var(--display); display: -webkit-box; -webkit-line-clamp: 4; line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
+.rev-by { margin-top: auto; font-size: 14px; color: var(--muted); }
+.rev-by b { color: var(--ink); font-weight: 500; }
+
+.rev-dialog { position: relative; }
+.rev-close { position: absolute; top: 12px; right: 12px; }
+.rev-essay-name { margin: 2px 40px 12px 0; font: 400 26px/1.15 var(--display); }
+.rev-essay-name a { color: inherit; text-decoration: none; }
+.rev-essay-name a:hover { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; }
+.rev-full { margin: 16px 0 0; font: italic 400 21px/1.55 var(--display); white-space: pre-line; }
+.rev-sign { margin-top: 16px; font-size: 17px; }
+.rev-sign span { margin-left: 10px; font: 13px var(--mono); color: var(--muted); }
+.rev-actions { margin-top: 20px; }
+.rev-form-title { margin: 0 40px 16px 0; font: 400 28px/1.15 var(--display); }
+.rev-form select { width: 100%; padding: 12px 14px; border: 1px solid var(--line); border-radius: 10px; background: var(--bg); color: var(--ink); font: 17px var(--sans); }
+.rev-rate { border: 0; padding: 0; margin: 0 0 16px; }
+.rev-rate legend { padding: 0; margin-bottom: 6px; font-size: 15px; }
+.rate-row { display: flex; gap: 4px; }
+.rate { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; cursor: pointer; }
+.rate input { position: absolute; opacity: 0; pointer-events: none; }
+.rate svg { width: 30px; height: 30px; fill: none; stroke: var(--hi); stroke-width: 1.4; transition: transform .15s; }
+.rate.on svg { fill: var(--hi); }
+.rate:hover svg { transform: scale(1.12); }
+.rate:has(input:focus-visible) { outline: 2px solid var(--ink); outline-offset: 2px; }
+.rev-count { display: block; margin-top: 4px; text-align: right; font-size: 13px; color: var(--muted); }
+.rev-hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
+@media (max-width: 650px) {
+  .reviews-page .room-heading { flex-direction: column; align-items: stretch; }
+  .reviews-page #writeReview { width: 100%; }
+  .rev-stats { padding-left: 50px; gap: 8px 18px; background-image: linear-gradient(90deg, transparent 29px, var(--rule) 29px, var(--rule) 30px, transparent 30px), linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px); }
+  .rev-stats b { font-size: 26px; }
+  .rev-essays { grid-template-columns: 1fr; }
+  .rev-full { font-size: 19px; }
+}
+
+/* hidden always wins, even over components that set their own display */
+[hidden] { display: none !important; }

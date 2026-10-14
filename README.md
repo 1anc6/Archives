@@ -100,3 +100,16 @@ The Music button (on the shelf page and in the reader) plays soft music generate
 2. In Render, go to **New → Blueprint**, pick the repo, and apply. `render.yaml` creates a free static site that serves `public/`.
    - Without the Blueprint: **New → Static Site**, leave Build Command empty, and set Publish Directory to `public`.
 3. Every push to the repo redeploys the site automatically.
+
+## Reviews and visitor counts
+
+The Reviews screen (`#reviews`) shows readers' reviews and how many people have visited.
+
+**Reviews (Supabase, free):**
+1. Create a project at supabase.com.
+2. In the project, open SQL Editor → New query, paste `supabase/reviews.sql`, and run it.
+3. In Project Settings → API, copy the Project URL and the `anon` `public` key into `public/data/site.json` under `"supabase"`.
+
+Anyone can read and post reviews (1–5 stars, a name up to 60 characters, 10–1500 characters of text). Nobody can edit or delete them from the site. To remove one, open Table Editor → `reviews` in Supabase and delete the row. Until the settings are filled in, the page says reviews are coming soon.
+
+**Visitor counts (GoatCounter):** in GoatCounter, open Settings and tick "Allow adding visitor counts on your website". The page then shows total visits and views per essay page.

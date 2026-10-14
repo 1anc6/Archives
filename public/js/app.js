@@ -40,7 +40,7 @@
     return `<span class="photo" style="${style}"><img src="${esc(small)}" srcset="${esc(small)} 640w, ${esc(b.image)} 1200w" sizes="(max-width: 650px) 80vw, 420px" alt="${esc(b.imageAlt || "")}" loading="${eager ? "eager" : "lazy"}" decoding="async" onload="this.classList.add('loaded')"></span>`;
   };
   /* ---------- Screens ---------- */
-  const ORDER = ["essays", "room", "about"];
+  const ORDER = ["essays", "room", "reviews", "about"];
   let screen = "essays";
   function go(name, push = true) {
     if (!ORDER.includes(name)) name = "essays";
@@ -61,6 +61,7 @@
     $("dock").classList.toggle("is-away", name !== "essays");
     screen = name;
     if (name === "room") renderRoom();
+    if (name === "reviews") window.Reviews?.open();
     window.scrollTo({ top: 0 });
     if (push) history.pushState({ screen: name }, "", name === "essays" ? location.pathname : `#${name}`);
   }

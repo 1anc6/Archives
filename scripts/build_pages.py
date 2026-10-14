@@ -19,7 +19,7 @@ from PIL import Image, ImageDraw, ImageFilter, ImageFont
 
 ROOT = Path(__file__).resolve().parent.parent
 PUBLIC = ROOT / "public"
-VERSION = "24"  # bump to make browsers fetch new CSS/JS
+VERSION = "25"  # bump to make browsers fetch new CSS/JS
 
 books = json.loads((PUBLIC / "data/books.json").read_text(encoding="utf-8"))
 site = json.loads((PUBLIC / "data/site.json").read_text(encoding="utf-8"))
@@ -268,6 +268,7 @@ def header(prefix, active):
       <nav class="main-nav" aria-label="Main navigation">
         {item("Essays", prefix, "essays")}
         {item("Library", prefix + "#room", "room")}
+        {item("Reviews", prefix + "#reviews", "reviews")}
         {item("About", prefix + "#about", "about")}
       </nav>
       <span class="acts">

@@ -312,6 +312,7 @@
         <div class="cite-foot"><span class="muted">Your name and review will be public.</span><button class="btn primary" type="submit">Post review</button></div>
       </form>`, "Write a review");
     const form = scrim.querySelector("form");
+    window.PrettySelect?.(form.elements.essay);
     const err = scrim.querySelector(".field-error");
     const body = form.elements.body;
     body.addEventListener("input", () => (scrim.querySelector(".rev-count").textContent = `${body.value.length} / 1500`));
@@ -351,15 +352,159 @@
         mine[essay] = Date.now();
         try { localStorage.setItem("books.reviewed", JSON.stringify(mine)); } catch {}
         sfx.pop();
-        close();
-        toast("Thanks! Your review is up");
         refresh();
+        thanks(scrim, close, saved);
       } catch {
         btn.disabled = false;
         btn.textContent = "Post review";
         fail("Couldn't post your review just now. Check your connection and try again.");
       }
     });
+  }
+
+  // Shown in the same dialog once a review is posted.
+  function thanks(scrim, close, r) {
+    const b = byId[r.essay_id];
+    const box = scrim.querySelector(".rev-dialog");
+    box.setAttribute("aria-label", "Review posted");
+    box.innerHTML = `
+      <button class="ib rev-close" type="button" data-close aria-label="Close"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+      <p class="end-qed rev-thanks-mark" aria-hidden="true">∎</p>
+      <h2 class="rev-form-title">Thanks, ${esc(r.name.split(" ")[0])}! Your review is up.</h2>
+      <p class="rev-thanks-lead">Liked <i>${esc(b.shortTitle)}</i>? Share your review as a picture for your story or a friend.</p>
+      <div class="rev-actions">
+        <button class="btn primary" type="button" data-share-review>Share as image</button>
+        <button class="btn ghost" type="button" data-close>Done</button>
+      </div>`;
+    box.querySelector("[data-share-review]").addEventListener("click", () => shareCard(r));
+    box.querySelector("[data-share-review]").focus();
+  }
+
+  /* ---------- Review as a shareable picture (same paper look as quote cards) ---------- */
+  function wrapLines(ctx, text, width) {
+    const out = [];
+    let line = "";
+    for (const word of text.split(/\s+/)) {
+      const test = line ? `${line} ${word}` : word;
+      if (ctx.measureText(test).width > width && line) {
+        out.push(line);
+        line = word;
+      } else line = test;
+    }
+    if (line) out.push(line);
+    return out;
+  }
+  function starPath(ctx, cx, cy, r) {
+    ctx.beginPath();
+    for (let i = 0; i < 10; i++) {
+      const a = -Math.PI / 2 + (i * Math.PI) / 5;
+      const rad = i % 2 ? r * 0.45 : r;
+      ctx.lineTo(cx + rad * Math.cos(a), cy + rad * Math.sin(a));
+    }
+    ctx.closePath();
+  }
+  async function reviewCard(r) {
+    const b = byId[r.essay_id];
+    await Promise.all([
+      document.fonts.load('italic 400 56px "Newsreader"'),
+      document.fonts.load('400 60px "Newsreader"'),
+      document.fonts.load('500 26px "Newsreader"'),
+      document.fonts.load('400 24px "IBM Plex Mono"'),
+    ]).catch(() => {});
+    const W = 1080, H = 1350, M = 150;
+    const c = document.createElement("canvas");
+    c.width = W;
+    c.height = H;
+    const ctx = c.getContext("2d");
+    ctx.fillStyle = "#f7f3ed";
+    ctx.fillRect(0, 0, W, H);
+    ctx.strokeStyle = "#e7e0d6";
+    ctx.lineWidth = 1.5;
+    for (let x = 0; x <= W; x += 54) { ctx.beginPath(); ctx.moveTo(x + .5, 0); ctx.lineTo(x + .5, H); ctx.stroke(); }
+    for (let y = 0; y <= H; y += 54) { ctx.beginPath(); ctx.moveTo(0, y + .5); ctx.lineTo(W, y + .5); ctx.stroke(); }
+    ctx.strokeStyle = "#d6a896";
+    ctx.lineWidth = 3;
+    ctx.beginPath(); ctx.moveTo(108, 0); ctx.lineTo(108, H); ctx.stroke();
+
+    const ink = "#544c40", muted = "#655c50", hi = "#a4553f";
+    const textW = W - M - 110;
+    // what it's a review of
+    ctx.fillStyle = muted;
+    ctx.font = '400 24px "IBM Plex Mono", monospace';
+    ctx.letterSpacing = "4px";
+    ctx.fillText("A READER'S REVIEW OF", M, 190);
+    ctx.letterSpacing = "0px";
+    ctx.fillStyle = ink;
+    ctx.font = '400 60px "Newsreader", Georgia, serif';
+    let y = 190;
+    wrapLines(ctx, b.title, textW).slice(0, 3).forEach((l) => ctx.fillText(l, M, (y += 72)));
+    // stars
+    y += 70;
+    for (let i = 0; i < 5; i++) {
+      starPath(ctx, M + 26 + i * 64, y, 26);
+      ctx.fillStyle = i < r.rating ? hi : "transparent";
+      ctx.fill();
+      ctx.strokeStyle = hi;
+      ctx.lineWidth = 2.5;
+      ctx.stroke();
+    }
+    // the review: largest size that fits
+    const top = y + 70, room = 1010 - top;
+    let size = 56, lines;
+    for (; size >= 30; size -= 2) {
+      ctx.font = `italic 400 ${size}px "Newsreader", Georgia, serif`;
+      lines = wrapLines(ctx, `“${r.body}”`, textW);
+      if (lines.length * size * 1.32 <= room) break;
+    }
+    const maxLines = Math.floor(room / (size * 1.32));
+    if (lines.length > maxLines) {
+      lines = lines.slice(0, maxLines);
+      lines[maxLines - 1] = lines[maxLines - 1].replace(/\s*\S*$/, "") + "…”";
+    }
+    ctx.fillStyle = ink;
+    lines.forEach((l, i) => ctx.fillText(l, M, top + size + i * size * 1.32));
+    // who wrote it
+    ctx.font = '400 38px "Newsreader", Georgia, serif';
+    ctx.fillText(`— ${r.name}`, M, 1090);
+    ctx.fillStyle = muted;
+    ctx.font = 'italic 400 30px "Newsreader", Georgia, serif';
+    ctx.fillText(`An essay by ${b.author || "Lanchenba Mutum"}`, M, 1136);
+    // site
+    ctx.fillStyle = ink;
+    ctx.font = '500 26px "Newsreader", Georgia, serif';
+    ctx.letterSpacing = "6px";
+    ctx.fillText((config.title || "The Open Archive").toUpperCase(), M, 1262);
+    ctx.letterSpacing = "0px";
+    ctx.fillStyle = muted;
+    ctx.font = '400 24px "IBM Plex Mono", monospace';
+    ctx.textAlign = "right";
+    ctx.fillText((config.url || location.origin).replace(/^https?:\/\//, "").replace(/\/$/, ""), W - 80, 1262);
+    ctx.textAlign = "left";
+    return new Promise((res) => c.toBlob(res, "image/png"));
+  }
+  async function shareCard(r) {
+    sfx.tick();
+    const blob = await reviewCard(r);
+    if (!blob) return toast("Couldn't make the image, sorry.");
+    const name = `review-${r.essay_id}.png`;
+    const file = new File([blob], name, { type: "image/png" });
+    const url = `${(config.url || ROOT).replace(/\/?$/, "/")}essays/${r.essay_id}/`;
+    if (navigator.canShare?.({ files: [file] })) {
+      try {
+        await navigator.share({ files: [file], title: byId[r.essay_id].title, text: url });
+        return;
+      } catch (err) {
+        if (err?.name === "AbortError") return;
+      }
+    }
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = name;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+    toast("Review card saved to your downloads");
   }
 
   /* ---------- Wiring ---------- */
@@ -416,6 +561,22 @@
     renderAll();
   }
 
+  // Views and ratings per essay, for sorting the homepage contents.
+  let statsP = null;
+  function stats() {
+    statsP ||= (async () => {
+      if (!ready) ready = load();
+      await ready;
+      const [r] = await Promise.allSettled([fetchReviews(), fetchViews()]);
+      if (r.status === "fulfilled") {
+        reviews = r.value;
+        loaded = true;
+      }
+      return { views: totalVisits != null ? views : null, rating: (id) => summary(id) };
+    })();
+    return statsP;
+  }
+
   // Whether reviews are switched on (site.json has the Supabase settings).
   async function enabled() {
     if (!ready) ready = load();
@@ -425,5 +586,5 @@
 
   if ($("essayReviews")) mountEssayReviews();
 
-  window.Reviews = { open, write: writeReview, enabled };
+  window.Reviews = { open, write: writeReview, enabled, stats };
 })();

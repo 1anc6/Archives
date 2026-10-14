@@ -247,6 +247,7 @@
   }
   function renderIndex() {
     $("indexList").innerHTML = books.map(entryHTML).join("");
+    sortIndex();
     renderContentsSum();
     filterIndex();
     $("indexList").querySelectorAll(".entry").forEach((el) => {
@@ -275,14 +276,15 @@
   // Long contents start short so phones don't scroll forever; search always covers every essay.
   const INDEX_SHOWN = 8;
   let indexAll = false;
+  let indexTopic = ""; // "" = every topic
   function filterIndex() {
     const q = $("indexSearch").value.trim().toLowerCase();
     let shown = 0;
-    const capped = !q && !indexAll;
+    const capped = !q && !indexTopic && !indexAll;
     $("indexList").querySelectorAll(".entry").forEach((el) => {
       const b = byId[el.dataset.id];
       const hay = `${b.title} ${b.description} ${b.category} ${(b.topics || []).join(" ")}`.toLowerCase();
-      const match = !q || q.split(/\s+/).every((t) => hay.includes(t));
+      const match = (!indexTopic || b.category === indexTopic) && (!q || q.split(/\s+/).every((t) => hay.includes(t)));
       el.hidden = !match || (capped && shown >= INDEX_SHOWN);
       if (!el.hidden) {
         shown++;
@@ -290,13 +292,59 @@
       }
     });
     const more = $("indexMore");
-    more.hidden = !!q || books.length <= INDEX_SHOWN;
+    more.hidden = !!q || !!indexTopic || books.length <= INDEX_SHOWN;
     more.textContent = indexAll ? "Show fewer essays" : `Show all ${books.length} essays`;
     more.setAttribute("aria-expanded", String(indexAll));
     $("indexEmpty").hidden = shown > 0;
     if (!shown) $("indexEmptyQuery").textContent = $("indexSearch").value.trim();
   }
   $("indexSearch").addEventListener("input", filterIndex);
+
+  /* ---------- Topic tabs and sorting ---------- */
+  function renderIndexChips() {
+    const cats = [...new Set(books.map((b) => b.category))];
+    $("indexChips").innerHTML = ["", ...cats]
+      .map((c) => `<button class="chip${c === indexTopic ? " is-active" : ""}" type="button" data-cat="${esc(c)}" aria-pressed="${c === indexTopic}">${c ? esc(c) : "All"}</button>`)
+      .join("");
+  }
+  $("indexChips").addEventListener("click", (e) => {
+    const c = e.target.closest(".chip");
+    if (!c) return;
+    sfx.soft();
+    indexTopic = c.dataset.cat;
+    renderIndexChips();
+    filterIndex();
+  });
+  // Order the essays: contents order, newest, most read or top rated.
+  let indexStats = null;
+  function sortIndex() {
+    const how = $("indexSort").value;
+    const pos = Object.fromEntries(books.map((b, i) => [b.id, i]));
+    const key = {
+      new: (b) => [-(Date.parse(b.added || "") || 0), -pos[b.id]],
+      read: (b) => [-(indexStats?.views?.[b.id] || 0), pos[b.id]],
+      rated: (b) => { const r = indexStats?.rating(b.id) || { n: 0, avg: 0 }; return [-r.avg, -r.n, pos[b.id]]; },
+    }[how] || ((b) => [pos[b.id]]);
+    const cmp = (x, y) => { for (let i = 0; i < x.length; i++) if (x[i] !== y[i]) return x[i] - y[i]; return 0; };
+    const list = $("indexList");
+    [...list.children]
+      .map((el) => ({ el, k: key(byId[el.dataset.id]) }))
+      .sort((a, b) => cmp(a.k, b.k))
+      .forEach(({ el }) => list.appendChild(el));
+  }
+  window.PrettySelect?.($("indexSort"));
+  $("indexSort").addEventListener("change", async () => {
+    sfx.soft();
+    const how = $("indexSort").value;
+    if ((how === "read" || how === "rated") && !indexStats && window.Reviews) {
+      $("indexSort").disabled = true;
+      indexStats = await window.Reviews.stats().catch(() => null);
+      $("indexSort").disabled = false;
+      if (how === "read" && !indexStats?.views) toast("Visitor numbers aren't available right now.");
+    }
+    sortIndex();
+    filterIndex();
+  });
   $("indexMore").addEventListener("click", () => {
     sfx.soft();
     indexAll = !indexAll;
@@ -503,6 +551,7 @@
   renderGreeting();
   renderFeature();
   renderStart();
+  renderIndexChips();
   renderIndex();
   renderDock();
   const startAt = location.hash.slice(1);

@@ -33,7 +33,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=STIX+Two+Text:ital@0;1&family=Noto+Sans+Math&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css?v=28">
+  <link rel="stylesheet" href="css/styles.css?v=30">
   <link rel="alternate" type="application/rss+xml" title="The Open Archive" href="feed.xml">
   <!-- stats:start -->
   <script data-goatcounter="https://lance.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
@@ -120,6 +120,17 @@
                 <kbd aria-hidden="true">/</kbd>
                 </label>
               </div>
+            </div>
+            <div class="contents-filters">
+              <div class="chips" id="indexChips" role="toolbar" aria-label="Filter essays by topic"></div>
+              <label class="index-sort"><span>Sort</span>
+                <select id="indexSort">
+                  <option value="">Contents order</option>
+                  <option value="new">Newest</option>
+                  <option value="read">Most read</option>
+                  <option value="rated">Top rated</option>
+                </select>
+              </label>
             </div>
             <ol class="index-list" id="indexList"></ol>
             <button class="btn index-more" type="button" id="indexMore" aria-controls="indexList" hidden></button>
@@ -284,12 +295,12 @@
     <div class="toast" id="toast" role="status" hidden></div>
   </div>
 
-  <script src="js/common.js?v=28"></script>
-  <script src="js/sfx.js?v=28"></script>
-  <script src="js/site.js?v=28"></script>
-  <script src="js/app.js?v=28"></script>
-  <script src="js/reviews.js?v=28"></script>
-  <script src="js/request.js?v=28"></script>
-  <script src="js/music.js?v=28"></script>
+  <script src="js/common.js?v=30"></script>
+  <script src="js/sfx.js?v=30"></script>
+  <script src="js/site.js?v=30"></script>
+  <script src="js/app.js?v=30"></script>
+  <script src="js/reviews.js?v=30"></script>
+  <script src="js/request.js?v=30"></script>
+  <script src="js/music.js?v=30"></script>
 </body>
 </html>

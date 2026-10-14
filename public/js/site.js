@@ -232,6 +232,36 @@
     document.querySelectorAll(".related-card").forEach((a) => a.addEventListener("click", () => sfx.tick()));
   }
 
+  /* ---------- Back to top, after a long scroll (not in the reader) ---------- */
+  const topBtn = document.createElement("button");
+  topBtn.type = "button";
+  topBtn.className = "to-top";
+  topBtn.setAttribute("aria-label", "Back to top");
+  topBtn.title = "Back to top";
+  topBtn.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5m-6 6 6-6 6 6"/></svg>';
+  document.body.appendChild(topBtn);
+  let topQueued = false;
+  function placeTopBtn() {
+    topQueued = false;
+    const show = scrollY > innerHeight * 1.5;
+    topBtn.classList.toggle("is-on", show);
+    topBtn.tabIndex = show ? 0 : -1;
+    // sit above the "Continue reading" dock when it's showing
+    const dock = $("dock");
+    const dockUp = dock && !dock.hidden && !dock.classList.contains("is-away");
+    topBtn.style.bottom = dockUp ? `${dock.offsetHeight + 28}px` : "";
+  }
+  addEventListener("scroll", () => {
+    if (!topQueued) requestAnimationFrame(placeTopBtn);
+    topQueued = true;
+  }, { passive: true });
+  topBtn.addEventListener("click", () => {
+    sfx.soft();
+    scrollTo({ top: 0, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+    $("content")?.focus({ preventScroll: true });
+  });
+  placeTopBtn();
+
   /* ---------- Essay page: the symbol writes itself on ---------- */
   const glyph = document.querySelector(".sheet-glyph");
   if (glyph) {

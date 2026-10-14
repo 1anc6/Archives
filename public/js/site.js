@@ -82,7 +82,7 @@
   });
 
   /* ---------- Citations ---------- */
-  const SITE_TITLE = "Lance's Unorthodox Essay Papers";
+  const SITE_TITLE = "The Open Archive";
   const MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
   function citations(book, url) {

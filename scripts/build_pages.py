@@ -19,7 +19,7 @@ from PIL import Image, ImageDraw, ImageFilter, ImageFont
 
 ROOT = Path(__file__).resolve().parent.parent
 PUBLIC = ROOT / "public"
-VERSION = "21"  # bump to make browsers fetch new CSS/JS
+VERSION = "22"  # bump to make browsers fetch new CSS/JS
 
 books = json.loads((PUBLIC / "data/books.json").read_text(encoding="utf-8"))
 site = json.loads((PUBLIC / "data/site.json").read_text(encoding="utf-8"))
@@ -178,7 +178,7 @@ def og_home():
     x = MARGIN_X + 44
     draw_glyph(d, (x, 60), "Σ ½ⁿ", 54)
     y = 150
-    for line in ["Lance's Unorthodox", "Essay Papers"]:
+    for line in ["The Open", "Archive"]:
         d.text((x, y), line, font=SERIF(68), fill=INK)
         y += 76
     y += 20
@@ -248,9 +248,9 @@ def header(prefix, active):
     return f"""
   <div class="stage">
     <header class="site-header">
-      <a class="brand" href="{prefix}" aria-label="Home">
+      <a class="brand" href="{prefix}" aria-label="The Open Archive, home">
         <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M4 8c4-1.6 8-1.4 12 1.4C20 6.6 24 6.4 28 8v17c-4-1.6-8-1.4-12 1.4C12 23.6 8 23.4 4 25z"/><path d="M16 9.4v17"/><path d="M8 13c1.8-.5 3.6-.4 5 .4M8 17c1.8-.5 3.6-.4 5 .4M19 13.4c1.4-.8 3.2-.9 5-.4"/></svg>
-        <span><strong>LANCE'S</strong><small>MATHEMATICAL ESSAYS</small></span>
+        <span><strong>THE OPEN</strong><small>ARCHIVE</small></span>
       </a>
       <nav class="main-nav" aria-label="Main navigation">
         {item("Essays", prefix, "essays")}

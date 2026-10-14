@@ -1,7 +1,7 @@
 {
   "_help": "Set 'url' to the site's address once it is online (e.g. https://lance-papers.onrender.com), then run: python scripts/build_pages.py",
   "url": "https://theopenarchive.onrender.com",
-  "title": "Lance's Unorthodox Essay Papers",
+  "title": "The Open Archive",
   "author": "Lanchenba Mutum",
   "description": "A collection of mathematical essays by Lanchenba Mutum, available to read online or download as PDF.",
   "curator": "Lanchenba Mutum"

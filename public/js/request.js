@@ -113,7 +113,7 @@
     const body = [
       "Hi Lance,",
       "",
-      "Please email me when there's a new essay on Lance's Unorthodox Essay Papers.",
+      "Please email me when there's a new essay on The Open Archive.",
       ...(name ? ["", `Name: ${name}`] : []),
       "",
       "Thanks!",

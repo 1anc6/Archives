@@ -232,5 +232,28 @@
     document.querySelectorAll(".related-card").forEach((a) => a.addEventListener("click", () => sfx.tick()));
   }
 
+  /* ---------- Essay page: the symbol writes itself on ---------- */
+  const glyph = document.querySelector(".sheet-glyph");
+  if (glyph) {
+    let i = 0;
+    const walk = (node) => {
+      for (const child of [...node.childNodes]) {
+        if (child.nodeType !== 3) { walk(child); continue; }
+        const frag = document.createDocumentFragment();
+        for (const ch of child.textContent) {
+          if (/\s/.test(ch)) { frag.append(ch); continue; }
+          const span = document.createElement("span");
+          span.className = "ink";
+          span.style.setProperty("--d", i++);
+          span.textContent = ch;
+          frag.append(span);
+        }
+        child.replaceWith(frag);
+      }
+    };
+    walk(glyph);
+    requestAnimationFrame(() => glyph.closest(".essay-sheet").classList.add("is-seen"));
+  }
+
   window.Site = { toast, share, cite, setTheme };
 })();

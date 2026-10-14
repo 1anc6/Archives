@@ -3,6 +3,15 @@
   "url": "https://theopenarchive.onrender.com",
   "title": "The Open Archive",
   "author": "Lanchenba Mutum",
-  "description": "A collection of mathematical essays by Lanchenba Mutum, available to read online or download as PDF.",
-  "curator": "Lanchenba Mutum"
+  "description": "A collection of mathematical essays by Lanchenba Mutum, free to read online, with PDFs on request.",
+  "curator": "Lanchenba Mutum",
+  "_help_stats": "Visitor stats: sign up at goatcounter.com, put your code here (e.g. \"lance\" for lance.goatcounter.com), then run python scripts/build_pages.py",
+  "goatcounter": "lance",
+  "_help_comments": "Comments: enable Discussions on the GitHub repo, install the giscus app, copy repoId and categoryId from giscus.app, then run python scripts/build_pages.py",
+  "giscus": {
+    "repo": "1anc6/TheOpenArchive",
+    "repoId": "",
+    "category": "Comments",
+    "categoryId": ""
+  }
 }

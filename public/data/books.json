@@ -338,7 +338,7 @@
     ],
     "description": "An analysis of the probability that a participant draws their own name in Secret Santa, introducing derangements and the unexpected appearance of e.",
     "excerpt": {
-      "text": "Yet, anyone who’s played the game before knows only too well how much of a hassle picking names can be, going to the extent of crumbling the holiday cheer. In this essay, we’ll explore the mathematics behind why the way we usually play this game is the stuff of nightmares.",
+      "text": "In this essay, we’ll explore the mathematics behind why the way we usually play this game is the stuff of nightmares.",
       "page": 1
     },
     "image": "images/secret-santa.jpg",

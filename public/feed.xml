@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>The Open Archive</title>
+    <link>https://theopenarchive.onrender.com/</link>
+    <atom:link href="https://theopenarchive.onrender.com/feed.xml" rel="self" type="application/rss+xml"/>
+    <description>A collection of mathematical essays by Lanchenba Mutum, free to read online, with PDFs on request.</description>
+    <language>en</language>
+    <lastBuildDate>Mon, 12 Oct 2026 09:00:00 +0000</lastBuildDate>
+    <item>
+      <title>Mathematics Behind Jujutsu Kaisen: Gojo Satoru&#x27;s Infinity</title>
+      <link>https://theopenarchive.onrender.com/essays/gojo-infinity/</link>
+      <guid isPermaLink="true">https://theopenarchive.onrender.com/essays/gojo-infinity/</guid>
+      <description>An examination of Zeno&#x27;s paradox, convergent series and limits through the &#x27;Infinity&#x27; technique of Gojo Satoru in Jujutsu Kaisen. “Between any attacker and Gojo, there is always a distance. That distance can be halved, then halved again, then again, forever. No matter how fast the attack travels, it must first cross half the remaining distance, then half of that, then half of that, an infinite sequence of steps that, Gojo claims, can never be completed.”</description>
+      <category>Infinity</category>
+      <pubDate>Mon, 12 Oct 2026 09:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <title>A Tale of Two Infinities</title>
+      <link>https://theopenarchive.onrender.com/essays/tale-of-two-infinities/</link>
+      <guid isPermaLink="true">https://theopenarchive.onrender.com/essays/tale-of-two-infinities/</guid>
+      <description>An introduction to Cantor&#x27;s discovery that infinite sets can differ in size, and to the distinction between countable and uncountable infinity. “Numbers, our whole world is dominated by numbers, all of which are finite – even if some are simply too large to comprehend. However, there is one “number” which defies all others: infinity.”</description>
+      <category>Infinity</category>
+      <pubDate>Mon, 12 Oct 2026 09:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <title>0.999… = 1: A Paradox That Isn&#x27;t</title>
+      <link>https://theopenarchive.onrender.com/essays/a-paradox-that-isnt/</link>
+      <guid isPermaLink="true">https://theopenarchive.onrender.com/essays/a-paradox-that-isnt/</guid>
+      <description>A careful demonstration that 0.999… is exactly equal to 1, with an explanation of why the result so often surprises students. “This shows that the infinite sum represented by 0.999… is exactly equal to 1. It does not merely approach 1—it reaches it in a precise mathematical sense.”</description>
+      <category>Infinity</category>
+      <pubDate>Mon, 12 Oct 2026 09:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <title>A Proof for the Unprovable</title>
+      <link>https://theopenarchive.onrender.com/essays/proof-for-the-unprovable/</link>
+      <guid isPermaLink="true">https://theopenarchive.onrender.com/essays/proof-for-the-unprovable/</guid>
+      <description>An account of Hilbert&#x27;s programme and Gödel&#x27;s incompleteness theorems, which showed that not every mathematical truth can be proved. “Let me break a rule, mathematics can&#x27;t prove everything…”</description>
+      <category>Logic</category>
+      <pubDate>Mon, 12 Oct 2026 09:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <title>A Mathematical Glitch in the Fourth Wall</title>
+      <link>https://theopenarchive.onrender.com/essays/glitch-in-the-fourth-wall/</link>
+      <guid isPermaLink="true">https://theopenarchive.onrender.com/essays/glitch-in-the-fourth-wall/</guid>
+      <description>An exploration of the number 73, from a well-known television reference to the proof by Pomerance and Spicer of its unique properties. “A journey through the improbable mathematics of 73. From a sitcom gag to a rigorous proof by Pomerance and Spicer, this essay explores why a single prime number stands unique in the infinite sea of integers, explained for curious minds.”</description>
+      <category>Number Theory</category>
+      <pubDate>Mon, 12 Oct 2026 09:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <title>&#x27;Tis the Season: A Mathematical Foray into Secret Santa</title>
+      <link>https://theopenarchive.onrender.com/essays/secret-santa/</link>
+      <guid isPermaLink="true">https://theopenarchive.onrender.com/essays/secret-santa/</guid>
+      <description>An analysis of the probability that a participant draws their own name in Secret Santa, introducing derangements and the unexpected appearance of e. “In this essay, we’ll explore the mathematics behind why the way we usually play this game is the stuff of nightmares.”</description>
+      <category>Probability</category>
+      <pubDate>Mon, 12 Oct 2026 09:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <title>AI Is Fundamentally Unintelligent</title>
+      <link>https://theopenarchive.onrender.com/essays/ai-is-unintelligent/</link>
+      <guid isPermaLink="true">https://theopenarchive.onrender.com/essays/ai-is-unintelligent/</guid>
+      <description>A study of why leading AI models answer a simple conditional-probability question incorrectly, and what this reveals about their reasoning. “Nowadays, AI is considered to be a near-flawless calculator capable of solving any question. Yet, a simple probability question can highlight a surprising weakness.”</description>
+      <category>Probability</category>
+      <pubDate>Mon, 12 Oct 2026 09:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <title>A Prisoner&#x27;s Dilemma</title>
+      <link>https://theopenarchive.onrender.com/essays/prisoners-dilemma/</link>
+      <guid isPermaLink="true">https://theopenarchive.onrender.com/essays/prisoners-dilemma/</guid>
+      <description>An introduction to game theory through the Prisoner&#x27;s Dilemma, examining rational choice when both cooperation and betrayal are possible. “In Game Theory, one of the most important thought experiments is the Prisoner’s Dilemma. It entails two rational agents who have been arrested and are being interrogated separately (i.e., communication is not allowed between them).”</description>
+      <category>Game Theory</category>
+      <pubDate>Mon, 12 Oct 2026 09:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <title>A Deep Dive into the Possibilities of LEGO</title>
+      <link>https://theopenarchive.onrender.com/essays/lego-maths/</link>
+      <guid isPermaLink="true">https://theopenarchive.onrender.com/essays/lego-maths/</guid>
+      <description>A combinatorial investigation into the number of ways in which a small set of LEGO bricks can be combined. “LEGO. It&#x27;s such a simple childhood toy that I have played with from a very young age, and I&#x27;m sure most of the people reading this would have as well. However, most don&#x27;t realise how much maths can be behind such a simple plastic block.”</description>
+      <category>Combinatorics</category>
+      <pubDate>Mon, 12 Oct 2026 09:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <title>A Voyage to the Planet of Fractal Geometry</title>
+      <link>https://theopenarchive.onrender.com/essays/planet-of-fractal-geometry/</link>
+      <guid isPermaLink="true">https://theopenarchive.onrender.com/essays/planet-of-fractal-geometry/</guid>
+      <description>An illustrated journey through the branches of geometry, culminating in fractals: self-similar shapes with non-integer dimensions. “Welcome to the solar system of geometry created by our father of geometry, known as Euclid. In the vast universe of mathematics, the solar system of geometry stands as the most notable and elegant solar system.”</description>
+      <category>Geometry</category>
+      <pubDate>Mon, 12 Oct 2026 09:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <title>How Do Patterns in Nature Relate to Mathematical Laws?</title>
+      <link>https://theopenarchive.onrender.com/essays/patterns-in-nature/</link>
+      <guid isPermaLink="true">https://theopenarchive.onrender.com/essays/patterns-in-nature/</guid>
+      <description>An examination of Alan Turing&#x27;s work on morphogenesis, showing how the spots and stripes of animal markings arise from reaction–diffusion between activators and inhibitors. “Many people associate Alan Turing with the Enigma machine, but in this essay, I shall be exploring one of his later works where he discovered the connection between nature and mathematics.”</description>
+      <category>Nature</category>
+      <pubDate>Mon, 12 Oct 2026 09:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <title>Absolute Cinema of Math</title>
+      <link>https://theopenarchive.onrender.com/essays/absolute-cinema-of-math/</link>
+      <guid isPermaLink="true">https://theopenarchive.onrender.com/essays/absolute-cinema-of-math/</guid>
+      <description>An exploration of the mathematics underlying music, from the physics of vibrating strings to harmonics and the equation of a wave. “Hearing the heartbreaking melody gives you goosebumps, you might wonder why? Well, math is the answer.”</description>
+      <category>Music</category>
+      <pubDate>Mon, 12 Oct 2026 09:00:00 +0000</pubDate>
+    </item>
+  </channel>
+</rss>

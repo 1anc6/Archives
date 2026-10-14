@@ -33,10 +33,13 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=STIX+Two+Text:ital@0;1&family=Noto+Sans+Math&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../css/styles.css?v=22">
+  <link rel="alternate" type="application/rss+xml" title="The Open Archive" href="../../feed.xml">
+  <link rel="stylesheet" href="../../css/styles.css?v=24">
+  <script data-goatcounter="https://lance.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </head>
 <body>
 
+  <a class="skip-link" href="#content">Skip to content</a>
   <div class="stage">
     <header class="site-header">
       <a class="brand" href="../../" aria-label="The Open Archive, home">
@@ -44,7 +47,7 @@
         <span><strong>THE OPEN</strong><small>ARCHIVE</small></span>
       </a>
       <nav class="main-nav" aria-label="Main navigation">
-        <a href="../../" class="active">Essays</a>
+        <a href="../../" class="active" aria-current="page">Essays</a>
         <a href="../../#room">Library</a>
         <a href="../../#about">About</a>
       </nav>
@@ -65,7 +68,7 @@
         </button>
       </span>
     </header>
-    <main class="page-wrap essay-page">
+    <main class="page-wrap essay-page" id="content" tabindex="-1">
       <nav class="crumbs" aria-label="Breadcrumb"><a href="../../">Essays</a><span>/</span><span>Geometry</span><span>/</span><span>No. 10</span></nav>
 
       <article class="essay-hero">
@@ -82,28 +85,33 @@
           </div>
           <div class="essay-actions">
             <a class="btn primary" data-read href="../../reader.html?id=planet-of-fractal-geometry">Read essay<svg class="arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a>
-            <a class="btn ghost" href="../../books/planet-of-fractal-geometry.pdf" download data-title="A Voyage to the Planet of Fractal Geometry">Download PDF</a>
+            <a class="btn ghost" href="../../books/planet-of-fractal-geometry.pdf" download data-title="A Voyage to the Planet of Fractal Geometry">Request PDF</a>
             <button class="btn ghost" data-cite>Cite</button>
             <button class="btn ghost" data-share>Share</button>
           </div>
           <p class="progress-note" id="progressNote" hidden></p>
         </div>
-        <figure class="essay-figure"><span class="photo" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA0JCgsKCA0LCgsODg0PEyAVExISEyccHhcgLikxMC4pLSwzOko+MzZGNywtQFdBRkxOUlNSMj5aYVpQYEpRUk//2wBDAQ4ODhMREyYVFSZPNS01T09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0//wAARCAARABgDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDnNUjaDVHR4wCp+6KfdGO6fc0fk7Vxj1qS/uPtV6bw4y5zj0oS2lv2bDAEDPNejRmvZpvdGrw71bM+ARKzeapI7UVdgYRRPbOq/McFj2orCrBTldtlQqOkuXlX3Fc/6tav6d0P0ooroWzOrp8ilJ99qKKKmW5Ej//Z);view-transition-name:ph-planet-of-fractal-geometry"><img src="../../images/planet-of-fractal-geometry-640.jpg" srcset="../../images/planet-of-fractal-geometry-640.jpg 640w, ../../images/planet-of-fractal-geometry.jpg 1200w" sizes="(max-width: 1000px) 92vw, 560px" alt="Illustrated solar system whose planets are named after branches of geometry." loading="eager" decoding="async" onload="this.classList.add('loaded')"></span></figure>
+        <figure class="essay-sheet">
+          <span class="sheet-glyph" aria-hidden="true">D ≈ 1.26</span>
+          <span class="sheet-photo"><span class="photo" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA0JCgsKCA0LCgsODg0PEyAVExISEyccHhcgLikxMC4pLSwzOko+MzZGNywtQFdBRkxOUlNSMj5aYVpQYEpRUk//2wBDAQ4ODhMREyYVFSZPNS01T09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0//wAARCAARABgDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDnNUjaDVHR4wCp+6KfdGO6fc0fk7Vxj1qS/uPtV6bw4y5zj0oS2lv2bDAEDPNejRmvZpvdGrw71bM+ARKzeapI7UVdgYRRPbOq/McFj2orCrBTldtlQqOkuXlX3Fc/6tav6d0P0ooroWzOrp8ilJ99qKKKmW5Ej//Z);view-transition-name:ph-planet-of-fractal-geometry"><img src="../../images/planet-of-fractal-geometry-640.jpg" srcset="../../images/planet-of-fractal-geometry-640.jpg 640w, ../../images/planet-of-fractal-geometry.jpg 1200w" sizes="(max-width: 1000px) 50vw, 280px" alt="Illustrated solar system whose planets are named after branches of geometry." loading="eager" decoding="async" onload="this.classList.add('loaded')"></span></span>
+        </figure>
       </article>
 
       <section class="essay-section">
-        <div class="section-heading plain"><h2>Topics covered</h2></div>
-        <ol class="topic-list">
-          <li style="--i:0"><span>01</span>The branches of geometry</li>
-          <li style="--i:1"><span>02</span>Fractal geometry</li>
-          <li style="--i:2"><span>03</span>Fractals in nature</li>
-          <li style="--i:3"><span>04</span>Equations of fractal geometry</li>
-          <li style="--i:4"><span>05</span>Fractals in human creativity</li>
+        <div class="section-heading plain"><h2>Inside this essay</h2><span class="section-note">Open any section in the reader</span></div>
+        <ol class="topic-list toc-links">
+          <li style="--i:0"><a href="../../reader.html?id=planet-of-fractal-geometry&amp;page=1"><span class="n">01</span><span class="t">Introduction</span><span class="p">p. 1</span></a></li>
+          <li style="--i:1"><a href="../../reader.html?id=planet-of-fractal-geometry&amp;page=1"><span class="n">02</span><span class="t">Geometry</span><span class="p">p. 1</span></a></li>
+          <li style="--i:2"><a href="../../reader.html?id=planet-of-fractal-geometry&amp;page=2"><span class="n">03</span><span class="t">Fractal Geometry</span><span class="p">p. 2</span></a></li>
+          <li style="--i:3"><a href="../../reader.html?id=planet-of-fractal-geometry&amp;page=3"><span class="n">04</span><span class="t">Fractals in Nature</span><span class="p">p. 3</span></a></li>
+          <li style="--i:4"><a href="../../reader.html?id=planet-of-fractal-geometry&amp;page=4"><span class="n">05</span><span class="t">Equations of Fractal Geometry</span><span class="p">p. 4</span></a></li>
+          <li style="--i:5"><a href="../../reader.html?id=planet-of-fractal-geometry&amp;page=6"><span class="n">06</span><span class="t">Fractals in Human Creativity</span><span class="p">p. 6</span></a></li>
+          <li style="--i:6"><a href="../../reader.html?id=planet-of-fractal-geometry&amp;page=7"><span class="n">07</span><span class="t">References</span><span class="p">p. 7</span></a></li>
         </ol>
       </section>
 
       <section class="essay-section">
-        <div class="section-heading plain"><h2>Further reading</h2><a class="link small" href="../../#room">All essays</a></div>
+        <div class="section-heading plain"><h2>Further reading</h2><a class="link small" href="../../">All essays</a></div>
         <div class="related-grid">
           <a class="related-card" href="../patterns-in-nature/" style="--i:0">
             <span class="photo" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA0JCgsKCA0LCgsODg0PEyAVExISEyccHhcgLikxMC4pLSwzOko+MzZGNywtQFdBRkxOUlNSMj5aYVpQYEpRUk//2wBDAQ4ODhMREyYVFSZPNS01T09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0//wAARCAARABgDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDGAxxRigEHoaCcCuMAAwaKAwPQ0UwIbb7tSn7tFFD3ERQ/6xqKKKGCP//Z);view-transition-name:ph-patterns-in-nature"><img src="../../images/patterns-in-nature-640.jpg" srcset="../../images/patterns-in-nature-640.jpg 640w, ../../images/patterns-in-nature.jpg 1200w" sizes="(max-width: 650px) 80vw, 420px" alt="A Turing reaction–diffusion pattern of golden spots on a dark green background." loading="lazy" decoding="async" onload="this.classList.add('loaded')"></span>
@@ -123,6 +131,7 @@
         </div>
       </section>
     </main>
+
     <script type="application/json" id="essayData">{"id": "planet-of-fractal-geometry", "title": "A Voyage to the Planet of Fractal Geometry", "author": "Lanchenba Mutum", "year": 2026}</script>
     <script type="application/ld+json">{"@context": "https://schema.org", "@type": "ScholarlyArticle", "headline": "A Voyage to the Planet of Fractal Geometry", "author": {"@type": "Person", "name": "Lanchenba Mutum"}, "datePublished": "2026", "description": "An illustrated journey through the branches of geometry, culminating in fractals: self-similar shapes with non-integer dimensions.", "about": ["The branches of geometry", "Fractal geometry", "Fractals in nature", "Equations of fractal geometry", "Fractals in human creativity"], "isPartOf": {"@type": "CreativeWorkSeries", "name": "The Open Archive", "author": {"@type": "Person", "name": "Lanchenba Mutum"}}, "image": "https://theopenarchive.onrender.com/images/planet-of-fractal-geometry.jpg", "encoding": {"@type": "MediaObject", "encodingFormat": "application/pdf", "contentUrl": "https://theopenarchive.onrender.com/books/planet-of-fractal-geometry.pdf"}, "url": "https://theopenarchive.onrender.com/essays/planet-of-fractal-geometry/"}</script>
 
@@ -132,10 +141,10 @@
     </footer>
     <div class="toast" id="toast" role="status" hidden></div>
   </div>
-  <script src="../../js/common.js?v=22"></script>
-  <script src="../../js/sfx.js?v=22"></script>
-  <script src="../../js/site.js?v=22"></script>
-  <script src="../../js/request.js?v=22"></script>
-  <script src="../../js/music.js?v=22"></script>
+  <script src="../../js/common.js?v=24"></script>
+  <script src="../../js/sfx.js?v=24"></script>
+  <script src="../../js/site.js?v=24"></script>
+  <script src="../../js/request.js?v=24"></script>
+  <script src="../../js/music.js?v=24"></script>
 </body>
 </html>

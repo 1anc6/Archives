@@ -376,3 +376,16 @@
   .end-actions .btn { flex: 1 1 auto; }
 }
 .reader-body .end-actions .btn.primary { background: var(--r-ink); color: var(--r-bg); }
+
+/* ---------- Listen mode ---------- */
+#listenBtn.is-on { background: var(--gold); color: var(--r-panel); }
+.listen-status { bottom: calc(110px + env(safe-area-inset-bottom)); }
+
+/* ---------- Highlights on the page ---------- */
+.textLayer span.hl { background: rgba(214, 150, 90, .38); border-radius: 2px; }
+.reader-body[data-theme="dark"] .textLayer span.hl { background: rgba(60, 120, 190, .4); } /* the page is colour-inverted in dark mode */
+
+/* ---------- Toolbar: four tools fit a phone ---------- */
+@media (max-width: 480px) {
+  .quote-bar button { padding: 8px 10px; gap: 5px; font-size: 14px; }
+}

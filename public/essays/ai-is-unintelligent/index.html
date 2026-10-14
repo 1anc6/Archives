@@ -33,10 +33,13 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=STIX+Two+Text:ital@0;1&family=Noto+Sans+Math&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../css/styles.css?v=22">
+  <link rel="alternate" type="application/rss+xml" title="The Open Archive" href="../../feed.xml">
+  <link rel="stylesheet" href="../../css/styles.css?v=24">
+  <script data-goatcounter="https://lance.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </head>
 <body>
 
+  <a class="skip-link" href="#content">Skip to content</a>
   <div class="stage">
     <header class="site-header">
       <a class="brand" href="../../" aria-label="The Open Archive, home">
@@ -44,7 +47,7 @@
         <span><strong>THE OPEN</strong><small>ARCHIVE</small></span>
       </a>
       <nav class="main-nav" aria-label="Main navigation">
-        <a href="../../" class="active">Essays</a>
+        <a href="../../" class="active" aria-current="page">Essays</a>
         <a href="../../#room">Library</a>
         <a href="../../#about">About</a>
       </nav>
@@ -65,7 +68,7 @@
         </button>
       </span>
     </header>
-    <main class="page-wrap essay-page">
+    <main class="page-wrap essay-page" id="content" tabindex="-1">
       <nav class="crumbs" aria-label="Breadcrumb"><a href="../../">Essays</a><span>/</span><span>Probability</span><span>/</span><span>No. 07</span></nav>
 
       <article class="essay-hero">
@@ -82,28 +85,34 @@
           </div>
           <div class="essay-actions">
             <a class="btn primary" data-read href="../../reader.html?id=ai-is-unintelligent">Read essay<svg class="arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a>
-            <a class="btn ghost" href="../../books/ai-is-unintelligent.pdf" download data-title="AI Is Fundamentally Unintelligent">Download PDF</a>
+            <a class="btn ghost" href="../../books/ai-is-unintelligent.pdf" download data-title="AI Is Fundamentally Unintelligent">Request PDF</a>
             <button class="btn ghost" data-cite>Cite</button>
             <button class="btn ghost" data-share>Share</button>
           </div>
           <p class="progress-note" id="progressNote" hidden></p>
         </div>
-        <figure class="essay-figure"><span class="photo" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA0JCgsKCA0LCgsODg0PEyAVExISEyccHhcgLikxMC4pLSwzOko+MzZGNywtQFdBRkxOUlNSMj5aYVpQYEpRUk//2wBDAQ4ODhMREyYVFSZPNS01T09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0//wAARCAARABgDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDjR1qTcA/y8j3qPPrSgDdxzW1jAkRyGYjjIopqdTRTsguMoFFFAD4+p+lFFFAj/9k=);view-transition-name:ph-ai-is-unintelligent"><img src="../../images/ai-is-unintelligent-640.jpg" srcset="../../images/ai-is-unintelligent-640.jpg 640w, ../../images/ai-is-unintelligent.jpg 1200w" sizes="(max-width: 1000px) 92vw, 560px" alt="A probability tree for three coin tosses with the path heads-heads-heads highlighted." loading="eager" decoding="async" onload="this.classList.add('loaded')"></span></figure>
+        <figure class="essay-sheet">
+          <span class="sheet-glyph" aria-hidden="true">P(H | E)</span>
+          <span class="sheet-photo"><span class="photo" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA0JCgsKCA0LCgsODg0PEyAVExISEyccHhcgLikxMC4pLSwzOko+MzZGNywtQFdBRkxOUlNSMj5aYVpQYEpRUk//2wBDAQ4ODhMREyYVFSZPNS01T09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0//wAARCAARABgDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDjR1qTcA/y8j3qPPrSgDdxzW1jAkRyGYjjIopqdTRTsguMoFFFAD4+p+lFFFAj/9k=);view-transition-name:ph-ai-is-unintelligent"><img src="../../images/ai-is-unintelligent-640.jpg" srcset="../../images/ai-is-unintelligent-640.jpg 640w, ../../images/ai-is-unintelligent.jpg 1200w" sizes="(max-width: 1000px) 50vw, 280px" alt="A probability tree for three coin tosses with the path heads-heads-heads highlighted." loading="eager" decoding="async" onload="this.classList.add('loaded')"></span></span>
+        </figure>
       </article>
 
       <section class="essay-section">
-        <div class="section-heading plain"><h2>Topics covered</h2></div>
-        <ol class="topic-list">
-          <li style="--i:0"><span>01</span>A conditional-probability problem</li>
-          <li style="--i:1"><span>02</span>AI as a probability machine</li>
-          <li style="--i:2"><span>03</span>When local logic fails globally</li>
-          <li style="--i:3"><span>04</span>Gödel and self-reference</li>
-          <li style="--i:4"><span>05</span>Turing and undecidability</li>
+        <div class="section-heading plain"><h2>Inside this essay</h2><span class="section-note">Open any section in the reader</span></div>
+        <ol class="topic-list toc-links">
+          <li style="--i:0"><a href="../../reader.html?id=ai-is-unintelligent&amp;page=2"><span class="n">01</span><span class="t">Introduction</span><span class="p">p. 2</span></a></li>
+          <li style="--i:1"><a href="../../reader.html?id=ai-is-unintelligent&amp;page=2"><span class="n">02</span><span class="t">The Problem</span><span class="p">p. 2</span></a></li>
+          <li style="--i:2"><a href="../../reader.html?id=ai-is-unintelligent&amp;page=2"><span class="n">03</span><span class="t">AI the Probability Machine</span><span class="p">p. 2</span></a></li>
+          <li style="--i:3"><a href="../../reader.html?id=ai-is-unintelligent&amp;page=3"><span class="n">04</span><span class="t">When Local Logic Fails Globally</span><span class="p">p. 3</span></a></li>
+          <li style="--i:4"><a href="../../reader.html?id=ai-is-unintelligent&amp;page=3"><span class="n">05</span><span class="t">Gödel</span><span class="p">p. 3</span></a></li>
+          <li style="--i:5"><a href="../../reader.html?id=ai-is-unintelligent&amp;page=4"><span class="n">06</span><span class="t">Turing</span><span class="p">p. 4</span></a></li>
+          <li style="--i:6"><a href="../../reader.html?id=ai-is-unintelligent&amp;page=4"><span class="n">07</span><span class="t">A Glimpse Beyond</span><span class="p">p. 4</span></a></li>
+          <li style="--i:7"><a href="../../reader.html?id=ai-is-unintelligent&amp;page=6"><span class="n">08</span><span class="t">What This Tells Us About Thought</span><span class="p">p. 6</span></a></li>
         </ol>
       </section>
 
       <section class="essay-section">
-        <div class="section-heading plain"><h2>Further reading</h2><a class="link small" href="../../#room">All essays</a></div>
+        <div class="section-heading plain"><h2>Further reading</h2><a class="link small" href="../../">All essays</a></div>
         <div class="related-grid">
           <a class="related-card" href="../secret-santa/" style="--i:0">
             <span class="photo" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA0JCgsKCA0LCgsODg0PEyAVExISEyccHhcgLikxMC4pLSwzOko+MzZGNywtQFdBRkxOUlNSMj5aYVpQYEpRUk//2wBDAQ4ODhMREyYVFSZPNS01T09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0//wAARCAARABgDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwCK4gijt2kQl5d21iO9P0i1YXZE9v5m4fLkV2UHh20XTngTLbznceuan0rT5LYGOdVYD7rd6xVMHbm0OH1Lw9KbgGDjcMlfSiu4vtOknPlxfKp6t3op8hDWuhqQ/wCrFPoorRbFhRRRTA//2Q==);view-transition-name:ph-secret-santa"><img src="../../images/secret-santa-640.jpg" srcset="../../images/secret-santa-640.jpg 640w, ../../images/secret-santa.jpg 1200w" sizes="(max-width: 650px) 80vw, 420px" alt="Christmas fir branches with gold baubles, red berries and a pine cone." loading="lazy" decoding="async" onload="this.classList.add('loaded')"></span>
@@ -123,6 +132,7 @@
         </div>
       </section>
     </main>
+
     <script type="application/json" id="essayData">{"id": "ai-is-unintelligent", "title": "AI Is Fundamentally Unintelligent", "author": "Lanchenba Mutum", "year": 2026}</script>
     <script type="application/ld+json">{"@context": "https://schema.org", "@type": "ScholarlyArticle", "headline": "AI Is Fundamentally Unintelligent", "author": {"@type": "Person", "name": "Lanchenba Mutum"}, "datePublished": "2026", "description": "A study of why leading AI models answer a simple conditional-probability question incorrectly, and what this reveals about their reasoning.", "about": ["A conditional-probability problem", "AI as a probability machine", "When local logic fails globally", "Gödel and self-reference", "Turing and undecidability"], "isPartOf": {"@type": "CreativeWorkSeries", "name": "The Open Archive", "author": {"@type": "Person", "name": "Lanchenba Mutum"}}, "image": "https://theopenarchive.onrender.com/images/ai-is-unintelligent.jpg", "encoding": {"@type": "MediaObject", "encodingFormat": "application/pdf", "contentUrl": "https://theopenarchive.onrender.com/books/ai-is-unintelligent.pdf"}, "url": "https://theopenarchive.onrender.com/essays/ai-is-unintelligent/"}</script>
 
@@ -132,10 +142,10 @@
     </footer>
     <div class="toast" id="toast" role="status" hidden></div>
   </div>
-  <script src="../../js/common.js?v=22"></script>
-  <script src="../../js/sfx.js?v=22"></script>
-  <script src="../../js/site.js?v=22"></script>
-  <script src="../../js/request.js?v=22"></script>
-  <script src="../../js/music.js?v=22"></script>
+  <script src="../../js/common.js?v=24"></script>
+  <script src="../../js/sfx.js?v=24"></script>
+  <script src="../../js/site.js?v=24"></script>
+  <script src="../../js/request.js?v=24"></script>
+  <script src="../../js/music.js?v=24"></script>
 </body>
 </html>

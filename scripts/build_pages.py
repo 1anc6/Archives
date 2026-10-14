@@ -19,7 +19,7 @@ from PIL import Image, ImageDraw, ImageFilter, ImageFont
 
 ROOT = Path(__file__).resolve().parent.parent
 PUBLIC = ROOT / "public"
-VERSION = "22"  # bump to make browsers fetch new CSS/JS
+VERSION = "24"  # bump to make browsers fetch new CSS/JS
 
 books = json.loads((PUBLIC / "data/books.json").read_text(encoding="utf-8"))
 site = json.loads((PUBLIC / "data/site.json").read_text(encoding="utf-8"))
@@ -27,6 +27,16 @@ BASE = site.get("url", "").rstrip("/")
 TITLE = site["title"]
 AUTHOR = site["author"]
 CURATOR = site.get("curator", AUTHOR)
+EMAIL = site.get("email", "")
+GOATCOUNTER = site.get("goatcounter", "").strip()  # e.g. "lance" -> lance.goatcounter.com
+GISCUS = site.get("giscus", {})  # comments; only shown once repoId and categoryId are filled in
+
+
+def stats_tag():
+    """GoatCounter visitor stats (no cookies). Empty until site.json has a code."""
+    if not GOATCOUNTER:
+        return ""
+    return f'<script data-goatcounter="https://{e(GOATCOUNTER)}.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>'
 for i, b in enumerate(books, start=1):
     b["num"] = i
 
@@ -235,17 +245,20 @@ def head(title, desc, prefix, og, author=None):
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=STIX+Two+Text:ital@0;1&family=Noto+Sans+Math&display=swap" rel="stylesheet">
+  <link rel="alternate" type="application/rss+xml" title="{e(TITLE)}" href="{prefix}feed.xml">
   <link rel="stylesheet" href="{prefix}css/styles.css?v={VERSION}">
+  {stats_tag()}
 </head>"""
 
 
 def header(prefix, active):
     def item(label, href, key, arrow=False):
-        cls = ' class="active"' if key == active else ""
+        cls = ' class="active" aria-current="page"' if key == active else ""
         tail = '<span aria-hidden="true">↗</span>' if arrow else ""
         return f'<a href="{href}"{cls}>{label}{tail}</a>'
 
     return f"""
+  <a class="skip-link" href="#content">Skip to content</a>
   <div class="stage">
     <header class="site-header">
       <a class="brand" href="{prefix}" aria-label="The Open Archive, home">
@@ -329,6 +342,42 @@ def excerpt(b):
             f'<footer>From page {x["page"]}</footer></blockquote>')
 
 
+def notation(glyph):
+    """Essay symbol as HTML: superscript/subscript characters become <sup>/<sub>
+    so the math font draws them (no font has e.g. a superscript n in italic)."""
+    sup, sub, plain = "⁰¹²³⁴⁵⁶⁷⁸⁹ⁿ⁺⁻", "₀₁₂₃₄₅₆₇₈₉", "0123456789n+-"
+    out = ""
+    for ch in glyph:
+        if ch in sup:
+            out += f"<sup>{plain[sup.index(ch)]}</sup>"
+        elif ch in sub:
+            out += f"<sub>{plain[sub.index(ch)]}</sub>"
+        else:
+            out += e(ch)
+    return out.replace("</sup><sup>", "").replace("</sub><sub>", "")
+
+
+def comments(b):
+    """Comments stored in the GitHub repository's Discussions, via giscus.
+    Hidden until site.json has giscus.repoId and giscus.categoryId."""
+    g = GISCUS
+    if not (g.get("repo") and g.get("repoId") and g.get("categoryId")):
+        return ""
+    attrs = {
+        "src": "https://giscus.app/client.js", "data-repo": g["repo"], "data-repo-id": g["repoId"],
+        "data-category": g.get("category", "Comments"), "data-category-id": g["categoryId"],
+        "data-mapping": "specific", "data-term": b["id"], "data-strict": "1",
+        "data-reactions-enabled": "1", "data-emit-metadata": "0", "data-input-position": "top",
+        "data-theme": "preferred_color_scheme", "data-lang": "en", "data-loading": "lazy",
+        "crossorigin": "anonymous",
+    }
+    tag = " ".join(f'{k}="{e(v)}"' for k, v in attrs.items())
+    return f"""    <section class="page-wrap essay-section comments" aria-labelledby="commentsTitle">
+      <div class="section-heading plain"><h2 id="commentsTitle">Comments</h2><span class="section-note">Sign in with GitHub to join in</span></div>
+      <script {tag} async></script>
+    </section>"""
+
+
 def related(b):
     same = [x for x in books if x["category"] == b["category"] and x["id"] != b["id"]]
     others = [x for x in books[b["num"]:] + books[: b["num"] - 1] if x not in same and x["id"] != b["id"]]
@@ -355,7 +404,10 @@ def essay_page(b):
     if BASE:
         ld["url"] = absolute(f"essays/{b['id']}/")
     data = {k: b[k] for k in ("id", "title", "author", "year")}
-    topics = "\n".join(f'          <li style="--i:{i}"><span>{i + 1:02d}</span>{e(t)}</li>' for i, t in enumerate(b["topics"]))
+    topics = "\n".join(
+        f'          <li style="--i:{i}"><a href="{prefix}reader.html?id={b["id"]}&amp;page={sec["page"]}">'
+        f'<span class="n">{i + 1:02d}</span><span class="t">{e(sec["title"])}</span><span class="p">p. {sec["page"]}</span></a></li>'
+        for i, sec in enumerate(b.get("sections", [])))
     rel = "\n".join(
         f"""          <a class="related-card" href="../{x['id']}/" style="--i:{i}">
             {photo(x, prefix, name=True)}
@@ -367,7 +419,7 @@ def essay_page(b):
     return f"""{head(title, b['description'], prefix, og, author=b['author'])}
 <body>
 {header(prefix, "essays")}
-    <main class="page-wrap essay-page">
+    <main class="page-wrap essay-page" id="content" tabindex="-1">
       <nav class="crumbs" aria-label="Breadcrumb"><a href="{prefix}">Essays</a><span>/</span><span>{e(b['category'])}</span><span>/</span><span>No. {b['num']:02d}</span></nav>
 
       <article class="essay-hero">
@@ -383,32 +435,109 @@ def essay_page(b):
           </div>
           <div class="essay-actions">
             <a class="btn primary" data-read href="{prefix}reader.html?id={b['id']}">Read essay<svg class="arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a>
-            <a class="btn ghost" href="{prefix}{e(b['file'])}" download data-title="{e(b['title'])}">Download PDF</a>
+            <a class="btn ghost" href="{prefix}{e(b['file'])}" download data-title="{e(b['title'])}">Request PDF</a>
             <button class="btn ghost" data-cite>Cite</button>
             <button class="btn ghost" data-share>Share</button>
           </div>
           <p class="progress-note" id="progressNote" hidden></p>
         </div>
-        <figure class="essay-figure">{photo(b, prefix, eager=True, name=True, sizes="(max-width: 1000px) 92vw, 560px")}</figure>
+        <figure class="essay-sheet">
+          <span class="sheet-glyph" aria-hidden="true">{notation(b["glyph"])}</span>
+          <span class="sheet-photo">{photo(b, prefix, eager=True, name=True, sizes="(max-width: 1000px) 50vw, 280px")}</span>
+        </figure>
       </article>
 
       <section class="essay-section">
-        <div class="section-heading plain"><h2>Topics covered</h2></div>
-        <ol class="topic-list">
+        <div class="section-heading plain"><h2>Inside this essay</h2><span class="section-note">Open any section in the reader</span></div>
+        <ol class="topic-list toc-links">
 {topics}
         </ol>
       </section>
 
       <section class="essay-section">
-        <div class="section-heading plain"><h2>Further reading</h2><a class="link small" href="{prefix}#room">All essays</a></div>
+        <div class="section-heading plain"><h2>Further reading</h2><a class="link small" href="{prefix}">All essays</a></div>
         <div class="related-grid">
 {rel}
         </div>
       </section>
     </main>
+{comments(b)}
     <script type="application/json" id="essayData">{json.dumps(data, ensure_ascii=False)}</script>
     <script type="application/ld+json">{json.dumps(ld, ensure_ascii=False)}</script>
 {footer(prefix, [])}"""
+
+
+# ---------------------------------------------------------------- 404 page
+def page_404():
+    """Served by Render for any missing address, so every link is absolute."""
+    prefix = "/"
+    og = og_tags(f"Page not found · {TITLE}", site["description"], "", "og/home.jpg")
+    return f"""{head(f"Page not found · {TITLE}", site["description"], prefix, og)}
+<body>
+{header(prefix, "")}
+    <main class="page-wrap lost" id="content" tabindex="-1">
+      <p class="lost-glyph" aria-hidden="true">∞</p>
+      <h1>This page wandered off to infinity</h1>
+      <p class="lost-lead">Like Zeno's runner, you got halfway there… and then halfway again. The address might be mistyped, or the page has moved. Happens to the best of us lol.</p>
+      <div class="lost-actions">
+        <a class="btn primary" href="/">Back to the essays<svg class="arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a>
+        <a class="btn ghost" id="lostRandom" href="/essays/{books[0]['id']}/">Take me to a random essay</a>
+      </div>
+    </main>
+    <script>
+      (function () {{
+        var ids = {json.dumps([b["id"] for b in books])};
+        document.getElementById("lostRandom").href = "/essays/" + ids[Math.floor(Math.random() * ids.length)] + "/";
+      }})();
+    </script>
+{footer(prefix, [])}"""
+
+
+# ---------------------------------------------------------------- RSS feed
+def feed_xml():
+    """RSS 2.0 feed of every essay, newest first, for feed readers."""
+    from email.utils import format_datetime
+    from datetime import datetime, timezone
+
+    def date(b):
+        y, m, d = map(int, (b.get("added") or f"{b.get('year', 2026)}-01-01").split("-"))
+        return datetime(y, m, d, 9, 0, tzinfo=timezone.utc)
+
+    items = []
+    for b in sorted(books, key=lambda x: (date(x), -x["num"]), reverse=True):
+        link = absolute(f"essays/{b['id']}/")
+        text = b["description"] + (f" “{b['excerpt']['text']}”" if b.get("excerpt") else "")
+        items.append(f"""    <item>
+      <title>{e(b['title'])}</title>
+      <link>{e(link)}</link>
+      <guid isPermaLink="true">{e(link)}</guid>
+      <description>{e(text)}</description>
+      <category>{e(b['category'])}</category>
+      <pubDate>{format_datetime(date(b))}</pubDate>
+    </item>""")
+    newest = max(date(b) for b in books)
+    return f"""<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>{e(TITLE)}</title>
+    <link>{e(absolute(''))}</link>
+    <atom:link href="{e(absolute('feed.xml'))}" rel="self" type="application/rss+xml"/>
+    <description>{e(site['description'])}</description>
+    <language>en</language>
+    <lastBuildDate>{format_datetime(newest)}</lastBuildDate>
+{chr(10).join(items)}
+  </channel>
+</rss>
+"""
+
+
+def replace_stats_block(path):
+    """Keep the visitor-stats tag in the hand-written pages in step with site.json."""
+    s = path.read_text(encoding="utf-8")
+    start, end = s.index("<!-- stats:start -->"), s.index("<!-- stats:end -->")
+    tag = stats_tag()
+    s = s[: start + len("<!-- stats:start -->")] + (f"\n  {tag}\n  " if tag else "") + s[end:]
+    path.write_text(s, encoding="utf-8")
 
 
 # ---------------------------------------------------------------- write everything
@@ -449,6 +578,11 @@ def main():
     og_home()
     replace_og_block(PUBLIC / "index.html", og_tags(TITLE, site["description"], "", "og/home.jpg"))
     print("  index.html preview tags")
+    for page in ("index.html", "reader.html"):
+        replace_stats_block(PUBLIC / page)
+    (PUBLIC / "404.html").write_text(page_404(), encoding="utf-8")
+    (PUBLIC / "feed.xml").write_text(feed_xml(), encoding="utf-8")
+    print("  404.html, feed.xml" + ("" if GOATCOUNTER else "  (visitor stats off: no goatcounter code in site.json)"))
 
     if BASE:
         urls = [""] + [f"essays/{b['id']}/" for b in books]

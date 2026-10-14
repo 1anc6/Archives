@@ -3,6 +3,15 @@
   const $ = (id) => document.getElementById(id);
   const pagesEl = $("pages");
 
+  // Progress is saved only after the reader actually scrolls, taps or presses
+  // a key. A re-layout (resizing, rotating the phone, the panel opening) also
+  // moves the scroll position, and must not overwrite their place.
+  let lastInput = 0;
+  for (const type of ["wheel", "touchmove", "pointerdown", "keydown"]) {
+    window.addEventListener(type, () => (lastInput = Date.now()), { passive: true, capture: true });
+  }
+  const userActive = () => Date.now() - lastInput < 2000;
+
   const store = {
     get(k, d) { try { return localStorage.getItem(k) ?? d; } catch { return d; } },
     set(k, v) { try { localStorage.setItem(k, v); } catch {} },
@@ -100,6 +109,7 @@
       await p.task.promise;
       const text = await textLayer(p, cssWidth);
       p.el.replaceChildren(canvas, ...(text ? [text] : []));
+      document.dispatchEvent(new CustomEvent("page-rendered", { detail: { num: p.num, el: p.el } }));
       p.el.classList.add("is-rendered");
       p.renderedAt = cssWidth;
     } catch (err) {
@@ -189,7 +199,7 @@
     // Reaching the card means the essay is finished, even if the last page is short.
     if ("IntersectionObserver" in window) {
       const seen = new IntersectionObserver((entries) => {
-        if (entries.some((x) => x.isIntersecting)) {
+        if (entries.some((x) => x.isIntersecting) && userActive()) {
           progress.set(book.id, total, total);
           seen.disconnect();
         }
@@ -231,10 +241,14 @@
       current = best.num;
       showPage(current);
       clearTimeout(saveTimer);
-      saveTimer = setTimeout(() => progress.set(book.id, current, total), 400);
+      if (userActive()) saveTimer = setTimeout(() => progress.set(book.id, current, total), 400);
     }
   }
-  window.addEventListener("scroll", updateCurrent, { passive: true });
+  window.addEventListener("scroll", () => {
+    // momentum scrolling after a swipe still counts as the reader moving
+    if (userActive()) lastInput = Date.now();
+    updateCurrent();
+  }, { passive: true });
 
   // Remember where a smooth scroll is heading so rapid taps keep advancing.
   let target = null;
@@ -253,7 +267,7 @@
       current = n;
       showPage(n);
       clearTimeout(saveTimer);
-      saveTimer = setTimeout(() => progress.set(book.id, current, total), 400);
+      if (userActive()) saveTimer = setTimeout(() => progress.set(book.id, current, total), 400);
     }
   }
 
@@ -397,6 +411,77 @@
   }
   $("pagesBtn").addEventListener("click", () => toggleThumbs());
   $("thumbsClose").addEventListener("click", () => toggleThumbs(false));
+
+  /* ---------- Listen: read the essay aloud with the device's own voice ---------- */
+  const speech = window.speechSynthesis;
+  if (speech && window.SpeechSynthesisUtterance) {
+    const btn = $("listenBtn");
+    const status = $("listenStatus");
+    btn.hidden = false;
+    let listening = false;
+    let run = 0; // bumps on every start/stop so an old loop knows to quit
+
+    // Page text in reading order, split into sentence-sized pieces (long
+    // utterances get cut off in some browsers).
+    async function pageChunks(n) {
+      const tc = await pages[n - 1].page.getTextContent();
+      let text = "";
+      for (const it of tc.items) {
+        if (!("str" in it)) continue;
+        text += it.str;
+        if (it.hasEOL) text = text.endsWith("-") ? text.slice(0, -1) : text + " ";
+      }
+      text = text.replace(/\s+/g, " ").trim();
+      const sentences = text.match(/[^.!?…]+[.!?…]+["”’)]*\s*|[^.!?…]+$/g) || [];
+      const chunks = [];
+      for (const s of sentences) {
+        if (chunks.length && (chunks[chunks.length - 1] + s).length < 220) chunks[chunks.length - 1] += s;
+        else chunks.push(s);
+      }
+      return chunks.map((c) => c.trim()).filter(Boolean);
+    }
+    const say = (text, id) => new Promise((resolve) => {
+      if (id !== run) return resolve(false);
+      const u = new SpeechSynthesisUtterance(text);
+      const voice = speech.getVoices().find((v) => /^en(-|_)(GB|IN|US)/i.test(v.lang)) || speech.getVoices().find((v) => /^en/i.test(v.lang));
+      if (voice) u.voice = voice;
+      u.rate = 1;
+      u.onend = () => resolve(id === run);
+      u.onerror = () => resolve(false);
+      speech.speak(u);
+    });
+    function setState(on, msg) {
+      listening = on;
+      btn.setAttribute("aria-pressed", String(on));
+      btn.classList.toggle("is-on", on);
+      btn.title = on ? "Stop listening" : "Listen";
+      status.hidden = !msg;
+      status.textContent = msg || "";
+    }
+    function stop(msg) {
+      run++;
+      speech.cancel();
+      setState(false, msg);
+      if (msg) setTimeout(() => { if (!listening) status.hidden = true; }, 2500);
+    }
+    async function start() {
+      const id = ++run;
+      speech.cancel();
+      // An immediate (silent) utterance keeps iPhones happy: speech must start from the tap.
+      speech.speak(new SpeechSynthesisUtterance(""));
+      for (let n = current; n <= total; n++) {
+        if (id !== run) return;
+        if (n !== current) goTo(n);
+        setState(true, `Listening · page ${n} of ${total}`);
+        for (const chunk of await pageChunks(n)) {
+          if (!(await say(chunk, id))) return;
+        }
+      }
+      if (id === run) stop("Finished reading aloud");
+    }
+    btn.addEventListener("click", () => (listening ? stop() : start()));
+    window.addEventListener("pagehide", () => speech.cancel());
+  }
 
   /* ---------- Start where the reader left off (or ?page=N) ---------- */
   const start = Math.min(total, +params.get("page") || (progress.get(book.id) || {}).page || 1);

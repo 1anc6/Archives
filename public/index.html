@@ -12,14 +12,14 @@
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="The Open Archive">
   <meta property="og:title" content="The Open Archive">
-  <meta property="og:description" content="A collection of mathematical essays by Lanchenba Mutum, available to read online or download as PDF.">
+  <meta property="og:description" content="A collection of mathematical essays by Lanchenba Mutum, free to read online, with PDFs on request.">
   <meta property="og:image" content="https://theopenarchive.onrender.com/og/home.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="The Open Archive">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="The Open Archive">
-  <meta name="twitter:description" content="A collection of mathematical essays by Lanchenba Mutum, available to read online or download as PDF.">
+  <meta name="twitter:description" content="A collection of mathematical essays by Lanchenba Mutum, free to read online, with PDFs on request.">
   <meta name="twitter:image" content="https://theopenarchive.onrender.com/og/home.jpg">
   <!-- og:end -->
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%23544c40'/><path d='M8 10c3-1 6-1 8 1 2-2 5-2 8-1v13c-3-1-6-1-8 1-2-2-5-2-8-1z' fill='none' stroke='%23f7f3ed' stroke-width='1.6'/></svg>">
@@ -33,9 +33,14 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=STIX+Two+Text:ital@0;1&family=Noto+Sans+Math&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css?v=22">
+  <link rel="stylesheet" href="css/styles.css?v=24">
+  <link rel="alternate" type="application/rss+xml" title="The Open Archive" href="feed.xml">
+  <!-- stats:start -->
+  <script data-goatcounter="https://lance.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+  <!-- stats:end -->
 </head>
 <body>
+  <a class="skip-link" href="#content">Skip to content</a>
   <div class="stage">
     <header class="site-header">
       <button class="brand" data-go="essays" aria-label="The Open Archive, home">
@@ -43,9 +48,9 @@
         <span><strong>THE OPEN</strong><small>ARCHIVE</small></span>
       </button>
       <nav class="main-nav" aria-label="Main navigation">
-        <button class="active" data-go="essays">Essays</button>
-        <button data-go="room">Library</button>
-        <button data-go="about">About</button>
+        <a href="./" class="active" aria-current="page" data-go="essays">Essays</a>
+        <a href="#room" data-go="room">Library</a>
+        <a href="#about" data-go="about">About</a>
       </nav>
       <span class="acts">
         <button class="ib music-btn" data-music aria-pressed="false" aria-label="Background music" title="Music">
@@ -65,7 +70,7 @@
       </span>
     </header>
 
-    <div class="screens">
+    <div class="screens" id="content" tabindex="-1">
       <!-- ============ Essays ============ -->
       <section class="screen in" data-screen="essays" aria-label="Essays">
         <main class="page-wrap home">
@@ -88,7 +93,7 @@
 
           <header class="masthead">
             <h1>The Open Archive</h1>
-            <p class="standfirst">A collection of mathematical essays by Lanchenba Mutum, available to read online or download as PDF.</p>
+            <p class="standfirst">A collection of mathematical essays by Lanchenba Mutum, free to read online, with PDFs on request.</p>
           </header>
 
           <article class="feature" id="feature" aria-labelledby="featureTitle"></article>
@@ -96,7 +101,6 @@
           <section class="start" aria-labelledby="startTitle">
             <div class="start-head">
               <h2 id="startTitle">New here? Start with one of these</h2>
-              <button class="btn ghost surprise" type="button" id="surpriseBtn"><svg class="dice" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="4"/><circle cx="9" cy="9" r="1.3"/><circle cx="15" cy="15" r="1.3"/><circle cx="15" cy="9" r="1.3"/><circle cx="9" cy="15" r="1.3"/></svg><span class="surprise-label">Surprise me</span></button>
             </div>
             <ol class="start-list" id="startList"></ol>
           </section>
@@ -107,11 +111,14 @@
                 <h2 id="contentsTitle">Contents</h2>
                 <p class="contents-sum" id="contentsSum"></p>
               </div>
-              <label class="mini-search contents-search">
+              <div class="contents-tools">
+                <button class="btn ghost surprise" type="button" id="surpriseBtn"><svg class="dice" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="4"/><circle cx="9" cy="9" r="1.3"/><circle cx="15" cy="15" r="1.3"/><circle cx="15" cy="9" r="1.3"/><circle cx="9" cy="15" r="1.3"/></svg><span class="surprise-label">Surprise me</span></button>
+                <label class="mini-search contents-search">
                 <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
                 <input id="indexSearch" type="search" placeholder="Search essays" aria-label="Search essays" aria-controls="indexList" autocomplete="off">
                 <kbd aria-hidden="true">/</kbd>
-              </label>
+                </label>
+              </div>
             </div>
             <ol class="index-list" id="indexList"></ol>
             <p class="index-empty" id="indexEmpty" role="status" hidden>No essays match “<span id="indexEmptyQuery"></span>”. <button class="link" type="button">Clear the search</button></p>
@@ -122,20 +129,22 @@
             <div class="notify-copy">
               <h2 id="notifyTitle">Want the next one?</h2>
               <p>I'll email you when a new essay drops. No spam, just maths (and the occasional lol).</p>
+              <p class="notify-rss">Use a feed reader? <a href="feed.xml">Follow the RSS feed</a> instead.</p>
             </div>
             <form class="notify-form" id="notifyForm" novalidate>
               <label class="field">
                 <span>Your name <small>(optional)</small></span>
                 <input name="name" type="text" autocomplete="name">
               </label>
-              <button class="btn primary" type="submit">Email me new essays</button>
-              <p class="notify-done" role="status" hidden>Your email app should be open now. Just press send! If nothing happened, email <a href="mailto:lanchenba613500@gmail.com?subject=New%20essay%20alerts">lanchenba613500@gmail.com</a> with "New essay alerts" in the subject.</p>
+              <button class="btn primary" type="submit" aria-describedby="notifyHow">Email me new essays</button>
+              <p class="notify-how" id="notifyHow">Opens your email app with a one-line request.</p>
+              <p class="notify-done" role="status" hidden>If your email app opened, just press send. If it didn't, email <a href="mailto:lanchenba613500@gmail.com?subject=New%20essay%20alerts">lanchenba613500@gmail.com</a> with "New essay alerts" in the subject.</p>
             </form>
           </section>
 
           <div class="editorial-note">
             <span>All twelve essays are written by Lanchenba Mutum.</span>
-            <button class="link" data-go="about">Image credits</button>
+            <button class="link" data-go="about" data-scroll="credits">Image credits</button>
           </div>
         </main>
       </section>
@@ -145,13 +154,20 @@
         <main class="page-wrap room-page">
           <div class="room-heading">
             <div>
-              <h1 id="roomTitle">Continue Reading</h1>
+              <h1 id="roomTitle">Library</h1>
               <p id="roomSub">Your reading progress is saved on this device.</p>
             </div>
             <div class="total-display"><strong id="pagesRead">0</strong><span id="pagesReadLabel">pages read</span></div>
           </div>
 
-          <div class="podium" id="podium"></div>
+          <section class="shelf-block" id="continueBlock" aria-labelledby="continueTitle" hidden>
+            <h2 class="shelf-h" id="continueTitle">Continue reading</h2>
+            <div class="podium" id="podium"></div>
+          </section>
+          <section class="shelf-block" id="upNextBlock" aria-labelledby="upNextTitle" hidden>
+            <h2 class="shelf-h" id="upNextTitle">Up next</h2>
+            <div class="podium" id="upNext"></div>
+          </section>
 
           <div class="section-heading list-heading">
             <h2>All essays</h2>
@@ -163,6 +179,12 @@
           <div class="chips" id="chips" role="toolbar" aria-label="Filter by topic"></div>
           <div class="shelf-list" id="shelfList"></div>
           <p class="empty" id="empty" hidden>No essays match your search.</p>
+
+          <section class="highlights" aria-labelledby="hlTitle">
+            <div class="section-heading list-heading"><h2 id="hlTitle">Your highlights</h2><span class="section-note">Saved on this device</span></div>
+            <ol class="hl-list" id="hlList"></ol>
+            <p class="hl-empty" id="hlEmpty">Nothing here yet. In the reader, select any sentence and choose <b>Highlight</b> to keep it here.</p>
+          </section>
         </main>
       </section>
 
@@ -186,7 +208,7 @@
             <h2>About me</h2>
             <div class="author-bio">
               <p>Hi, I'm Lanchenba Mutum, or just Lance if you'd rather not wrestle with all those syllables (most people don't, and honestly, fair lol). This is where my maths essays live. Full disclosure: the <i>Jujutsu Kaisen</i> one exists purely because I was enjoying the anime way too much and thought, "wait, Gojo's Infinity is basically a convergent series" lol. The rest happened the same way. A box of LEGO, a Secret Santa draw, the number 73, and suddenly I'm writing pages about limits, the sizes of infinity, Gödel and game theory.</p>
-              <p>They're written for anyone who's curious, no maths degree required (there are fewer scary symbols than it looks, I promise lol). Want a PDF? Tap download and send me a quick email, I'm happy to share. Questions, corrections and ideas for the next essay are very welcome too: <a href="mailto:lanchenba613500@gmail.com">lanchenba613500@gmail.com</a>.</p>
+              <p>They're written for anyone who's curious, no maths degree required (there are fewer scary symbols than it looks, I promise lol). Want a PDF? Tap Request PDF and send me a quick email, I'm happy to share. Questions, corrections and ideas for the next essay are very welcome too: <a href="mailto:lanchenba613500@gmail.com">lanchenba613500@gmail.com</a>.</p>
             </div>
           </div>
 
@@ -196,22 +218,18 @@
           </div>
 
           <div class="about-card">
-            <h2>Contributors</h2>
-            <ul class="contributors" id="contributors"></ul>
-          </div>
-
-          <div class="about-card">
             <h2>Using this site</h2>
             <ul>
               <li><b>Reading online.</b> Select any essay title to open its page, then choose <i>Read essay</i>. Your place is saved automatically, so you may return to it at any time.</li>
+              <li><b>Highlights.</b> In the reader, select text and choose <i>Highlight</i>. Your highlights stay on the page and are collected in the Library.</li>
               <li><b>Reading list.</b> Select the bookmark on an essay to add it to your reading list in the Library.</li>
-              <li><b>Downloading.</b> PDFs are shared by request. Select <i>Download PDF</i> on an essay page, in the reader or in the Library, add your name, and your email app will open with a request to the author.</li>
+              <li><b>PDFs.</b> Every essay is free to read here. For the PDF, select <i>Request PDF</i> on an essay page, in the reader or in the Library, and send the short email that opens. If you don't use an email app, choose <i>Copy the request</i> instead.</li>
               <li><b>New essays.</b> Select <i>Email me new essays</i> at the bottom of the Essays page and send the email that opens. You'll hear about the next essay as soon as it's out.</li>
               <li><b>Reading comfort.</b> The reader offers light, sepia and dark modes. Optional background music and sound effects can be switched on or off in the header.</li>
             </ul>
           </div>
 
-          <div class="about-card">
+          <div class="about-card" id="credits">
             <h2>Image credits</h2>
             <p>The images for <i>Gojo Satoru's Infinity</i>, <i>A Tale of Two Infinities</i>, <i>A Proof for the Unprovable</i>, <i>The Possibilities of LEGO</i>, <i>Planet of Fractal Geometry</i> and <i>A Foray into Secret Santa</i> are taken from the illustrations within each essay. The remaining images were generated for this site: the convergence of 0.999… to 1, an Ulam prime spiral highlighting 73, the Prisoner's Dilemma payoff matrix, a Turing reaction–diffusion pattern, the harmonics of a vibrating string, and a probability tree for three coin tosses.</p>
           </div>
@@ -236,11 +254,11 @@
     <div class="toast" id="toast" role="status" hidden></div>
   </div>
 
-  <script src="js/common.js?v=21"></script>
-  <script src="js/sfx.js?v=21"></script>
-  <script src="js/site.js?v=22"></script>
-  <script src="js/app.js?v=21"></script>
-  <script src="js/request.js?v=22"></script>
-  <script src="js/music.js?v=21"></script>
+  <script src="js/common.js?v=24"></script>
+  <script src="js/sfx.js?v=24"></script>
+  <script src="js/site.js?v=24"></script>
+  <script src="js/app.js?v=24"></script>
+  <script src="js/request.js?v=24"></script>
+  <script src="js/music.js?v=24"></script>
 </body>
 </html>

@@ -4,8 +4,9 @@
 (function () {
   const KEY = "books.sfxMuted";
   let ctx = null;
-  let muted = false;
-  try { muted = localStorage.getItem(KEY) === "1"; } catch {}
+  // Off unless the visitor turns them on (stored as "0" once switched on).
+  let muted = true;
+  try { muted = localStorage.getItem(KEY) !== "0"; } catch {}
 
   function audio() {
     if (ctx === false) return null;

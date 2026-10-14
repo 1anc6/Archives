@@ -52,7 +52,12 @@
       s.classList.toggle("in", on);
       s.classList.toggle("from-left", on && back);
     });
-    document.querySelectorAll(".main-nav [data-go]").forEach((b) => b.classList.toggle("active", b.dataset.go === name));
+    document.querySelectorAll(".main-nav [data-go]").forEach((b) => {
+      const on = b.dataset.go === name;
+      b.classList.toggle("active", on);
+      if (on) b.setAttribute("aria-current", "page");
+      else b.removeAttribute("aria-current");
+    });
     $("dock").classList.toggle("is-away", name !== "essays");
     screen = name;
     if (name === "room") renderRoom();
@@ -61,10 +66,14 @@
   }
   document.addEventListener("click", (e) => {
     const el = e.target.closest("[data-go]");
-    if (el) {
-      sfx.tick();
-      go(el.dataset.go);
-    }
+    if (!el) return;
+    // Menu items are real links: let ctrl/cmd-click open them in a new tab.
+    if (el.tagName === "A" && (e.ctrlKey || e.metaKey || e.shiftKey)) return;
+    e.preventDefault();
+    sfx.tick();
+    go(el.dataset.go);
+    // e.g. "Image credits" jumps to that card on the About screen
+    if (el.dataset.scroll) requestAnimationFrame(() => document.getElementById(el.dataset.scroll)?.scrollIntoView({ block: "start" }));
   });
   window.addEventListener("popstate", () => go(location.hash.slice(1) || "essays", false));
 
@@ -76,7 +85,7 @@
     <span><b>${books.length}</b>essays</span>
     <span><b>${topics}</b>subject areas</span>
     <span><b>${totalPages}</b>pages</span>
-    <span><b>~${hours} h</b>reading time</span>`;
+    <span><b>~${hours}h</b>reading time</span>`;
   const contentsTotals = `${books.length} essays · ${totalPages} pages · about ${hours} hours of reading`;
   function renderContentsSum() {
     const all = progress.all();
@@ -84,7 +93,6 @@
     $("contentsSum").textContent = done ? `${done} of ${books.length} read · ${contentsTotals}` : contentsTotals;
   }
 
-  $("contributors").innerHTML = "<li><strong>Lanchenba Mutum</strong></li>";
 
   // Bookmark icon for the reading list; filled when the essay is saved.
   const BOOKMARK = `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4h10v16l-5-3.6L7 20z"/></svg>`;
@@ -147,7 +155,6 @@
     $("feature").innerHTML = `
       <div class="feature-copy">
         <h2 class="feature-title" id="featureTitle"><a href="essays/${b.id}/">${esc(b.shortTitle)}</a></h2>
-        ${b.title !== b.shortTitle ? `<p class="feature-sub">${esc(b.title)}</p>` : ""}
         <p class="feature-meta"><span class="feature-today">Today's essay</span><span>No. ${pad(b.num)}</span><span>${esc(b.category)}</span><span>${b.pages} pages · ~${b.pages * MIN_PER_PAGE} min</span></p>
         ${quote}
         <div class="feature-actions">
@@ -165,6 +172,10 @@
 
   /* ---------- Start here: three suggested first essays ---------- */
   function renderStart() {
+    // Returning readers who have started an essay don't need the newcomer picks.
+    const section = $("startList").closest(".start");
+    section.hidden = visits > 1 && Object.keys(progress.all()).length > 0;
+    if (section.hidden) return;
     const picks = books.filter((b) => b.startHere).sort((a, b) => a.startHere.order - b.startHere.order);
     $("startList").innerHTML = picks
       .map((b) => `
@@ -226,7 +237,7 @@
         <span class="entry-num">${isDone(p) ? `<svg class="tick" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>` : pad(b.num)}</span>
         <span class="entry-glyph" aria-hidden="true">${notation(b.glyph)}</span>
         <div class="entry-body">
-          <h3 class="entry-title"><a href="essays/${b.id}/">${esc(b.shortTitle)}</a><span class="entry-leader" aria-hidden="true"></span><span class="entry-pages">${b.pages} pp.</span></h3>
+          <h3 class="entry-title"><a href="essays/${b.id}/">${esc(b.shortTitle)}</a><span class="entry-leader" aria-hidden="true"></span><span class="entry-pages" aria-hidden="true">${b.pages} pp.</span></h3>
           <p class="entry-desc">${esc(b.description)}</p>
           <p class="entry-meta"><span class="entry-pp">${b.pages} pages</span><span>${esc(b.category)}</span>${st ? `<span class="entry-status">${st}</span>` : ""}</p>
         </div>
@@ -301,6 +312,17 @@
     $("dockBtn").href = readerURL(b, last.page);
   }
 
+  /* ---------- Visits (for the greeting and the Start here picks) ---------- */
+  const visits = (() => {
+    try {
+      const v = (+localStorage.getItem("books.visits") || 0) + 1;
+      localStorage.setItem("books.visits", String(v));
+      return v;
+    } catch {
+      return 1;
+    }
+  })();
+
   /* ---------- Greeting from the author ---------- */
   function renderGreeting() {
     const store = {
@@ -308,8 +330,6 @@
       set: (k, v) => { try { localStorage.setItem(k, v); } catch {} },
     };
     if (store.get("books.greetingHidden")) return;
-    const visits = (+store.get("books.visits") || 0) + 1;
-    store.set("books.visits", String(visits));
     const el = $("greeting");
     if (visits > 1) {
       el.classList.add("is-compact");
@@ -338,39 +358,68 @@
 
     const started = books.filter((b) => all[b.id]).sort((a, b) => all[b.id].at - all[a.id].at);
     const inProgress = started.filter((b) => !isDone(all[b.id]));
-    const podium = [...inProgress, ...books.filter((b) => !all[b.id]), ...started.filter((b) => isDone(all[b.id]))].slice(0, 3);
-    $("roomTitle").textContent = inProgress.length ? "Continue Reading" : "Your Library";
-    $("roomSub").textContent = inProgress.length
-      ? `${inProgress.length} in progress · ${started.length - inProgress.length} completed · progress is saved on this device`
-      : "Recommended starting points. Your progress will be saved on this device.";
+    const done = started.length - inProgress.length;
+    // Unstarted essays, the Start here picks first.
+    const unread = books
+      .filter((b) => !all[b.id])
+      .sort((a, b) => (a.startHere?.order ?? 99) - (b.startHere?.order ?? 99) || a.num - b.num);
+    $("roomSub").textContent = started.length
+      ? `${inProgress.length} in progress · ${done} finished · saved on this device`
+      : "Nothing started yet. Your place in each essay is saved on this device.";
 
-    $("podium").innerHTML = podium
-      .map((b, i) => {
-        const p = all[b.id];
-        const pct = p ? Math.round((p.page / p.total) * 100) : 0;
-        const badge = i === 0 ? (p && !isDone(p) ? "IN PROGRESS" : "RECOMMENDED") : "";
-        return `
-          <a class="podium-card" href="${readerURL(b, p && !isDone(p) ? p.page : null)}" style="--i:${i}">
-            ${photo(b, true)}
-            ${badge ? `<span class="badge">${badge}</span>` : ""}
-            <div class="podium-copy">
-              <span class="meta"><span>${esc(b.category)}</span><span class="num">${pad(b.num)}</span></span>
-              <h2>${esc(b.shortTitle)}</h2>
-              <p class="by">by ${esc(b.author)}</p>
-              <div class="pg"><b>${p ? p.page : 0}</b><small>of ${p ? p.total : b.pages} pages</small><span>${pct}%</span></div>
-              <div class="bar"><i style="width:${pct}%"></i></div>
-            </div>
+    // Notebook cards led by the essay's symbol; progress only for started essays.
+    const card = (b, i, p) => {
+      const pct = p ? Math.round((p.page / p.total) * 100) : 0;
+      return `
+          <a class="shelf-card" href="${readerURL(b, p ? p.page : null)}" style="--i:${i}">
+            <span class="shelf-glyph" aria-hidden="true">${notation(b.glyph)}</span>
+            <h3>${esc(b.shortTitle)}</h3>
+            <p class="shelf-meta">No. ${pad(b.num)} · ${esc(b.category)} · ${b.pages} pages</p>
+            ${p ? `<p class="shelf-pg">Page ${p.page} of ${p.total} <span>${pct}%</span></p><div class="bar"><i style="width:${pct}%"></i></div>` : ""}
           </a>`;
-      })
-      .join("");
+    };
+    $("continueBlock").hidden = !inProgress.length;
+    $("podium").innerHTML = inProgress.slice(0, 3).map((b, i) => card(b, i, all[b.id])).join("");
+    $("upNextBlock").hidden = !unread.length;
+    $("upNext").innerHTML = unread.slice(0, 3).map((b, i) => card(b, i, null)).join("");
     renderChips();
     renderList();
+    renderHighlights();
   }
+
+  /* ---------- Highlights saved in the reader (js/quote.js) ---------- */
+  const readHL = () => {
+    try { return JSON.parse(localStorage.getItem("books.highlights")) || []; } catch { return []; }
+  };
+  function renderHighlights() {
+    const list = readHL().map((h, i) => ({ ...h, i })).sort((a, b) => b.at - a.at);
+    $("hlEmpty").hidden = list.length > 0;
+    $("hlList").innerHTML = list
+      .map((h) => `
+        <li>
+          <blockquote>“${esc(h.text)}”</blockquote>
+          <p class="hl-meta">
+            <a href="reader.html?id=${encodeURIComponent(h.book)}&page=${h.page}">${esc(byId[h.book]?.shortTitle || h.title)} · p. ${h.page}</a>
+            <button class="link hl-remove" type="button" data-i="${h.i}">Remove</button>
+          </p>
+        </li>`)
+      .join("");
+  }
+  $("hlList").addEventListener("click", (e) => {
+    const btn = e.target.closest(".hl-remove");
+    if (!btn) return;
+    const list = readHL();
+    list.splice(+btn.dataset.i, 1);
+    try { localStorage.setItem("books.highlights", JSON.stringify(list)); } catch {}
+    sfx.unpop();
+    toast("Highlight removed");
+    renderHighlights();
+  });
 
   function renderChips() {
     const cats = ["All", "Saved", ...new Set(books.map((b) => b.category))];
     $("chips").innerHTML = cats
-      .map((c) => `<button class="chip${c === activeTopic ? " is-active" : ""}" data-topic="${esc(c)}">${c === "Saved" ? "Reading list" : esc(c)}</button>`)
+      .map((c) => `<button class="chip${c === activeTopic ? " is-active" : ""}" data-topic="${esc(c)}" aria-pressed="${c === activeTopic}">${c === "Saved" ? "Reading list" : esc(c)}</button>`)
       .join("");
   }
   $("chips").addEventListener("click", (e) => {
@@ -402,13 +451,13 @@
         return `
           <div class="row" data-id="${b.id}" style="--i:${i}">
             <span class="n">${pad(b.num)}</span>
-            ${photo(b)}
+            <span class="row-glyph" aria-hidden="true">${notation(b.glyph)}</span>
             <div class="row-title"><a href="essays/${b.id}/" class="row-link"><strong>${esc(b.shortTitle)}</strong></a><span>${esc(b.category)} · ${esc(b.author)}</span></div>
             <div class="row-progress"><small>${status}</small><div class="bar"><i style="width:${pct}%"></i></div></div>
             <div class="row-acts">
               <button class="ib save-toggle${on ? " on" : ""}" aria-pressed="${on}" aria-label="Add ${esc(b.shortTitle)} to reading list" title="${on ? "In your reading list" : "Add to reading list"}">${BOOKMARK}</button>
               <button class="ib cite-btn" aria-label="Cite this essay" title="Cite this essay"><svg viewBox="0 0 24 24"><path d="M7 7h4v4c0 3-1.5 5-4 6M14 7h4v4c0 3-1.5 5-4 6"/></svg></button>
-              <a class="ib" href="${esc(b.file)}" download data-title="${esc(b.title)}" aria-label="Download PDF" title="Download PDF"><svg viewBox="0 0 24 24"><path d="M12 4v11m0 0-4-4m4 4 4-4M5 20h14"/></svg></a>
+              <a class="ib" href="${esc(b.file)}" download data-title="${esc(b.title)}" aria-label="Request the PDF" title="Request the PDF"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="m4 7 8 6 8-6"/></svg></a>
             </div>
           </div>`;
       })
@@ -432,7 +481,7 @@
       window.Site.cite(b, new URL(`essays/${b.id}/`, location.href.split("#")[0]).href);
       return;
     }
-    if (e.target.closest("a")) sfx.tick(); // essay page or download link
+    if (e.target.closest("a")) sfx.tick(); // essay page or PDF request link
   });
 
   /* ---------- Start ---------- */

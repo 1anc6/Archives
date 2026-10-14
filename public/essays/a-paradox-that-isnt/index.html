@@ -33,10 +33,13 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=STIX+Two+Text:ital@0;1&family=Noto+Sans+Math&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../css/styles.css?v=22">
+  <link rel="alternate" type="application/rss+xml" title="The Open Archive" href="../../feed.xml">
+  <link rel="stylesheet" href="../../css/styles.css?v=24">
+  <script data-goatcounter="https://lance.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </head>
 <body>
 
+  <a class="skip-link" href="#content">Skip to content</a>
   <div class="stage">
     <header class="site-header">
       <a class="brand" href="../../" aria-label="The Open Archive, home">
@@ -44,7 +47,7 @@
         <span><strong>THE OPEN</strong><small>ARCHIVE</small></span>
       </a>
       <nav class="main-nav" aria-label="Main navigation">
-        <a href="../../" class="active">Essays</a>
+        <a href="../../" class="active" aria-current="page">Essays</a>
         <a href="../../#room">Library</a>
         <a href="../../#about">About</a>
       </nav>
@@ -65,7 +68,7 @@
         </button>
       </span>
     </header>
-    <main class="page-wrap essay-page">
+    <main class="page-wrap essay-page" id="content" tabindex="-1">
       <nav class="crumbs" aria-label="Breadcrumb"><a href="../../">Essays</a><span>/</span><span>Infinity</span><span>/</span><span>No. 03</span></nav>
 
       <article class="essay-hero">
@@ -82,28 +85,36 @@
           </div>
           <div class="essay-actions">
             <a class="btn primary" data-read href="../../reader.html?id=a-paradox-that-isnt">Read essay<svg class="arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a>
-            <a class="btn ghost" href="../../books/a-paradox-that-isnt.pdf" download data-title="0.999… = 1: A Paradox That Isn&#x27;t">Download PDF</a>
+            <a class="btn ghost" href="../../books/a-paradox-that-isnt.pdf" download data-title="0.999… = 1: A Paradox That Isn&#x27;t">Request PDF</a>
             <button class="btn ghost" data-cite>Cite</button>
             <button class="btn ghost" data-share>Share</button>
           </div>
           <p class="progress-note" id="progressNote" hidden></p>
         </div>
-        <figure class="essay-figure"><span class="photo" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA0JCgsKCA0LCgsODg0PEyAVExISEyccHhcgLikxMC4pLSwzOko+MzZGNywtQFdBRkxOUlNSMj5aYVpQYEpRUk//2wBDAQ4ODhMREyYVFSZPNS01T09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0//wAARCAARABgDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDjY7Z5F3L0qU2j44WrVje20UASQHd9Ks/2jZf3W/KuZynfRHWkjFlheI/MKKu6jdW88aiEHIPcUVpFtrUlmeOtOooqgGnrRRRQB//Z);view-transition-name:ph-a-paradox-that-isnt"><img src="../../images/a-paradox-that-isnt-640.jpg" srcset="../../images/a-paradox-that-isnt-640.jpg 640w, ../../images/a-paradox-that-isnt.jpg 1200w" sizes="(max-width: 1000px) 92vw, 560px" alt="Four bars labelled 0.9, 0.99, 0.999 and 0.9999, each closer to a dashed line marked 1." loading="eager" decoding="async" onload="this.classList.add('loaded')"></span></figure>
+        <figure class="essay-sheet">
+          <span class="sheet-glyph" aria-hidden="true">0.9̅ = 1</span>
+          <span class="sheet-photo"><span class="photo" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA0JCgsKCA0LCgsODg0PEyAVExISEyccHhcgLikxMC4pLSwzOko+MzZGNywtQFdBRkxOUlNSMj5aYVpQYEpRUk//2wBDAQ4ODhMREyYVFSZPNS01T09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0//wAARCAARABgDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDjY7Z5F3L0qU2j44WrVje20UASQHd9Ks/2jZf3W/KuZynfRHWkjFlheI/MKKu6jdW88aiEHIPcUVpFtrUlmeOtOooqgGnrRRRQB//Z);view-transition-name:ph-a-paradox-that-isnt"><img src="../../images/a-paradox-that-isnt-640.jpg" srcset="../../images/a-paradox-that-isnt-640.jpg 640w, ../../images/a-paradox-that-isnt.jpg 1200w" sizes="(max-width: 1000px) 50vw, 280px" alt="Four bars labelled 0.9, 0.99, 0.999 and 0.9999, each closer to a dashed line marked 1." loading="eager" decoding="async" onload="this.classList.add('loaded')"></span></span>
+        </figure>
       </article>
 
       <section class="essay-section">
-        <div class="section-heading plain"><h2>Topics covered</h2></div>
-        <ol class="topic-list">
-          <li style="--i:0"><span>01</span>Understanding 0.999…</li>
-          <li style="--i:1"><span>02</span>A simple algebraic proof</li>
-          <li style="--i:2"><span>03</span>A geometric perspective</li>
-          <li style="--i:3"><span>04</span>The historical birth of limits</li>
-          <li style="--i:4"><span>05</span>Representation versus value</li>
+        <div class="section-heading plain"><h2>Inside this essay</h2><span class="section-note">Open any section in the reader</span></div>
+        <ol class="topic-list toc-links">
+          <li style="--i:0"><a href="../../reader.html?id=a-paradox-that-isnt&amp;page=1"><span class="n">01</span><span class="t">Introduction</span><span class="p">p. 1</span></a></li>
+          <li style="--i:1"><a href="../../reader.html?id=a-paradox-that-isnt&amp;page=1"><span class="n">02</span><span class="t">Understanding 0.999…</span><span class="p">p. 1</span></a></li>
+          <li style="--i:2"><a href="../../reader.html?id=a-paradox-that-isnt&amp;page=2"><span class="n">03</span><span class="t">A Simple Algebraic Proof</span><span class="p">p. 2</span></a></li>
+          <li style="--i:3"><a href="../../reader.html?id=a-paradox-that-isnt&amp;page=2"><span class="n">04</span><span class="t">A Geometric Perspective</span><span class="p">p. 2</span></a></li>
+          <li style="--i:4"><a href="../../reader.html?id=a-paradox-that-isnt&amp;page=3"><span class="n">05</span><span class="t">Why This Feels Wrong</span><span class="p">p. 3</span></a></li>
+          <li style="--i:5"><a href="../../reader.html?id=a-paradox-that-isnt&amp;page=3"><span class="n">06</span><span class="t">The Birth of Limits</span><span class="p">p. 3</span></a></li>
+          <li style="--i:6"><a href="../../reader.html?id=a-paradox-that-isnt&amp;page=3"><span class="n">07</span><span class="t">Representation vs. Value</span><span class="p">p. 3</span></a></li>
+          <li style="--i:7"><a href="../../reader.html?id=a-paradox-that-isnt&amp;page=4"><span class="n">08</span><span class="t">Why This Matters</span><span class="p">p. 4</span></a></li>
+          <li style="--i:8"><a href="../../reader.html?id=a-paradox-that-isnt&amp;page=4"><span class="n">09</span><span class="t">Conclusion</span><span class="p">p. 4</span></a></li>
+          <li style="--i:9"><a href="../../reader.html?id=a-paradox-that-isnt&amp;page=4"><span class="n">10</span><span class="t">References</span><span class="p">p. 4</span></a></li>
         </ol>
       </section>
 
       <section class="essay-section">
-        <div class="section-heading plain"><h2>Further reading</h2><a class="link small" href="../../#room">All essays</a></div>
+        <div class="section-heading plain"><h2>Further reading</h2><a class="link small" href="../../">All essays</a></div>
         <div class="related-grid">
           <a class="related-card" href="../gojo-infinity/" style="--i:0">
             <span class="photo" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA0JCgsKCA0LCgsODg0PEyAVExISEyccHhcgLikxMC4pLSwzOko+MzZGNywtQFdBRkxOUlNSMj5aYVpQYEpRUk//2wBDAQ4ODhMREyYVFSZPNS01T09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0//wAARCAARABgDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD06sma4n+2gKxxnAFWdY+0f2dL9lbbJjg+leT6z4svLe5WC2lJdD8z9yaT7IaWlz2Rc7RnrRWZ4bu5b7Rbe4nOZHXJopiL9z/x7Sf7pr541f8A5DU//XQ/zoooA908Kf8AIvWn+4KKKKENn//Z);view-transition-name:ph-gojo-infinity"><img src="../../images/gojo-infinity-640.jpg" srcset="../../images/gojo-infinity-640.jpg 640w, ../../images/gojo-infinity.jpg 1200w" sizes="(max-width: 650px) 80vw, 420px" alt="Manga illustration of Gojo Satoru, smiling and reaching one hand towards the viewer." loading="lazy" decoding="async" onload="this.classList.add('loaded')"></span>
@@ -123,6 +134,7 @@
         </div>
       </section>
     </main>
+
     <script type="application/json" id="essayData">{"id": "a-paradox-that-isnt", "title": "0.999… = 1: A Paradox That Isn't", "author": "Lanchenba Mutum", "year": 2026}</script>
     <script type="application/ld+json">{"@context": "https://schema.org", "@type": "ScholarlyArticle", "headline": "0.999… = 1: A Paradox That Isn't", "author": {"@type": "Person", "name": "Lanchenba Mutum"}, "datePublished": "2026", "description": "A careful demonstration that 0.999… is exactly equal to 1, with an explanation of why the result so often surprises students.", "about": ["Understanding 0.999…", "A simple algebraic proof", "A geometric perspective", "The historical birth of limits", "Representation versus value"], "isPartOf": {"@type": "CreativeWorkSeries", "name": "The Open Archive", "author": {"@type": "Person", "name": "Lanchenba Mutum"}}, "image": "https://theopenarchive.onrender.com/images/a-paradox-that-isnt.jpg", "encoding": {"@type": "MediaObject", "encodingFormat": "application/pdf", "contentUrl": "https://theopenarchive.onrender.com/books/a-paradox-that-isnt.pdf"}, "url": "https://theopenarchive.onrender.com/essays/a-paradox-that-isnt/"}</script>
 
@@ -132,10 +144,10 @@
     </footer>
     <div class="toast" id="toast" role="status" hidden></div>
   </div>
-  <script src="../../js/common.js?v=22"></script>
-  <script src="../../js/sfx.js?v=22"></script>
-  <script src="../../js/site.js?v=22"></script>
-  <script src="../../js/request.js?v=22"></script>
-  <script src="../../js/music.js?v=22"></script>
+  <script src="../../js/common.js?v=24"></script>
+  <script src="../../js/sfx.js?v=24"></script>
+  <script src="../../js/site.js?v=24"></script>
+  <script src="../../js/request.js?v=24"></script>
+  <script src="../../js/music.js?v=24"></script>
 </body>
 </html>

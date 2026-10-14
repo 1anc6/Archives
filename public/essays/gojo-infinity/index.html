@@ -33,10 +33,13 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=STIX+Two+Text:ital@0;1&family=Noto+Sans+Math&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../css/styles.css?v=22">
+  <link rel="alternate" type="application/rss+xml" title="The Open Archive" href="../../feed.xml">
+  <link rel="stylesheet" href="../../css/styles.css?v=24">
+  <script data-goatcounter="https://lance.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </head>
 <body>
 
+  <a class="skip-link" href="#content">Skip to content</a>
   <div class="stage">
     <header class="site-header">
       <a class="brand" href="../../" aria-label="The Open Archive, home">
@@ -44,7 +47,7 @@
         <span><strong>THE OPEN</strong><small>ARCHIVE</small></span>
       </a>
       <nav class="main-nav" aria-label="Main navigation">
-        <a href="../../" class="active">Essays</a>
+        <a href="../../" class="active" aria-current="page">Essays</a>
         <a href="../../#room">Library</a>
         <a href="../../#about">About</a>
       </nav>
@@ -65,7 +68,7 @@
         </button>
       </span>
     </header>
-    <main class="page-wrap essay-page">
+    <main class="page-wrap essay-page" id="content" tabindex="-1">
       <nav class="crumbs" aria-label="Breadcrumb"><a href="../../">Essays</a><span>/</span><span>Infinity</span><span>/</span><span>No. 01</span></nav>
 
       <article class="essay-hero">
@@ -82,28 +85,34 @@
           </div>
           <div class="essay-actions">
             <a class="btn primary" data-read href="../../reader.html?id=gojo-infinity">Read essay<svg class="arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a>
-            <a class="btn ghost" href="../../books/gojo-infinity.pdf" download data-title="Mathematics Behind Jujutsu Kaisen: Gojo Satoru&#x27;s Infinity">Download PDF</a>
+            <a class="btn ghost" href="../../books/gojo-infinity.pdf" download data-title="Mathematics Behind Jujutsu Kaisen: Gojo Satoru&#x27;s Infinity">Request PDF</a>
             <button class="btn ghost" data-cite>Cite</button>
             <button class="btn ghost" data-share>Share</button>
           </div>
           <p class="progress-note" id="progressNote" hidden></p>
         </div>
-        <figure class="essay-figure"><span class="photo" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA0JCgsKCA0LCgsODg0PEyAVExISEyccHhcgLikxMC4pLSwzOko+MzZGNywtQFdBRkxOUlNSMj5aYVpQYEpRUk//2wBDAQ4ODhMREyYVFSZPNS01T09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0//wAARCAARABgDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD06sma4n+2gKxxnAFWdY+0f2dL9lbbJjg+leT6z4svLe5WC2lJdD8z9yaT7IaWlz2Rc7RnrRWZ4bu5b7Rbe4nOZHXJopiL9z/x7Sf7pr541f8A5DU//XQ/zoooA908Kf8AIvWn+4KKKKENn//Z);view-transition-name:ph-gojo-infinity"><img src="../../images/gojo-infinity-640.jpg" srcset="../../images/gojo-infinity-640.jpg 640w, ../../images/gojo-infinity.jpg 1200w" sizes="(max-width: 1000px) 92vw, 560px" alt="Manga illustration of Gojo Satoru, smiling and reaching one hand towards the viewer." loading="eager" decoding="async" onload="this.classList.add('loaded')"></span></figure>
+        <figure class="essay-sheet">
+          <span class="sheet-glyph" aria-hidden="true">Σ ½<sup>n</sup></span>
+          <span class="sheet-photo"><span class="photo" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA0JCgsKCA0LCgsODg0PEyAVExISEyccHhcgLikxMC4pLSwzOko+MzZGNywtQFdBRkxOUlNSMj5aYVpQYEpRUk//2wBDAQ4ODhMREyYVFSZPNS01T09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0//wAARCAARABgDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD06sma4n+2gKxxnAFWdY+0f2dL9lbbJjg+leT6z4svLe5WC2lJdD8z9yaT7IaWlz2Rc7RnrRWZ4bu5b7Rbe4nOZHXJopiL9z/x7Sf7pr541f8A5DU//XQ/zoooA908Kf8AIvWn+4KKKKENn//Z);view-transition-name:ph-gojo-infinity"><img src="../../images/gojo-infinity-640.jpg" srcset="../../images/gojo-infinity-640.jpg 640w, ../../images/gojo-infinity.jpg 1200w" sizes="(max-width: 1000px) 50vw, 280px" alt="Manga illustration of Gojo Satoru, smiling and reaching one hand towards the viewer." loading="eager" decoding="async" onload="this.classList.add('loaded')"></span></span>
+        </figure>
       </article>
 
       <section class="essay-section">
-        <div class="section-heading plain"><h2>Topics covered</h2></div>
-        <ol class="topic-list">
-          <li style="--i:0"><span>01</span>Zeno&#x27;s paradoxes</li>
-          <li style="--i:1"><span>02</span>Geometric series and convergence</li>
-          <li style="--i:2"><span>03</span>The Lebesgue measure</li>
-          <li style="--i:3"><span>04</span>Riemannian geometry: infinity as a metric transformation</li>
-          <li style="--i:4"><span>05</span>Mahoraga&#x27;s adaptation and the World Cutting Slash</li>
+        <div class="section-heading plain"><h2>Inside this essay</h2><span class="section-note">Open any section in the reader</span></div>
+        <ol class="topic-list toc-links">
+          <li style="--i:0"><a href="../../reader.html?id=gojo-infinity&amp;page=2"><span class="n">01</span><span class="t">Introduction</span><span class="p">p. 2</span></a></li>
+          <li style="--i:1"><a href="../../reader.html?id=gojo-infinity&amp;page=3"><span class="n">02</span><span class="t">Zeno&#x27;s Paradoxes</span><span class="p">p. 3</span></a></li>
+          <li style="--i:2"><a href="../../reader.html?id=gojo-infinity&amp;page=3"><span class="n">03</span><span class="t">Geometric Series</span><span class="p">p. 3</span></a></li>
+          <li style="--i:3"><a href="../../reader.html?id=gojo-infinity&amp;page=4"><span class="n">04</span><span class="t">The Lebesgue Measure</span><span class="p">p. 4</span></a></li>
+          <li style="--i:4"><a href="../../reader.html?id=gojo-infinity&amp;page=6"><span class="n">05</span><span class="t">Riemannian Geometry</span><span class="p">p. 6</span></a></li>
+          <li style="--i:5"><a href="../../reader.html?id=gojo-infinity&amp;page=8"><span class="n">06</span><span class="t">Mahoraga&#x27;s Adaptation</span><span class="p">p. 8</span></a></li>
+          <li style="--i:6"><a href="../../reader.html?id=gojo-infinity&amp;page=9"><span class="n">07</span><span class="t">Conclusion</span><span class="p">p. 9</span></a></li>
+          <li style="--i:7"><a href="../../reader.html?id=gojo-infinity&amp;page=10"><span class="n">08</span><span class="t">References</span><span class="p">p. 10</span></a></li>
         </ol>
       </section>
 
       <section class="essay-section">
-        <div class="section-heading plain"><h2>Further reading</h2><a class="link small" href="../../#room">All essays</a></div>
+        <div class="section-heading plain"><h2>Further reading</h2><a class="link small" href="../../">All essays</a></div>
         <div class="related-grid">
           <a class="related-card" href="../tale-of-two-infinities/" style="--i:0">
             <span class="photo" style="background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA0JCgsKCA0LCgsODg0PEyAVExISEyccHhcgLikxMC4pLSwzOko+MzZGNywtQFdBRkxOUlNSMj5aYVpQYEpRUk//2wBDAQ4ODhMREyYVFSZPNS01T09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0//wAARCAARABgDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwC4k+XAIAq6GBUNngU3ADf6r8cVKJcHGB+VTzHdKDK8lwoyAQaKk3Rl+UFFO4uUst0quf8AW0UVmi2V5f8AW/jRRRW/Qwj1P//Z);view-transition-name:ph-tale-of-two-infinities"><img src="../../images/tale-of-two-infinities-640.jpg" srcset="../../images/tale-of-two-infinities-640.jpg 640w, ../../images/tale-of-two-infinities.jpg 1200w" sizes="(max-width: 650px) 80vw, 420px" alt="A pink grand hotel façade beneath the title &#x27;Hilbert&#x27;s Hotel Paradox&#x27; and an infinity symbol." loading="lazy" decoding="async" onload="this.classList.add('loaded')"></span>
@@ -123,6 +132,7 @@
         </div>
       </section>
     </main>
+
     <script type="application/json" id="essayData">{"id": "gojo-infinity", "title": "Mathematics Behind Jujutsu Kaisen: Gojo Satoru's Infinity", "author": "Lanchenba Mutum", "year": 2026}</script>
     <script type="application/ld+json">{"@context": "https://schema.org", "@type": "ScholarlyArticle", "headline": "Mathematics Behind Jujutsu Kaisen: Gojo Satoru's Infinity", "author": {"@type": "Person", "name": "Lanchenba Mutum"}, "datePublished": "2026", "description": "An examination of Zeno's paradox, convergent series and limits through the 'Infinity' technique of Gojo Satoru in Jujutsu Kaisen.", "about": ["Zeno's paradoxes", "Geometric series and convergence", "The Lebesgue measure", "Riemannian geometry: infinity as a metric transformation", "Mahoraga's adaptation and the World Cutting Slash"], "isPartOf": {"@type": "CreativeWorkSeries", "name": "The Open Archive", "author": {"@type": "Person", "name": "Lanchenba Mutum"}}, "image": "https://theopenarchive.onrender.com/images/gojo-infinity.jpg", "encoding": {"@type": "MediaObject", "encodingFormat": "application/pdf", "contentUrl": "https://theopenarchive.onrender.com/books/gojo-infinity.pdf"}, "url": "https://theopenarchive.onrender.com/essays/gojo-infinity/"}</script>
 
@@ -132,10 +142,10 @@
     </footer>
     <div class="toast" id="toast" role="status" hidden></div>
   </div>
-  <script src="../../js/common.js?v=22"></script>
-  <script src="../../js/sfx.js?v=22"></script>
-  <script src="../../js/site.js?v=22"></script>
-  <script src="../../js/request.js?v=22"></script>
-  <script src="../../js/music.js?v=22"></script>
+  <script src="../../js/common.js?v=24"></script>
+  <script src="../../js/sfx.js?v=24"></script>
+  <script src="../../js/site.js?v=24"></script>
+  <script src="../../js/request.js?v=24"></script>
+  <script src="../../js/music.js?v=24"></script>
 </body>
 </html>

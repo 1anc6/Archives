@@ -365,6 +365,8 @@
 .end-reactions button span { font-size: 20px; line-height: 1; }
 .end-reactions button:hover { transform: translateY(-2px); border-color: var(--r-soft); }
 .end-sent { margin: 14px 0 0; font-size: 15px; color: var(--r-soft); }
+.end-review { margin: 14px 0 0; font-size: 15px; color: var(--r-soft); }
+.end-review .link { font-size: inherit; }
 .end-next { margin-top: 32px; padding-top: 28px; border-top: 1px solid var(--r-line); }
 .end-next-label { margin: 0; font-size: 15px; color: var(--r-soft); }
 .end-next-title { display: inline-block; margin-top: 6px; font: 400 clamp(26px, 3.4vw, 34px)/1.15 var(--serif); color: var(--r-ink); text-decoration: none; }

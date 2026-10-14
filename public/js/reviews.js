@@ -1,12 +1,29 @@
-// Reviews screen: readers' reviews (stored in Supabase) and how many people
-// visited the site and each essay (from GoatCounter's public counters).
+// Readers' reviews (stored in Supabase) and how many people visited the site and
+// each essay (from GoatCounter's public counters). Used by the Reviews screen on the
+// homepage, the Reviews section on each essay page and the reader's end card.
 // Settings live in data/site.json: "supabase": {"url", "anonKey"} and "goatcounter".
 (function () {
   const $ = (id) => document.getElementById(id);
   const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
   const sfx = window.Sfx || { tick() {}, soft() {}, pop() {} };
-  const toast = (m) => window.Site?.toast?.(m);
-  const SITE_JSON = new URL("../data/site.json", document.currentScript.src).href;
+  const ROOT = new URL("../", document.currentScript.src).href; // the site's home folder
+  const SITE_JSON = ROOT + "data/site.json";
+  function toast(m) {
+    if (window.Site?.toast) return window.Site.toast(m);
+    // The reader has no site.js, so show a plain toast here.
+    let t = $("toast");
+    if (!t) {
+      t = document.createElement("div");
+      t.id = "toast";
+      t.className = "toast";
+      t.setAttribute("role", "status");
+      document.body.appendChild(t);
+    }
+    t.textContent = m;
+    t.hidden = false;
+    clearTimeout(toast.timer);
+    toast.timer = setTimeout(() => (t.hidden = true), 2400);
+  }
   const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
   const STAR = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3.2 2.7 5.6 6.1.8-4.5 4.2 1.1 6.1L12 17l-5.4 2.9 1.1-6.1-4.5-4.2 6.1-.8z"/></svg>';
 
@@ -14,6 +31,10 @@
   let config = {}, books = [], byId = {}, reviews = [], views = {}, totalVisits = null;
   let filter = null; // essay id, or null for all
   let loadFailed = false;
+  let loaded = false; // first fetch finished: until then show placeholders, not zeros
+  // Long lists start short so phones don't scroll forever.
+  const ESSAYS_SHOWN = 6, REVIEWS_STEP = 8;
+  let allEssays = false, reviewsShown = REVIEWS_STEP;
 
   const db = () => config.supabase && config.supabase.url && config.supabase.anonKey ? config.supabase : null;
   const headers = () => ({ apikey: db().anonKey, Authorization: `Bearer ${db().anonKey}` });
@@ -41,9 +62,10 @@
     byId = Object.fromEntries(books.map((b) => [b.id, b]));
   }
 
-  async function fetchReviews() {
+  async function fetchReviews(essayId) {
     if (!db()) return [];
-    const res = await fetch(`${db().url}/rest/v1/reviews?select=id,created_at,essay_id,name,rating,body&order=created_at.desc&limit=1000`, { headers: headers() });
+    const only = essayId ? `&essay_id=eq.${encodeURIComponent(essayId)}` : "";
+    const res = await fetch(`${db().url}/rest/v1/reviews?select=id,created_at,essay_id,name,rating,body${only}&order=created_at.desc&limit=1000`, { headers: headers() });
     if (!res.ok) throw new Error(`Reviews: ${res.status}`);
     return (await res.json()).filter((r) => byId[r.essay_id]);
   }
@@ -78,7 +100,16 @@
     return { n: list.length, avg };
   }
 
+  const SK = (w = "") => `<span class="sk${w}" aria-hidden="true"></span>`;
+  const skCards = (n) => Array.from({ length: n }, () => `<li class="rev-card sk-card" aria-hidden="true">${SK(" sk-line")}${SK(" sk-line")}${SK(" sk-line short")}</li>`).join("");
+
   function renderStats() {
+    $("revStats").setAttribute("aria-busy", String(!loaded));
+    if (!loaded) {
+      $("revStats").innerHTML = SK(" sk-stat") + SK(" sk-stat") + SK(" sk-stat");
+      $("revCountsNote").hidden = true;
+      return;
+    }
     const all = reviews.length ? reviews.reduce((s, r) => s + r.rating, 0) / reviews.length : 0;
     const essayViews = Object.values(views).some((v) => v != null) ? Object.values(views).reduce((s, v) => s + (v || 0), 0) : null;
     const parts = [];
@@ -91,7 +122,18 @@
   }
 
   function renderEssays() {
-    $("revEssays").innerHTML = books
+    // Most reviewed first, then most viewed; ties keep the usual order.
+    const ranked = books
+      .map((b, i) => ({ b, i, n: summary(b.id).n, v: views[b.id] || 0 }))
+      .sort((x, y) => y.n - x.n || y.v - x.v || x.i - y.i)
+      .map((x) => x.b);
+    let shown = allEssays ? ranked : ranked.slice(0, ESSAYS_SHOWN);
+    if (filter && !shown.some((b) => b.id === filter)) shown = [...shown, byId[filter]];
+    const more = $("revMoreEssays");
+    more.hidden = ranked.length <= ESSAYS_SHOWN;
+    more.textContent = allEssays ? "Show fewer essays" : `Show all ${ranked.length} essays`;
+    more.setAttribute("aria-expanded", String(allEssays));
+    $("revEssays").innerHTML = shown
       .map((b) => {
         const s = summary(b.id);
         const v = views[b.id];
@@ -100,8 +142,8 @@
             <button class="rev-essay${filter === b.id ? " is-active" : ""}" type="button" data-essay="${b.id}" aria-pressed="${filter === b.id}">
               <span class="rev-essay-title">${esc(b.shortTitle)}</span>
               <span class="rev-essay-meta">
-                ${v != null ? `<span>${fmt(v)} ${v === 1 ? "view" : "views"}</span>` : ""}
-                <span>${s.n ? `${stars(s.avg, "sm")} ${s.avg.toFixed(1)} · ${s.n} ${s.n === 1 ? "review" : "reviews"}` : "No reviews yet"}</span>
+                ${!loaded ? SK(" sk-meta") : `${v != null ? `<span>${fmt(v)} ${v === 1 ? "view" : "views"}</span>` : ""}
+                <span>${s.n ? `${stars(s.avg, "sm")} ${s.avg.toFixed(1)} · ${s.n} ${s.n === 1 ? "review" : "reviews"}` : "No reviews yet"}</span>`}
               </span>
             </button>
           </li>`;
@@ -113,15 +155,15 @@
     const list = filter ? reviews.filter((r) => r.essay_id === filter) : reviews;
     $("revListTitle").textContent = filter ? `Reviews of ${byId[filter].shortTitle}` : "Latest reviews";
     $("revClear").hidden = !filter;
+    if (!loaded && db()) {
+      $("revList").innerHTML = skCards(3);
+      $("revEmpty").hidden = $("revMoreReviews").hidden = true;
+      return;
+    }
+    $("revMoreReviews").hidden = list.length <= reviewsShown;
     $("revList").innerHTML = list
-      .map((r, i) => `
-        <li style="--i:${Math.min(i, 8)}">
-          <button class="rev-card" type="button" data-review="${r.id}">
-            ${stars(r.rating, "sm")}
-            <span class="rev-body">“${esc(r.body)}”</span>
-            <span class="rev-by"><b>${esc(r.name)}</b> on <i>${esc(byId[r.essay_id].shortTitle)}</i></span>
-          </button>
-        </li>`)
+      .slice(0, reviewsShown)
+      .map((r, i) => cardHTML(r, i, true))
       .join("");
     $("revEmpty").hidden = list.length > 0;
     $("revEmpty").textContent = !db()
@@ -130,11 +172,71 @@
       : filter ? "No reviews of this essay yet. Be the first to write one!" : "No reviews yet. Be the first to write one!";
   }
 
+  function cardHTML(r, i, withEssay) {
+    return `
+        <li style="--i:${Math.min(i, 8)}">
+          <button class="rev-card" type="button" data-review="${r.id}">
+            ${stars(r.rating, "sm")}
+            <span class="rev-body">“${esc(r.body)}”</span>
+            <span class="rev-by"><b>${esc(r.name)}</b>${withEssay ? ` on <i>${esc(byId[r.essay_id].shortTitle)}</i>` : ` · ${date(r.created_at)}`}</span>
+          </button>
+        </li>`;
+  }
+
   function renderAll() {
     renderStats();
     renderEssays();
     renderList();
     $("writeReview").hidden = !db();
+  }
+
+  /* ---------- Essay page: this essay's reviews ---------- */
+  const PAGE_SHOWN = 3;
+  function renderEssayReviews() {
+    const box = $("essayReviews");
+    if (!box) return;
+    box.hidden = !db();
+    if (box.hidden) return;
+    const id = box.dataset.essayId;
+    const list = reviews.filter((r) => r.essay_id === id);
+    const sum = $("erSum"), ul = $("erList");
+    sum.setAttribute("aria-busy", String(!loaded));
+    if (!loaded) {
+      sum.innerHTML = SK(" sk-stat");
+      ul.innerHTML = skCards(2);
+      return;
+    }
+    const s = summary(id);
+    sum.innerHTML = loadFailed
+      ? "Couldn't load reviews right now. Please try again later."
+      : s.n
+        ? `${stars(s.avg)} <b>${s.avg.toFixed(1)}</b> <span>from ${s.n} ${s.n === 1 ? "review" : "reviews"}</span>`
+        : "No reviews yet. Be the first to share what you thought!";
+    ul.innerHTML = list.slice(0, PAGE_SHOWN).map((r, i) => cardHTML(r, i, false)).join("");
+    const all = $("erAll");
+    all.hidden = list.length <= PAGE_SHOWN;
+    all.textContent = `See all ${list.length} reviews`;
+    all.href = `${ROOT}?reviews=${encodeURIComponent(id)}#reviews`;
+  }
+  async function mountEssayReviews() {
+    if (!ready) ready = load();
+    await ready;
+    renderEssayReviews();
+    if (!db()) return;
+    try {
+      reviews = await fetchReviews($("essayReviews").dataset.essayId);
+      loadFailed = false;
+    } catch {
+      loadFailed = true;
+    }
+    loaded = true;
+    renderEssayReviews();
+  }
+
+  // Redraw whichever reviews are on this page.
+  function refresh() {
+    if ($("revStats")) renderAll();
+    renderEssayReviews();
   }
 
   /* ---------- Dialogs ---------- */
@@ -177,16 +279,20 @@
     const b = byId[r.essay_id];
     const { scrim } = dialog(`
       <p class="cite-label">Review of</p>
-      <h2 class="rev-essay-name"><a href="essays/${b.id}/">${esc(b.title)}</a></h2>
+      <h2 class="rev-essay-name"><a href="${ROOT}essays/${b.id}/">${esc(b.title)}</a></h2>
       ${stars(r.rating)}
       <blockquote class="rev-full">“${esc(r.body)}”</blockquote>
       <p class="rev-sign">— ${esc(r.name)}<span>${date(r.created_at)}</span></p>
-      <div class="rev-actions"><a class="btn ghost" href="essays/${b.id}/">Read this essay</a></div>`, `Review by ${r.name}`);
+      ${$("essayReviews") ? "" : `<div class="rev-actions"><a class="btn ghost" href="${ROOT}essays/${b.id}/">Read this essay</a></div>`}`, `Review by ${r.name}`);
     scrim.querySelector("[data-close]").focus();
   }
 
-  function writeReview() {
+  async function writeReview(preset) {
+    if (!ready) ready = load();
+    await ready;
+    if (!db()) return toast("Reviews are coming soon.");
     sfx.tick();
+    const pick = preset || filter;
     let mine = {};
     try { mine = JSON.parse(localStorage.getItem("books.reviewed") || "{}"); } catch {}
     const { scrim, close } = dialog(`
@@ -194,7 +300,7 @@
       <form class="request-form rev-form" novalidate>
         <label class="field"><span>Your name</span><input name="name" type="text" autocomplete="name" maxlength="60" required></label>
         <label class="field"><span>Essay</span>
-          <select name="essay" required>${books.map((b) => `<option value="${b.id}"${b.id === filter ? " selected" : ""}>${esc(b.shortTitle)}</option>`).join("")}</select>
+          <select name="essay" required>${books.map((b) => `<option value="${b.id}"${b.id === pick ? " selected" : ""}>${esc(b.shortTitle)}</option>`).join("")}</select>
         </label>
         <fieldset class="field rev-rate">
           <legend>Your rating</legend>
@@ -241,12 +347,13 @@
         if (!res.ok) throw new Error(String(res.status));
         const [saved] = await res.json();
         reviews.unshift(saved);
+        loaded = true;
         mine[essay] = Date.now();
         try { localStorage.setItem("books.reviewed", JSON.stringify(mine)); } catch {}
         sfx.pop();
         close();
         toast("Thanks! Your review is up");
-        renderAll();
+        refresh();
       } catch {
         btn.disabled = false;
         btn.textContent = "Post review";
@@ -259,17 +366,34 @@
   document.addEventListener("click", (e) => {
     const card = e.target.closest("[data-review]");
     if (card) return showReview(card.dataset.review);
+    const write = e.target.closest("[data-write-review]");
+    if (write) return writeReview(write.dataset.writeReview);
     const essay = e.target.closest("[data-essay]");
     if (essay) {
       sfx.soft();
       filter = filter === essay.dataset.essay ? null : essay.dataset.essay;
+      reviewsShown = REVIEWS_STEP;
       renderEssays();
       renderList();
       $("revListTitle").scrollIntoView({ behavior: "smooth", block: "start" });
       return;
     }
+    if (e.target.closest("#revMoreEssays")) {
+      sfx.soft();
+      allEssays = !allEssays;
+      renderEssays();
+      if (!allEssays) $("revEssays").previousElementSibling.scrollIntoView({ behavior: "smooth", block: "start" });
+      return;
+    }
+    if (e.target.closest("#revMoreReviews")) {
+      sfx.soft();
+      reviewsShown += REVIEWS_STEP;
+      renderList();
+      return;
+    }
     if (e.target.closest("#revClear")) {
       filter = null;
+      reviewsShown = REVIEWS_STEP;
       renderEssays();
       renderList();
       return;
@@ -280,12 +404,26 @@
   async function open() {
     if (!ready) ready = load();
     await ready;
-    renderAll(); // show what we have straight away
+    // "See all reviews" on an essay page lands here filtered to that essay.
+    const want = new URLSearchParams(location.search).get("reviews");
+    if (want && byId[want] && !open.used) filter = want;
+    open.used = true;
+    renderAll(); // placeholders (or what we had) straight away
     const [r] = await Promise.allSettled([fetchReviews(), fetchViews()]);
     loadFailed = r.status !== "fulfilled";
     if (!loadFailed) reviews = r.value;
+    loaded = true;
     renderAll();
   }
 
-  window.Reviews = { open };
+  // Whether reviews are switched on (site.json has the Supabase settings).
+  async function enabled() {
+    if (!ready) ready = load();
+    await ready;
+    return !!db();
+  }
+
+  if ($("essayReviews")) mountEssayReviews();
+
+  window.Reviews = { open, write: writeReview, enabled };
 })();

@@ -33,7 +33,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=STIX+Two+Text:ital@0;1&family=Noto+Sans+Math&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css?v=25">
+  <link rel="stylesheet" href="css/styles.css?v=28">
   <link rel="alternate" type="application/rss+xml" title="The Open Archive" href="feed.xml">
   <!-- stats:start -->
   <script data-goatcounter="https://lance.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
@@ -122,6 +122,7 @@
               </div>
             </div>
             <ol class="index-list" id="indexList"></ol>
+            <button class="btn index-more" type="button" id="indexMore" aria-controls="indexList" hidden></button>
             <p class="index-empty" id="indexEmpty" role="status" hidden>No essays match “<span id="indexEmptyQuery"></span>”. <button class="link" type="button">Clear the search</button></p>
           </section>
 
@@ -203,14 +204,16 @@
           <div class="rev-stats" id="revStats" aria-live="polite"></div>
           <p class="rev-note" id="revCountsNote" hidden>Visitor numbers will appear here once they're switched on.</p>
 
-          <h2 class="shelf-h rev-h">By essay</h2>
+          <h2 class="shelf-h rev-h">By Essay</h2>
           <ol class="rev-essays" id="revEssays"></ol>
+          <button class="btn rev-more" type="button" id="revMoreEssays" hidden></button>
 
           <div class="section-heading list-heading rev-list-head">
             <h2 id="revListTitle">Latest reviews</h2>
             <button class="link" type="button" id="revClear" hidden>Show all reviews</button>
           </div>
           <ul class="rev-list" id="revList"></ul>
+          <button class="btn rev-more" type="button" id="revMoreReviews" hidden>Show more reviews</button>
           <p class="empty" id="revEmpty"></p>
         </main>
       </section>
@@ -281,12 +284,12 @@
     <div class="toast" id="toast" role="status" hidden></div>
   </div>
 
-  <script src="js/common.js?v=25"></script>
-  <script src="js/sfx.js?v=25"></script>
-  <script src="js/site.js?v=25"></script>
-  <script src="js/app.js?v=25"></script>
-  <script src="js/reviews.js?v=25"></script>
-  <script src="js/request.js?v=25"></script>
-  <script src="js/music.js?v=25"></script>
+  <script src="js/common.js?v=28"></script>
+  <script src="js/sfx.js?v=28"></script>
+  <script src="js/site.js?v=28"></script>
+  <script src="js/app.js?v=28"></script>
+  <script src="js/reviews.js?v=28"></script>
+  <script src="js/request.js?v=28"></script>
+  <script src="js/music.js?v=28"></script>
 </body>
 </html>

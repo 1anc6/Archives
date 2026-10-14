@@ -19,7 +19,7 @@ from PIL import Image, ImageDraw, ImageFilter, ImageFont
 
 ROOT = Path(__file__).resolve().parent.parent
 PUBLIC = ROOT / "public"
-VERSION = "25"  # bump to make browsers fetch new CSS/JS
+VERSION = "28"  # bump to make browsers fetch new CSS/JS
 
 books = json.loads((PUBLIC / "data/books.json").read_text(encoding="utf-8"))
 site = json.loads((PUBLIC / "data/site.json").read_text(encoding="utf-8"))
@@ -455,6 +455,16 @@ def essay_page(b):
         </ol>
       </section>
 
+      <section class="essay-section essay-reviews" id="essayReviews" data-essay-id="{b['id']}" aria-labelledby="reviewsTitle" hidden>
+        <div class="section-heading plain"><h2 id="reviewsTitle">Reviews</h2><a class="link small" href="{prefix}#reviews">All reviews</a></div>
+        <p class="er-sum" id="erSum"></p>
+        <ul class="rev-list" id="erList"></ul>
+        <div class="er-actions">
+          <button class="btn primary" type="button" data-write-review="{b['id']}">Write a review</button>
+          <a class="btn ghost" id="erAll" href="{prefix}#reviews" hidden>See all reviews</a>
+        </div>
+      </section>
+
       <section class="essay-section">
         <div class="section-heading plain"><h2>Further reading</h2><a class="link small" href="{prefix}">All essays</a></div>
         <div class="related-grid">
@@ -465,7 +475,7 @@ def essay_page(b):
 {comments(b)}
     <script type="application/json" id="essayData">{json.dumps(data, ensure_ascii=False)}</script>
     <script type="application/ld+json">{json.dumps(ld, ensure_ascii=False)}</script>
-{footer(prefix, [])}"""
+{footer(prefix, ["reviews.js"])}"""
 
 
 # ---------------------------------------------------------------- 404 page

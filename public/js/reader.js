@@ -179,6 +179,7 @@
       <p class="end-lead">Thanks for reading <i>${escapeHTML(book.shortTitle || book.title)}</i>. So, how was it?</p>
       <div class="end-reactions">${reactions.map(([e, label]) => `<button type="button" data-reaction="${label}"><span aria-hidden="true">${e}</span>${label}</button>`).join("")}</div>
       <p class="end-sent" role="status" hidden>Your email app should be open with your reaction. Just press send, and thank you!</p>
+      <p class="end-review" hidden>Got more to say? <button class="link" type="button" data-write-review="${book.id}">Write a review</button> for other readers.</p>
       <div class="end-next">
         <p class="end-next-label">Up next</p>
         <a class="end-next-title" href="essays/${next.id}/">${escapeHTML(next.shortTitle)}</a>
@@ -189,6 +190,7 @@
         </div>
       </div>`;
     pagesEl.appendChild(card);
+    window.Reviews?.enabled().then((on) => (card.querySelector(".end-review").hidden = !on));
     card.querySelector(".end-reactions").addEventListener("click", (e) => {
       const btn = e.target.closest("[data-reaction]");
       if (!btn) return;

@@ -272,23 +272,37 @@
   });
 
   /* ---------- Search the contents ---------- */
+  // Long contents start short so phones don't scroll forever; search always covers every essay.
+  const INDEX_SHOWN = 8;
+  let indexAll = false;
   function filterIndex() {
     const q = $("indexSearch").value.trim().toLowerCase();
     let shown = 0;
+    const capped = !q && !indexAll;
     $("indexList").querySelectorAll(".entry").forEach((el) => {
       const b = byId[el.dataset.id];
       const hay = `${b.title} ${b.description} ${b.category} ${(b.topics || []).join(" ")}`.toLowerCase();
       const match = !q || q.split(/\s+/).every((t) => hay.includes(t));
-      el.hidden = !match;
-      if (match) {
+      el.hidden = !match || (capped && shown >= INDEX_SHOWN);
+      if (!el.hidden) {
         shown++;
         if (q) el.classList.add("is-seen"); // skip the scroll-in fade while searching
       }
     });
+    const more = $("indexMore");
+    more.hidden = !!q || books.length <= INDEX_SHOWN;
+    more.textContent = indexAll ? "Show fewer essays" : `Show all ${books.length} essays`;
+    more.setAttribute("aria-expanded", String(indexAll));
     $("indexEmpty").hidden = shown > 0;
     if (!shown) $("indexEmptyQuery").textContent = $("indexSearch").value.trim();
   }
   $("indexSearch").addEventListener("input", filterIndex);
+  $("indexMore").addEventListener("click", () => {
+    sfx.soft();
+    indexAll = !indexAll;
+    filterIndex();
+    if (!indexAll) $("contentsTitle").scrollIntoView({ behavior: "smooth", block: "start" });
+  });
   $("indexEmpty").querySelector("button").addEventListener("click", () => {
     $("indexSearch").value = "";
     filterIndex();

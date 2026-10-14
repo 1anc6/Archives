@@ -34,7 +34,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=STIX+Two+Text:ital@0;1&family=Noto+Sans+Math&display=swap" rel="stylesheet">
   <link rel="alternate" type="application/rss+xml" title="The Open Archive" href="../../feed.xml">
-  <link rel="stylesheet" href="../../css/styles.css?v=25">
+  <link rel="stylesheet" href="../../css/styles.css?v=28">
   <script data-goatcounter="https://lance.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </head>
 <body>
@@ -109,6 +109,16 @@
         </ol>
       </section>
 
+      <section class="essay-section essay-reviews" id="essayReviews" data-essay-id="tale-of-two-infinities" aria-labelledby="reviewsTitle" hidden>
+        <div class="section-heading plain"><h2 id="reviewsTitle">Reviews</h2><a class="link small" href="../../#reviews">All reviews</a></div>
+        <p class="er-sum" id="erSum"></p>
+        <ul class="rev-list" id="erList"></ul>
+        <div class="er-actions">
+          <button class="btn primary" type="button" data-write-review="tale-of-two-infinities">Write a review</button>
+          <a class="btn ghost" id="erAll" href="../../#reviews" hidden>See all reviews</a>
+        </div>
+      </section>
+
       <section class="essay-section">
         <div class="section-heading plain"><h2>Further reading</h2><a class="link small" href="../../">All essays</a></div>
         <div class="related-grid">
@@ -140,10 +150,11 @@
     </footer>
     <div class="toast" id="toast" role="status" hidden></div>
   </div>
-  <script src="../../js/common.js?v=25"></script>
-  <script src="../../js/sfx.js?v=25"></script>
-  <script src="../../js/site.js?v=25"></script>
-  <script src="../../js/request.js?v=25"></script>
-  <script src="../../js/music.js?v=25"></script>
+  <script src="../../js/common.js?v=28"></script>
+  <script src="../../js/sfx.js?v=28"></script>
+  <script src="../../js/site.js?v=28"></script>
+  <script src="../../js/reviews.js?v=28"></script>
+  <script src="../../js/request.js?v=28"></script>
+  <script src="../../js/music.js?v=28"></script>
 </body>
 </html>

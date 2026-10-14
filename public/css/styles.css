@@ -1548,3 +1548,35 @@ button, a, .chip, .pselect-menu li { touch-action: manipulation; }
   /* iOS zooms into any text box smaller than 16px when it's tapped */
   input:not([type="radio"]):not([type="checkbox"]), textarea, select, .mini-search input { font-size: 16px; }
 }
+
+/* ============ Music panel (js: music.js) ============ */
+.music-pop {
+  position: fixed; z-index: 85; padding: 10px;
+  border: 1px solid var(--line); border-radius: 14px; background: var(--panel); color: var(--ink);
+  background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 28px 28px;
+  box-shadow: 0 22px 48px -20px rgba(40, 30, 20, .6);
+  font-family: var(--sans);
+  animation: pselect-in .2s var(--ease);
+}
+.mp-now { display: flex; align-items: center; gap: 12px; padding: 4px 4px 12px; border-bottom: 1px solid var(--line); }
+.mp-toggle, .mp-next { display: grid; place-items: center; flex: none; border-radius: 50%; touch-action: manipulation; }
+.mp-toggle { width: 44px; height: 44px; background: var(--accent); color: var(--accent-ink); }
+.mp-next { width: 40px; height: 40px; color: var(--muted); border: 1px solid var(--line); }
+.mp-next:hover { color: var(--ink); border-color: var(--muted); }
+.mp-toggle svg, .mp-next svg { width: 18px; height: 18px; fill: currentColor; stroke: none; }
+.mp-meta { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.mp-label { font: 11px var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.mp-title { font: 400 19px/1.2 var(--display); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.mp-list { list-style: none; margin: 8px 0 0; padding: 0; max-height: min(320px, 55vh); overflow-y: auto; overscroll-behavior: contain; }
+.mp-list button {
+  display: grid; grid-template-columns: 14px 1fr; column-gap: 10px; align-items: center; width: 100%;
+  min-height: 48px; padding: 8px 10px; border-radius: 10px; text-align: left; color: var(--muted); touch-action: manipulation;
+}
+.mp-list button:hover { background: color-mix(in srgb, var(--hi) 10%, transparent); color: var(--ink); }
+.mp-list button[aria-pressed="true"] { color: var(--ink); background: color-mix(in srgb, var(--hi) 14%, transparent); }
+.mp-dot { width: 8px; height: 8px; border-radius: 50%; border: 1.5px solid var(--muted); justify-self: center; }
+.mp-list button[aria-pressed="true"] .mp-dot { background: var(--hi); border-color: var(--hi); }
+.mp-t { font-size: 16px; }
+.mp-n { grid-column: 2; font-size: 13px; color: var(--muted); }
+@media (prefers-reduced-motion: reduce) { .music-pop { animation: none; } }

@@ -29,6 +29,11 @@ create table if not exists public.reviews (
 
 alter table public.reviews enable row level security;
 
+-- Let the website read and add reviews (needed when "Automatically expose
+-- new tables" is turned off; harmless otherwise).
+grant usage on schema public to anon, authenticated;
+grant select, insert on public.reviews to anon, authenticated;
+
 drop policy if exists "Anyone can read reviews" on public.reviews;
 create policy "Anyone can read reviews"
   on public.reviews for select

@@ -16,7 +16,7 @@
   },
   "_help_reviews": "Reviews: create a free project at supabase.com, run supabase/reviews.sql in its SQL Editor, then paste the Project URL and the anon public key here. Visitor counts: in GoatCounter, Settings → tick \"Allow adding visitor counts on your website\".",
   "supabase": {
-    "url": "",
-    "anonKey": ""
+    "url": "https://xnywvztttykdgavusgbt.supabase.co",
+    "anonKey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhueXd2enR0dHlrZGdhdnVzZ2J0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTIwMDMzMzQsImV4cCI6MjEwNzU3OTMzNH0.mlWt6fTEXYGmtFaM1_sb53CVvGCioahG5oi_wJUdo7s"
   }
 }

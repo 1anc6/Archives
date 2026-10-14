@@ -15,7 +15,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pymupdf
 from matplotlib.patches import Circle, FancyBboxPatch, Rectangle
-from PIL import Image
+from PIL import Image, ImageFilter
 
 ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / "public" / "images"
@@ -38,10 +38,29 @@ FROM_PDF = {
     "secret-santa": (0, 0.0, 0.52),  # top half only: ornaments, no title text
     "tale-of-two-infinities": 0,
 }
+# Pictures with their title running edge to edge: shown whole on a blurred copy
+# of themselves instead of being cropped to the card shape.
+FIT = {"tale-of-two-infinities"}
+
+
+def fit(img: Image.Image) -> Image.Image:
+    """The whole picture, centred on a blurred, darkened, cover-cropped copy of itself."""
+    img = img.convert("RGB")
+    w, h = img.size
+    s = max(W / w, H / h)
+    bg = img.resize((round(w * s), round(h * s)), Image.LANCZOS)
+    bg = bg.crop(((bg.width - W) // 2, (bg.height - H) // 2, (bg.width - W) // 2 + W, (bg.height - H) // 2 + H))
+    bg = Image.blend(bg.filter(ImageFilter.GaussianBlur(28)), Image.new("RGB", (W, H), INK), 0.25)
+    s = min(W / w, H / h)
+    fg = img.resize((round(w * s), round(h * s)), Image.LANCZOS)
+    bg.paste(fg, ((W - fg.width) // 2, (H - fg.height) // 2))
+    return bg
 
 
 def save(img: Image.Image, name: str):
     img = img.convert("RGB")
+    if name in FIT:
+        img = fit(img)
     # cover-crop to the card shape
     r = W / H
     w, h = img.size

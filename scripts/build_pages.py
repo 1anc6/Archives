@@ -19,7 +19,7 @@ from PIL import Image, ImageDraw, ImageFilter, ImageFont
 
 ROOT = Path(__file__).resolve().parent.parent
 PUBLIC = ROOT / "public"
-VERSION = "34"  # bump to make browsers fetch new CSS/JS
+VERSION = "35"  # bump to make browsers fetch new CSS/JS
 
 books = json.loads((PUBLIC / "data/books.json").read_text(encoding="utf-8"))
 site = json.loads((PUBLIC / "data/site.json").read_text(encoding="utf-8"))
@@ -411,9 +411,11 @@ def essay_page(b):
         for i, sec in enumerate(b.get("sections", [])))
     rel = "\n".join(
         f"""          <a class="related-card" href="../{x['id']}/" style="--i:{i}">
-            {photo(x, prefix, name=True)}
+            {photo(x, prefix, name=True, sizes="(max-width: 650px) 92px, (max-width: 1000px) 30vw, 360px")}
             <span class="meta"><span>{e(x['category'])}</span><span class="num">{x['num']:02d}</span></span>
             <span class="related-name">{e(x['shortTitle'])}</span>
+            <span class="related-desc">{e(x['description'])}</span>
+            <span class="related-foot"><span>{x['pages']} pages · ~{x['pages'] * 2} min</span><span class="related-go">Read<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></span></span>
           </a>"""
         for i, x in enumerate(related(b))
     )

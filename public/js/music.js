@@ -439,6 +439,8 @@
   }
 
   function render() {
+    // lets the page react to the music (the homepage's liquid wave only flows while it plays)
+    document.documentElement.classList.toggle("music-on", playing);
     document.querySelectorAll("[data-music]").forEach((btn) => {
       btn.classList.toggle("is-playing", playing);
       btn.setAttribute("aria-haspopup", "dialog");

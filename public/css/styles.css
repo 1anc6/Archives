@@ -706,14 +706,20 @@ body.no-scroll { overflow: hidden; }
   gap: 24px 64px;
   position: relative;
   padding: 40px 0 28px;
+  border-bottom: 1px solid var(--ink);
+  transition: border-color .6s;
 }
-/* The rule under the masthead is a slow, liquid wave: a faint filled swell
-   behind a thin line, drifting at different speeds. Still if motion is reduced. */
+/* While music plays (js: music.js sets .music-on), the rule under the masthead
+   turns into a slow, liquid wave: a faint filled swell behind a thin line,
+   drifting at different speeds. Still if motion is reduced. */
 .masthead::before, .masthead::after {
   content: ""; position: absolute; left: 0; right: 0; pointer-events: none;
   -webkit-mask-repeat: repeat-x; mask-repeat: repeat-x;
   animation: wave-drift 14s linear infinite;
+  opacity: 0; transition: opacity .6s; animation-play-state: paused;
 }
+.music-on .masthead { border-bottom-color: transparent; }
+.music-on .masthead::before, .music-on .masthead::after { opacity: 1; animation-play-state: running; }
 .masthead::before {
   bottom: -6px; height: 18px;
   background: color-mix(in srgb, var(--hi) 16%, transparent);

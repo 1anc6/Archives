@@ -39,16 +39,87 @@
     setTheme(root.dataset.theme === "dark" ? "light" : "dark");
   });
 
-  /* ---------- Sound effects on/off ---------- */
+  /* ---------- Sound effects: on/off and a choice of sound sets ---------- */
+  // The button opens a small panel (styled like the music one) with an
+  // on/off switch and the sound sets; picking a set plays a sample of it.
   const sfxBtn = $("sfxBtn");
+  const packs = sfx.packs || [];
+  let sfxPop = null;
+  const ICON_ON = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M17 9.5a4 4 0 0 1 0 5"/></svg>';
+  const ICON_OFF = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="m17 10 4 4m0-4-4 4"/></svg>';
   function showSfx() {
     if (!sfxBtn) return;
+    const name = packs.find((p) => p.id === sfx.pack)?.title;
     sfxBtn.classList.toggle("is-muted", sfx.muted);
-    sfxBtn.title = sfx.muted ? "Sound effects off" : "Sound effects on";
+    sfxBtn.title = sfx.muted ? "Sound effects off" : `Sound effects: ${name || "on"}`;
     sfxBtn.setAttribute("aria-pressed", String(!sfx.muted));
+    if (sfxPop) {
+      const focusKey = document.activeElement?.dataset?.sfx;
+      sfxPop.innerHTML = `
+        <div class="mp-now">
+          <button type="button" class="mp-toggle sfx-toggle" data-sfx="toggle" aria-pressed="${!sfx.muted}" aria-label="${sfx.muted ? "Turn sound effects on" : "Turn sound effects off"}">${sfx.muted ? ICON_OFF : ICON_ON}</button>
+          <div class="mp-meta"><span class="mp-label">Sound effects</span><span class="mp-title">${sfx.muted ? "Off" : esc(name || "On")}</span></div>
+        </div>
+        <ul class="mp-list" aria-label="Sound sets">${packs.map((p) => `
+          <li><button type="button" data-sfx="${p.id}" aria-pressed="${!sfx.muted && p.id === sfx.pack}">
+            <span class="mp-dot" aria-hidden="true"></span>
+            <span class="mp-t">${esc(p.title)}</span>
+            <span class="mp-n">${esc(p.note)}</span>
+          </button></li>`).join("")}
+        </ul>`;
+      sfxPop.querySelector(`[data-sfx="${focusKey}"]`)?.focus({ preventScroll: true });
+    }
   }
+  function placeSfx() {
+    if (!sfxPop) return;
+    const r = sfxBtn.getBoundingClientRect();
+    const w = Math.min(300, innerWidth - 24);
+    sfxPop.style.width = `${w}px`;
+    sfxPop.style.top = `${Math.round(r.bottom + 8)}px`;
+    sfxPop.style.left = `${Math.round(Math.min(Math.max(12, r.right - w), innerWidth - w - 12))}px`;
+  }
+  function sfxOutside(e) {
+    if (!sfxPop.contains(e.target) && !sfxBtn.contains(e.target)) closeSfx(false);
+  }
+  function sfxKey(e) {
+    if (e.key === "Escape") { e.stopPropagation(); closeSfx(); }
+  }
+  function openSfx() {
+    sfxPop = document.createElement("div");
+    sfxPop.className = "music-pop";
+    sfxPop.setAttribute("role", "dialog");
+    sfxPop.setAttribute("aria-label", "Sound effects");
+    document.body.appendChild(sfxPop);
+    showSfx();
+    placeSfx();
+    sfxBtn.setAttribute("aria-expanded", "true");
+    sfxPop.querySelector("[data-sfx=toggle]").focus({ preventScroll: true });
+    setTimeout(() => document.addEventListener("pointerdown", sfxOutside), 0);
+    document.addEventListener("keydown", sfxKey);
+    addEventListener("resize", placeSfx);
+    addEventListener("scroll", placeSfx, { passive: true });
+  }
+  function closeSfx(refocus = true) {
+    if (!sfxPop) return;
+    sfxPop.remove();
+    sfxPop = null;
+    sfxBtn.setAttribute("aria-expanded", "false");
+    document.removeEventListener("pointerdown", sfxOutside);
+    document.removeEventListener("keydown", sfxKey);
+    removeEventListener("resize", placeSfx);
+    removeEventListener("scroll", placeSfx);
+    if (refocus) sfxBtn.focus({ preventScroll: true });
+  }
+  sfxBtn?.setAttribute("aria-haspopup", "dialog");
+  sfxBtn?.setAttribute("aria-expanded", "false");
   sfxBtn?.addEventListener("click", () => {
-    sfx.toggle();
+    if (!packs.length) { sfx.toggle(); return showSfx(); }
+    sfxPop ? closeSfx() : openSfx();
+  });
+  document.addEventListener("click", (e) => {
+    const b = sfxPop && e.target.closest("[data-sfx]");
+    if (!b || !sfxPop.contains(b)) return;
+    b.dataset.sfx === "toggle" ? sfx.toggle() : sfx.setPack(b.dataset.sfx);
     showSfx();
   });
   showSfx();

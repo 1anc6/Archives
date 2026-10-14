@@ -704,9 +704,32 @@ body.no-scroll { overflow: hidden; }
   grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
   align-items: end;
   gap: 24px 64px;
+  position: relative;
   padding: 40px 0 28px;
-  border-bottom: 1px solid var(--ink);
 }
+/* The rule under the masthead is a slow, liquid wave: a faint filled swell
+   behind a thin line, drifting at different speeds. Still if motion is reduced. */
+.masthead::before, .masthead::after {
+  content: ""; position: absolute; left: 0; right: 0; pointer-events: none;
+  -webkit-mask-repeat: repeat-x; mask-repeat: repeat-x;
+  animation: wave-drift 14s linear infinite;
+}
+.masthead::before {
+  bottom: -6px; height: 18px;
+  background: color-mix(in srgb, var(--hi) 16%, transparent);
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 18' preserveAspectRatio='none'%3E%3Cpath d='M0 9C40 1 80 1 120 9S200 17 240 9V18H0Z'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 18' preserveAspectRatio='none'%3E%3Cpath d='M0 9C40 1 80 1 120 9S200 17 240 9V18H0Z'/%3E%3C/svg%3E");
+  -webkit-mask-size: 240px 18px; mask-size: 240px 18px;
+  animation-duration: 22s; animation-direction: reverse;
+}
+.masthead::after {
+  bottom: -5px; height: 10px;
+  background: var(--ink);
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 10' preserveAspectRatio='none'%3E%3Cpath d='M0 5C30 1 60 1 90 5S150 9 180 5' fill='none' stroke='black' stroke-width='1.2'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 10' preserveAspectRatio='none'%3E%3Cpath d='M0 5C30 1 60 1 90 5S150 9 180 5' fill='none' stroke='black' stroke-width='1.2'/%3E%3C/svg%3E");
+  -webkit-mask-size: 180px 10px; mask-size: 180px 10px;
+}
+@keyframes wave-drift { to { -webkit-mask-position: 720px 0; mask-position: 720px 0; } }
 .masthead h1 { font: 400 clamp(44px, 5.6vw, 78px)/1 var(--display); letter-spacing: -.025em; text-wrap: balance; }
 .standfirst { font-size: 19px; line-height: 1.55; color: var(--muted); max-width: 40ch; padding-bottom: 8px; }
 .masthead > * { animation: rise .8s var(--ease) both; }
@@ -1580,3 +1603,7 @@ button, a, .chip, .pselect-menu li { touch-action: manipulation; }
 .mp-t { font-size: 16px; }
 .mp-n { grid-column: 2; font-size: 13px; color: var(--muted); }
 @media (prefers-reduced-motion: reduce) { .music-pop { animation: none; } }
+
+/* Sound-effects panel (js: site.js) reuses the music panel; its icons are stroked. */
+.sfx-toggle svg { fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; width: 20px; height: 20px; }
+.sfx-toggle[aria-pressed="false"] { background: transparent; color: var(--muted); border: 1px solid var(--line); }

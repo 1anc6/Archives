@@ -333,6 +333,8 @@
     if (e.key === "-" && !e.ctrlKey && !e.metaKey) setZoom(zoom - 0.25);
     if (e.key === "Escape" && !$("thumbs").hidden) toggleThumbs(false);
     if (e.key === "Escape" && !$("toc").hidden) toggleToc(false);
+    if (e.key === "Escape" && document.body.classList.contains("is-fullscreen") && !inFullscreen()) setImmersive(false);
+    if ((e.key === "f" || e.key === "F") && $("fullscreenBtn") && !e.ctrlKey && !e.metaKey && !e.altKey) toggleFullscreen();
   });
 
   let resizeTimer;
@@ -365,6 +367,68 @@
   if (matchMedia("(pointer: coarse)").matches && !store.get("books.swipeHintSeen")) {
     $("swipeHint").hidden = false;
     setTimeout(() => ($("swipeHint").hidden = true), 4500);
+  }
+
+  /* ---------- Tap the page to hide or show the controls ---------- */
+  function showControls(show) {
+    document.body.classList.toggle("controls-hidden", !show);
+  }
+  let tapType = "mouse";
+  let hadSelection = false;
+  pagesEl.addEventListener("pointerdown", (e) => {
+    tapType = e.pointerType;
+    hadSelection = !window.getSelection()?.isCollapsed;
+  }, { passive: true });
+  pagesEl.addEventListener("click", (e) => {
+    // A mouse click only toggles in full screen, so clicking about on a desktop doesn't hide them.
+    if (tapType === "mouse" && !document.body.classList.contains("is-fullscreen")) return;
+    // A tap that only clears a selection, or that lands on a button or link, isn't for this.
+    if (hadSelection || !window.getSelection()?.isCollapsed) return;
+    if (e.target.closest("a, button, input, .end-card")) return;
+    showControls(document.body.classList.contains("controls-hidden"));
+  });
+
+  /* ---------- Full screen ---------- */
+  // Phones without the Fullscreen API (iPhone) still get the immersive layout.
+  const root = document.documentElement;
+  const canFullscreen = !!(root.requestFullscreen || root.webkitRequestFullscreen);
+  const inFullscreen = () => !!(document.fullscreenElement || document.webkitFullscreenElement);
+  let keepPage = null; // the page being read when the mode was switched
+  function setImmersive(on) {
+    const keep = keepPage ?? here();
+    keepPage = null;
+    document.body.classList.toggle("is-fullscreen", on);
+    const btn = $("fullscreenBtn");
+    btn.setAttribute("aria-pressed", String(on));
+    btn.title = on ? "Exit full screen" : "Full screen";
+    btn.setAttribute("aria-label", on ? "Exit full screen" : "Full screen");
+    showControls(!on);
+    if (on && $("tapHint") && !store.get("books.tapHintSeen")) {
+      store.set("books.tapHintSeen", "1");
+      $("tapHint").hidden = false;
+      setTimeout(() => ($("tapHint").hidden = true), 4500);
+    }
+    // the header leaves the page flow and the window resizes: stay on the same page
+    setTimeout(() => { setZoom(zoom); goTo(keep, false); }, 0);
+  }
+  async function toggleFullscreen() {
+    const on = !document.body.classList.contains("is-fullscreen");
+    keepPage = here();
+    try {
+      if (on && canFullscreen) {
+        await (root.requestFullscreen?.({ navigationUI: "hide" }) ?? root.webkitRequestFullscreen());
+        return; // fullscreenchange does the rest
+      }
+      if (!on && inFullscreen()) {
+        await (document.exitFullscreen?.() ?? document.webkitExitFullscreen());
+        return;
+      }
+    } catch {}
+    setImmersive(on);
+  }
+  $("fullscreenBtn")?.addEventListener("click", toggleFullscreen); // missing on a page cached before it existed
+  for (const type of ["fullscreenchange", "webkitfullscreenchange"]) {
+    document.addEventListener(type, () => setImmersive(inFullscreen()));
   }
 
   /* ---------- Contents ---------- */

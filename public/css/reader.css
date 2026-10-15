@@ -400,3 +400,26 @@
 @media (max-width: 480px) {
   .quote-bar button { padding: 8px 10px; gap: 5px; font-size: 14px; }
 }
+
+/* ---------- Tap to hide the controls, and full screen ---------- */
+.reader-foot { transition: background .35s, transform .4s var(--ease), opacity .3s; }
+.controls-hidden .reader-foot {
+  transform: translate(-50%, calc(100% + 28px));
+  opacity: 0;
+  pointer-events: none;
+}
+#fullscreenBtn .ic-exit, .is-fullscreen #fullscreenBtn .ic-enter { display: none; }
+.is-fullscreen #fullscreenBtn .ic-exit { display: block; }
+
+/* In full screen the header floats over the pages and slides away with the footer. */
+.is-fullscreen .reader-bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  transition: background .35s, transform .4s var(--ease), opacity .3s;
+}
+.is-fullscreen.controls-hidden .reader-bar { transform: translateY(-100%); opacity: 0; pointer-events: none; }
+.is-fullscreen .pages { padding-top: max(16px, env(safe-area-inset-top)); }
+@media (max-width: 720px) {
+  .is-fullscreen .pages { gap: 8px; padding-inline: 2px; }
+}

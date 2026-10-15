@@ -89,7 +89,67 @@
   let pack = PACKS[0];
   try { pack = PACKS.find((p) => p.id === localStorage.getItem(PACK_KEY)) || pack; } catch {}
 
+  /* ---------- Dice: a rattle while shuffling, then a landing ---------- */
+  // One clack: a burst of noise through a narrow filter sounds like a plastic
+  // die knocking on a table. Pitch and loudness vary so no two sound alike.
+  let noise = null;
+  function clack(vol = 0.5, delay = 0) {
+    if (muted) return;
+    const a = audio();
+    if (!a) return;
+    if (!noise) {
+      noise = a.createBuffer(1, Math.floor(a.sampleRate * 0.05), a.sampleRate);
+      const d = noise.getChannelData(0);
+      for (let i = 0; i < d.length; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / d.length, 3);
+    }
+    const t = a.currentTime + delay;
+    const src = a.createBufferSource();
+    src.buffer = noise;
+    src.playbackRate.value = 0.8 + Math.random() * 0.5;
+    const band = a.createBiquadFilter();
+    band.type = "bandpass";
+    band.frequency.value = 1800 + Math.random() * 1600;
+    band.Q.value = 6;
+    const gain = a.createGain();
+    const v = vol * (0.7 + Math.random() * 0.3);
+    gain.gain.setValueAtTime(v, t);
+    gain.gain.exponentialRampToValueAtTime(0.0001, t + 0.05);
+    src.connect(band).connect(gain).connect(a.destination);
+    src.start(t);
+    // the body of the die: a short, low knock under the click
+    blip(220 + Math.random() * 120, 0.04, "triangle", vol * 0.12, null, delay);
+  }
+
+  // Haptics. Android vibrates; iPhones (iOS 18+) give a tick when a hidden
+  // switch is toggled, which is the only haptic a web page can reach there.
+  let iosSwitch = null;
+  function haptic(pattern) {
+    if (navigator.vibrate) {
+      try { navigator.vibrate(pattern); } catch {}
+      return;
+    }
+    if (!/iP(hone|ad|od)/.test(navigator.userAgent)) return;
+    if (!iosSwitch) {
+      iosSwitch = document.createElement("label");
+      iosSwitch.setAttribute("aria-hidden", "true");
+      iosSwitch.style.cssText = "position:fixed;width:1px;height:1px;overflow:hidden;opacity:0;pointer-events:none;left:-9px;top:0";
+      iosSwitch.innerHTML = '<input type="checkbox" switch tabindex="-1">';
+      document.body.appendChild(iosSwitch);
+    }
+    const taps = Array.isArray(pattern) ? Math.ceil(pattern.length / 2) : 1;
+    for (let i = 0; i < taps; i++) setTimeout(() => iosSwitch.click(), i * 70);
+  }
+
   const Sfx = {
+    // A die tumbling: one knock per shuffle step (sound when sounds are on; a light tick of haptics always).
+    rattle() { clack(0.45); haptic(6); },
+    // The die settles: two quick knocks and a gentle chime, with a firmer buzz.
+    land() {
+      clack(0.55);
+      clack(0.35, 0.07);
+      if (!muted) setTimeout(() => pack.ding(), 140);
+      haptic([14, 50, 24]);
+    },
     tick() { pack.tick(); buzz(8); },
     soft() { pack.soft(); },
     pop() { pack.pop(); buzz(12); },

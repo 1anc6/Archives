@@ -398,7 +398,11 @@
   }
   function place() {
     if (!panel || !opener) return;
-    const r = opener.getBoundingClientRect();
+    let r = opener.getBoundingClientRect();
+    // opened from the reader's "More" menu, which closes: hang it under the More button instead
+    if (!r.width || (opener.closest(".more-menu:not(.is-open)") && document.getElementById("moreBtn")?.offsetWidth)) {
+      r = (document.getElementById("moreBtn") || opener).getBoundingClientRect();
+    }
     const w = Math.min(300, innerWidth - 24);
     panel.style.width = `${w}px`;
     panel.style.top = `${Math.round(r.bottom + 8)}px`;

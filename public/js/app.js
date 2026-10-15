@@ -208,23 +208,37 @@
     if (matchMedia("(prefers-reduced-motion: reduce)").matches) return goTo(url);
     btn.classList.add("is-rolling");
     btn.style.width = `${btn.offsetWidth}px`;
-    sfx.soft();
-    let n = 0;
-    const roll = setInterval(() => {
-      label.textContent = books[Math.floor(Math.random() * books.length)].shortTitle;
-      if (++n >= 9) {
-        clearInterval(roll);
-        label.textContent = pick.shortTitle;
-        btn.classList.add("is-picked");
-        setTimeout(() => goTo(url), 350);
-      }
-    }, 75);
+    // Like a real die: quick tumbles that slow down, a knock on each, then it lands.
+    const dice = btn.querySelector(".dice");
+    const steps = [50, 55, 60, 70, 80, 95, 115, 140, 175];
+    let spin = 0;
+    let shown = null;
+    steps.reduce((at, wait, i) => {
+      setTimeout(() => {
+        let t;
+        do t = books[Math.floor(Math.random() * books.length)]; while (books.length > 1 && t === shown);
+        shown = t;
+        label.textContent = t.shortTitle;
+        spin += 70 + Math.random() * 60;
+        dice.style.transform = `rotate(${spin}deg) scale(${i % 2 ? 0.9 : 1.08})`;
+        sfx.rattle ? sfx.rattle() : sfx.soft();
+      }, at);
+      return at + wait;
+    }, 0);
+    setTimeout(() => {
+      label.textContent = pick.shortTitle;
+      dice.style.transform = "";
+      btn.classList.add("is-picked");
+      sfx.land ? sfx.land() : sfx.ding();
+      setTimeout(() => goTo(url), 480);
+    }, steps.reduce((a, b) => a + b, 0));
   });
   // Coming back with the browser's back button restores the button.
   window.addEventListener("pageshow", () => {
     const btn = $("surpriseBtn");
     btn.classList.remove("is-rolling", "is-picked");
     btn.style.width = "";
+    btn.querySelector(".dice").style.transform = "";
     btn.querySelector(".surprise-label").textContent = "Surprise me";
   });
 

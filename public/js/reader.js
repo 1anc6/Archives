@@ -34,6 +34,30 @@
   });
   applyTheme();
 
+  /* ---------- "More" menu (phones): theme, listen, music, PDF ---------- */
+  const moreBtn = $("moreBtn");
+  const moreMenu = $("moreMenu");
+  function toggleMore(open = !moreMenu.classList.contains("is-open")) {
+    if (!moreBtn) return;
+    moreMenu.classList.toggle("is-open", open);
+    moreBtn.setAttribute("aria-expanded", String(open));
+  }
+  if (moreBtn && moreMenu) {
+    moreBtn.addEventListener("click", () => toggleMore());
+    // Close after picking something, except the theme, which is nicer to cycle in place.
+    moreMenu.addEventListener("click", (e) => {
+      const item = e.target.closest("button, a");
+      if (item && item.id !== "themeBtn") toggleMore(false);
+    });
+    document.addEventListener("pointerdown", (e) => {
+      if (moreMenu.classList.contains("is-open") && !moreMenu.contains(e.target) && !moreBtn.contains(e.target)) toggleMore(false);
+    });
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && moreMenu.classList.contains("is-open")) { toggleMore(false); moreBtn.focus(); }
+    });
+    window.addEventListener("scroll", () => moreMenu.classList.contains("is-open") && toggleMore(false), { passive: true });
+  }
+
   const params = new URLSearchParams(location.search);
   const id = params.get("id");
 
@@ -255,7 +279,11 @@
     $("scrub").value = n;
     markSection(n);
     const left = (total - n) * MIN_PER_PAGE;
-    $("timeLeft").textContent = left > 0 ? `· ~${left} min left` : "· last page";
+    const timeText = left > 0 ? `~${left} min left` : "last page";
+    // Where they are in the essay reads better than a countdown; the time stays in the tooltip.
+    const sec = (book.sections || []).filter((s) => s.page <= n && s.page <= total).pop();
+    $("timeLeft").textContent = `· ${sec ? sec.title : timeText}`;
+    $("timeLeft").parentElement.title = sec ? `${sec.title} · ${timeText}` : timeText;
     document.querySelectorAll(".thumb.is-current").forEach((t) => t.classList.remove("is-current"));
     const t = pages[n - 1].thumb;
     if (t) {
@@ -372,7 +400,22 @@
   /* ---------- Tap the page to hide or show the controls ---------- */
   function showControls(show) {
     document.body.classList.toggle("controls-hidden", !show);
+    document.body.classList.toggle("bar-hidden", !show);
   }
+
+  // The header slides away while reading down the essay and comes back on the
+  // way up (full screen has its own rule: hidden until a tap).
+  let lastY = window.scrollY;
+  window.addEventListener("scroll", () => {
+    const y = window.scrollY;
+    const dy = y - lastY;
+    if (Math.abs(dy) < 8) return;
+    lastY = y;
+    const busy = document.body.classList.contains("thumbs-open") || $("moreMenu")?.classList.contains("is-open");
+    // only for the reader's own scrolling, not jumps like returning to their saved page
+    if (document.body.classList.contains("is-fullscreen") || busy || !userActive()) return;
+    document.body.classList.toggle("bar-hidden", dy > 0 && y > 140);
+  }, { passive: true });
   let tapType = "mouse";
   let hadSelection = false;
   pagesEl.addEventListener("pointerdown", (e) => {
@@ -439,7 +482,6 @@
     document.querySelectorAll(".toc-item").forEach((el, i) => el.classList.toggle("is-current", i === idx));
   }
   if (sections.length) {
-    $("tocBtn").hidden = false;
     $("tocList").innerHTML = sections
       .map((s, i) => `<li><button class="toc-item" data-page="${s.page}" style="--i:${i}"><span class="toc-n">${String(i + 1).padStart(2, "0")}</span><span class="toc-t">${escapeHTML(s.title)}</span><span class="toc-p">p. ${s.page}</span></button></li>`)
       .join("");
@@ -450,16 +492,27 @@
       if (!matchMedia("(min-width: 900px)").matches) toggleToc(false);
     });
   }
-  function toggleToc(open = $("toc").hidden) {
-    if (open) toggleThumbs(false);
-    $("toc").hidden = !open;
-    $("tocBtn").setAttribute("aria-expanded", String(open));
-    document.body.classList.toggle("thumbs-open", open || !$("thumbs").hidden);
-    if (open) markSection(current);
-    setTimeout(() => setZoom(zoom), 0);
+  /* One panel with two tabs: Contents (the sections) and Pages (thumbnails). */
+  let lastTab = store.get("books.panelTab", "toc");
+  function openPanel(tab) {
+    if (tab === "toc" && !sections.length) tab = "pages";
+    $("toc").hidden = tab !== "toc";
+    $("thumbs").hidden = tab !== "pages";
+    $("pagesBtn").setAttribute("aria-expanded", String(!!tab));
+    document.body.classList.toggle("thumbs-open", !!tab);
+    document.body.dataset.panel = tab || "";
+    if (tab) store.set("books.panelTab", (lastTab = tab));
+    if (tab === "toc") markSection(current);
+    if (tab === "pages") {
+      if (!thumbsBuilt) buildThumbs();
+      showPage(current);
+    }
+    setTimeout(() => setZoom(zoom), 0); // page width changes when the side panel opens
   }
-  $("tocBtn").addEventListener("click", () => toggleToc());
-  $("tocClose").addEventListener("click", () => toggleToc(false));
+  const toggleToc = (open = $("toc").hidden) => openPanel(open ? "toc" : null);
+  document.querySelectorAll('[data-tab="toc"]').forEach((t) => (t.hidden = !sections.length));
+  document.querySelectorAll("[data-tab]").forEach((t) => t.addEventListener("click", () => openPanel(t.dataset.tab)));
+  $("tocClose").addEventListener("click", () => openPanel(null));
 
   /* ---------- Slides on a portrait phone ---------- */
   const isSlides = pages[0].w > pages[0].h;
@@ -502,17 +555,9 @@
       }
     }
   }
-  function toggleThumbs(open = $("thumbs").hidden) {
-    if (open && !$("toc").hidden) { $("toc").hidden = true; $("tocBtn").setAttribute("aria-expanded", "false"); }
-    $("thumbs").hidden = !open;
-    $("pagesBtn").setAttribute("aria-expanded", String(open));
-    document.body.classList.toggle("thumbs-open", open);
-    if (open && !thumbsBuilt) buildThumbs();
-    if (open) showPage(current);
-    setTimeout(() => setZoom(zoom), 0); // page width changes when the side panel opens
-  }
-  $("pagesBtn").addEventListener("click", () => toggleThumbs());
-  $("thumbsClose").addEventListener("click", () => toggleThumbs(false));
+  const toggleThumbs = (open = $("thumbs").hidden) => openPanel(open ? "pages" : null);
+  $("pagesBtn").addEventListener("click", () => openPanel($("toc").hidden && $("thumbs").hidden ? lastTab : null));
+  $("thumbsClose").addEventListener("click", () => openPanel(null));
 
   /* ---------- Listen: read the essay aloud with the device's own voice ---------- */
   const speech = window.speechSynthesis;

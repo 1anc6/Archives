@@ -5,6 +5,44 @@
   // Resolve data/ relative to this script, so pages in sub-folders work too.
   const DATA_URL = new URL("../data/books.json", document.currentScript.src).href;
 
+  // Fetch a page as soon as the reader shows intent to open it (hovering a
+  // link, or pressing it on a phone), so it appears almost instantly. PDFs
+  // are left alone: they're big and the reader loads them itself.
+  (function prefetchOnIntent() {
+    if (navigator.connection?.saveData) return;
+    if (HTMLScriptElement.supports?.("speculationrules")) {
+      const rules = document.createElement("script");
+      rules.type = "speculationrules";
+      rules.textContent = JSON.stringify({
+        prefetch: [{
+          where: { and: [{ href_matches: "/*" }, { not: { href_matches: "/books/*" } }, { not: { href_matches: "*.pdf" } }] },
+          eagerness: "moderate",
+        }],
+      });
+      document.head.appendChild(rules);
+      return;
+    }
+    const done = new Set();
+    const intent = (e) => {
+      const a = e.target.closest?.("a[href]");
+      if (!a || a.origin !== location.origin || a.target || /\.pdf$|^\/books\//.test(a.pathname)) return;
+      const url = a.href.split("#")[0];
+      if (url === location.href.split("#")[0] || done.has(url)) return;
+      done.add(url);
+      const link = document.createElement("link");
+      link.rel = "prefetch";
+      link.href = url;
+      document.head.appendChild(link);
+    };
+    document.addEventListener("pointerover", (e) => {
+      const a = e.target.closest?.("a[href]");
+      if (!a) return;
+      const t = setTimeout(() => intent(e), 80);
+      a.addEventListener("pointerout", () => clearTimeout(t), { once: true });
+    }, { passive: true });
+    document.addEventListener("touchstart", intent, { passive: true });
+  })();
+
   function readJSON(key, fallback) {
     try {
       const raw = localStorage.getItem(key);

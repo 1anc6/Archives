@@ -260,7 +260,7 @@ svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width:
   font-size: 16px;
   text-decoration: none;
   white-space: nowrap;
-  transition: background .2s, color .2s, transform .2s, opacity .2s;
+  transition: background .2s, color .2s, transform .2s, opacity .2s, scale .18s var(--ease);
 }
 .btn.primary { background: var(--accent); color: var(--accent-ink); }
 .btn.primary:hover { transform: translateY(-1px); }
@@ -1637,3 +1637,18 @@ button, a, .chip, .pselect-menu li { touch-action: manipulation; }
 /* Sound-effects panel (js: site.js) reuses the music panel; its icons are stroked. */
 .sfx-toggle svg { fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; width: 20px; height: 20px; }
 .sfx-toggle[aria-pressed="false"] { background: transparent; color: var(--muted); border: 1px solid var(--line); }
+
+/* ============ Smooth interactions everywhere ============ */
+/* A gentle default for anything that can be hovered or pressed; components
+   with their own transition keep it. */
+:where(a, button, [role="button"], summary, input, select, textarea) {
+  transition: color .2s ease, background-color .2s ease, border-color .2s ease, box-shadow .25s ease, opacity .2s ease, scale .18s var(--ease);
+}
+/* A small press, so taps feel answered straight away. */
+@media (prefers-reduced-motion: no-preference) {
+  :where(.btn, .round-btn, .icon-btn, .ib, .chip, .entry-save, .mp-toggle, .mp-next, .quote-bar button, .end-reactions button, .author-links a):active { scale: .96; }
+}
+/* On touch screens a tapped card shouldn't stay lifted after the finger leaves. */
+@media (hover: none) {
+  .podium-card:hover, .related-card:hover, .start-card:hover, .shelf-card:hover, .rev-card:hover, .end-reactions button:hover { transform: none; }
+}

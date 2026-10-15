@@ -128,12 +128,47 @@
     layer.style.setProperty("--scale-factor", vp.scale);
     try {
       await pdfjsLib.renderTextLayer({ textContentSource: p.page.streamTextContent(), container: layer, viewport: vp, textDivs: [] }).promise;
+      const end = document.createElement("div");
+      end.className = "endOfContent";
+      layer.append(end);
       return layer;
     } catch (err) {
       console.error(err);
       return null;
     }
   }
+
+  // While text is being selected, keep each layer's catch-all box right next to
+  // the edge being dragged (as pdf.js's own viewer does). Dragging through the
+  // gap between two lines then stays put instead of jumping to the page's end.
+  let prevRange = null;
+  function resetSelecting() {
+    document.querySelectorAll(".textLayer.selecting").forEach((layer) => {
+      layer.classList.remove("selecting");
+      const end = layer.querySelector(".endOfContent");
+      if (end && end.parentElement !== layer) layer.append(end);
+    });
+    prevRange = null;
+  }
+  document.addEventListener("selectionchange", () => {
+    const sel = window.getSelection();
+    if (!sel || sel.isCollapsed || !sel.rangeCount) return resetSelecting();
+    const range = sel.getRangeAt(0);
+    const moveStart = prevRange && (range.compareBoundaryPoints(Range.END_TO_END, prevRange) === 0 || range.compareBoundaryPoints(Range.START_TO_END, prevRange) === 0);
+    let edge = moveStart ? range.startContainer : range.endContainer;
+    if (edge.nodeType === Node.TEXT_NODE) edge = edge.parentNode;
+    const layer = edge.closest?.(".textLayer");
+    const end = layer?.querySelector(".endOfContent");
+    if (end && edge !== layer && edge !== end) {
+      layer.classList.add("selecting");
+      edge.parentElement.insertBefore(end, moveStart ? edge : edge.nextSibling);
+    }
+    prevRange = range.cloneRange();
+  });
+  document.addEventListener("pointerup", () => {
+    const sel = window.getSelection();
+    if (!sel || sel.isCollapsed) resetSelecting();
+  });
 
   pagesEl.innerHTML = "";
   for (const p of pages) {
@@ -443,13 +478,41 @@
       }
       return chunks.map((c) => c.trim()).filter(Boolean);
     }
+    // A female American voice, picked from what this device has. Browsers don't
+    // say which voices are female, so go by the names that are, best sounding first.
+    const FEMALE = [
+      /\b(aria|jenny|ava|emma|michelle|ana)\b/i, // Microsoft natural voices (Edge, Windows 11)
+      /google us english/i, // Chrome
+      /\b(samantha|ava|allison|susan|zoe|nicky|joelle)\b/i, // Apple
+      /\bzira\b/i, // older Windows
+      /en-us-x-(sfg|tpc|tpf|iob|iog)/i, // Android's female voice codes
+      /female|woman/i,
+    ];
+    let voice = null;
+    function pickVoice() {
+      const en = speech.getVoices().filter((v) => /^en([-_]|$)/i.test(v.lang));
+      const us = (v) => /^en[-_]US/i.test(v.lang);
+      const score = (v) => {
+        const named = FEMALE.findIndex((re) => re.test(v.name));
+        if (named < 0) return -1;
+        return (us(v) ? 100 : 0) + 50 - named * 5 + (/natural|neural|premium|enhanced/i.test(v.name) ? 3 : 0);
+      };
+      const best = en.map((v) => [score(v), v]).filter(([s]) => s >= 0).sort((a, b) => b[0] - a[0])[0];
+      voice = best?.[1] || en.find(us) || en[0] || null;
+    }
+    pickVoice();
+    speech.addEventListener?.("voiceschanged", pickVoice);
+
     const say = (text, id) => new Promise((resolve) => {
       if (id !== run) return resolve(false);
       const u = new SpeechSynthesisUtterance(text);
-      const voice = speech.getVoices().find((v) => /^en(-|_)(GB|IN|US)/i.test(v.lang)) || speech.getVoices().find((v) => /^en/i.test(v.lang));
-      if (voice) u.voice = voice;
-      u.rate = 1;
-      u.onend = () => resolve(id === run);
+      if (voice) {
+        u.voice = voice;
+        u.lang = voice.lang;
+      } else u.lang = "en-US";
+      u.rate = 1.05;
+      u.pitch = 1;
+      u.onend = () => setTimeout(() => resolve(id === run), 120); // a brief pause between sentences
       u.onerror = () => resolve(false);
       speech.speak(u);
     });

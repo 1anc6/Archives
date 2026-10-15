@@ -265,31 +265,66 @@
   // Compare text without spaces or hyphens, which the PDF splits unpredictably.
   const squash = (s) => s.replace(/[\s­-]+/g, "").toLowerCase();
 
-  // Paint saved highlights onto a page's text layer.
+  // Paint saved highlights onto a page: soft marks drawn under exactly the
+  // highlighted words (not whole lines), in a layer between the page and its text.
   function paint(pageEl) {
     const b = book();
     const num = +pageEl.dataset.num;
     const mine = readHL().filter((h) => h.book === b.id && h.page === num);
     const layer = pageEl.querySelector(".textLayer");
     if (!layer) return;
-    layer.querySelectorAll(".hl").forEach((s) => s.classList.remove("hl"));
+    pageEl.querySelector(".hl-layer")?.remove();
     if (!mine.length) return;
-    const spans = [...layer.querySelectorAll("span")].filter((s) => !s.children.length && s.textContent.trim());
+    // Every kept character of the page, and where it sits in the text layer.
     let all = "";
-    const ranges = spans.map((s) => {
-      const start = all.length;
-      all += squash(s.textContent);
-      return [start, all.length];
-    });
+    const at = [];
+    const walker = document.createTreeWalker(layer, NodeFilter.SHOW_TEXT);
+    for (let node; (node = walker.nextNode()); ) {
+      const s = node.data;
+      for (let i = 0; i < s.length; i++) {
+        const c = squash(s[i]);
+        if (c.length !== 1) continue;
+        all += c;
+        at.push([node, i]);
+      }
+    }
+    const box = layer.getBoundingClientRect();
+    if (!box.width) return;
+    const marks = document.createElement("div");
+    marks.className = "hl-layer";
+    marks.setAttribute("aria-hidden", "true");
+    const range = document.createRange();
     for (const h of mine) {
       const needle = squash(h.text.replace(/…$/, ""));
-      const at = needle ? all.indexOf(needle) : -1;
-      if (at < 0) continue;
-      const end = at + needle.length;
-      spans.forEach((s, i) => {
-        if (ranges[i][1] > at && ranges[i][0] < end) s.classList.add("hl");
-      });
+      const from = needle ? all.indexOf(needle) : -1;
+      if (from < 0) continue;
+      const [startNode, startOff] = at[from];
+      const [endNode, endOff] = at[from + needle.length - 1];
+      range.setStart(startNode, startOff);
+      range.setEnd(endNode, endOff + 1);
+      // Merge the pieces into one band per line, so overlaps don't show darker.
+      const lines = [];
+      for (const r of range.getClientRects()) {
+        if (r.width < 1 || r.height < 1) continue;
+        const line = lines.find((l) => Math.abs(l.top + l.h / 2 - (r.top + r.height / 2)) < Math.min(l.h, r.height) / 2 && r.left <= l.right + 6 && r.right >= l.left - 6);
+        if (!line) { lines.push({ left: r.left, right: r.right, top: r.top, h: r.height }); continue; }
+        const bottom = Math.max(line.top + line.h, r.bottom);
+        line.left = Math.min(line.left, r.left);
+        line.right = Math.max(line.right, r.right);
+        line.top = Math.min(line.top, r.top);
+        line.h = bottom - line.top;
+      }
+      for (const l of lines) {
+        const m = document.createElement("i");
+        m.className = "hl-mark";
+        m.style.left = `${((l.left - box.left - 1) / box.width) * 100}%`;
+        m.style.top = `${((l.top - box.top - 1) / box.height) * 100}%`;
+        m.style.width = `${((l.right - l.left + 2) / box.width) * 100}%`;
+        m.style.height = `${((l.h + 2) / box.height) * 100}%`;
+        marks.appendChild(m);
+      }
     }
+    layer.before(marks);
   }
   document.addEventListener("page-rendered", (e) => paint(e.detail.el));
 

@@ -124,6 +124,101 @@
   });
   showSfx();
 
+  /* ---------- Looks: the reader picks how the interface is drawn ---------- */
+  // The original design is the default. Each other look has a touch sound
+  // that suits it, and picking a look switches to that sound set.
+  const LOOKS = [
+    { id: "classic", title: "Original", note: "Squared paper, flat and quiet", sound: "click" },
+    { id: "skeuo", title: "Skeuomorphic", note: "Bevelled keys, paper you can almost touch", sound: "switch" },
+    { id: "neu", title: "Neumorphic", note: "Soft shapes pressed out of the page", sound: "press" },
+    { id: "glass", title: "Glass", note: "Frosted panels floating over colour", sound: "chime" },
+  ];
+  const uiBtn = $("uiBtn");
+  let uiPop = null;
+  const look = () => root.dataset.ui || "classic";
+  function setLook(id) {
+    if (id === "classic") delete root.dataset.ui;
+    else root.dataset.ui = id;
+    try { localStorage.setItem("books.ui", id); } catch {}
+  }
+  function showUi() {
+    if (!uiBtn) return;
+    const cur = LOOKS.find((l) => l.id === look()) || LOOKS[0];
+    uiBtn.title = `Look: ${cur.title}`;
+    if (!uiPop) return;
+    const focusKey = document.activeElement?.dataset?.look;
+    uiPop.innerHTML = `
+      <div class="mp-now">
+        <div class="mp-meta"><span class="mp-label">Look</span><span class="mp-title">${esc(cur.title)}</span></div>
+      </div>
+      <ul class="mp-list ui-list" aria-label="Looks">${LOOKS.map((l) => `
+        <li><button type="button" data-look="${l.id}" aria-pressed="${l.id === cur.id}">
+          <span class="ui-swatch" data-swatch="${l.id}" aria-hidden="true"></span>
+          <span class="mp-t">${esc(l.title)}</span>
+          <span class="mp-n">${esc(l.note)}</span>
+        </button></li>`).join("")}
+      </ul>`;
+    uiPop.querySelector(`[data-look="${focusKey}"]`)?.focus({ preventScroll: true });
+  }
+  function placeUi() {
+    if (!uiPop) return;
+    const r = uiBtn.getBoundingClientRect();
+    const w = Math.min(300, innerWidth - 24);
+    uiPop.style.width = `${w}px`;
+    uiPop.style.top = `${Math.round(r.bottom + 8)}px`;
+    uiPop.style.left = `${Math.round(Math.min(Math.max(12, r.right - w), innerWidth - w - 12))}px`;
+  }
+  function uiOutside(e) {
+    if (!uiPop.contains(e.target) && !uiBtn.contains(e.target)) closeUi(false);
+  }
+  function uiKey(e) {
+    if (e.key === "Escape") { e.stopPropagation(); closeUi(); }
+  }
+  function openUi() {
+    uiPop = document.createElement("div");
+    uiPop.className = "music-pop";
+    uiPop.setAttribute("role", "dialog");
+    uiPop.setAttribute("aria-label", "Look");
+    document.body.appendChild(uiPop);
+    showUi();
+    placeUi();
+    uiBtn.setAttribute("aria-expanded", "true");
+    uiPop.querySelector(`[data-look="${look()}"]`)?.focus({ preventScroll: true });
+    setTimeout(() => document.addEventListener("pointerdown", uiOutside), 0);
+    document.addEventListener("keydown", uiKey);
+    addEventListener("resize", placeUi);
+    addEventListener("scroll", placeUi, { passive: true });
+  }
+  function closeUi(refocus = true) {
+    if (!uiPop) return;
+    uiPop.remove();
+    uiPop = null;
+    uiBtn.setAttribute("aria-expanded", "false");
+    document.removeEventListener("pointerdown", uiOutside);
+    document.removeEventListener("keydown", uiKey);
+    removeEventListener("resize", placeUi);
+    removeEventListener("scroll", placeUi);
+    if (refocus) uiBtn.focus({ preventScroll: true });
+  }
+  uiBtn?.setAttribute("aria-haspopup", "dialog");
+  uiBtn?.setAttribute("aria-expanded", "false");
+  uiBtn?.addEventListener("click", () => {
+    sfx.soft();
+    uiPop ? closeUi() : openUi();
+  });
+  document.addEventListener("click", (e) => {
+    const b = uiPop && e.target.closest("[data-look]");
+    if (!b || !uiPop.contains(b)) return;
+    const l = LOOKS.find((x) => x.id === b.dataset.look);
+    if (!l) return;
+    setLook(l.id);
+    sfx.usePack?.(l.sound);
+    showUi();
+    showSfx();
+    placeUi();
+  });
+  showUi();
+
   /* ---------- Share ---------- */
   function canonical() {
     return document.querySelector('link[rel="canonical"]')?.href || location.href.split("#")[0];

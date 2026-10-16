@@ -10,6 +10,7 @@
   const TRACK_KEY = "books.music.track"; // chosen track (localStorage)
   const STATE_KEY = "books.music.state"; // where we left off (sessionStorage, this tab only)
   const VOLUME = 0.5;
+  const CROSSFADE = 4; // seconds two tracks overlap when switching
   const ROOT = new URL("../", document.currentScript.src).href;
 
   const read = (s, k) => { try { return s.getItem(k); } catch { return null; } };
@@ -74,6 +75,32 @@
         }
       },
     },
+    // The next two are made to flow: long bars, overlapping pads and a
+    // texture that never stops, so there is no edge where one bar ends.
+    {
+      id: "tide", title: "Drifting tide", note: "Slow ambient swells and the sea",
+      chords: [[45, 52, 57, 64], [41, 48, 57, 60], [43, 50, 55, 62], [40, 47, 55, 59]],
+      bar: 12, pad: { type: "sine", level: 0.04 }, cutoff: 1600, texture: "waves",
+      lead(v, t, chord, bar) {
+        // a few far-off bells, always from the chord, so they melt into it
+        let s = 1.5 + Math.random() * 2;
+        while (s < bar - 2) {
+          v.bell(pick(chord) + 24, t + s, 0.035);
+          s += 3 + Math.random() * 3;
+        }
+      },
+    },
+    {
+      id: "stars", title: "Stargazing", note: "A glassy shimmer that keeps on flowing",
+      chords: [[50, 57, 64, 69], [47, 54, 62, 66], [43, 50, 59, 66], [45, 52, 61, 64]],
+      bar: 8, pad: { type: "triangle", level: 0.028 }, cutoff: 3000, texture: "shimmer",
+      lead(v, t, chord, bar) {
+        // an unbroken ripple of the chord, high and soft, the same pace in every bar
+        const notes = chord.map((n) => n + 24);
+        const step = bar / 16;
+        for (let i = 0; i < 16; i++) v.box(notes[(i * 3) % notes.length], t + i * step, i % 4 === 0 ? 0.03 : 0.018);
+      },
+    },
   ];
   let tracks = TRACKS.slice();
   const byId = (id) => tracks.find((x) => x.id === id) || tracks[0];
@@ -116,6 +143,20 @@
     for (let i = 0; i < nd.length; i++) nd[i] = Math.random() * 2 - 1;
 
     const hz = (m) => 440 * Math.pow(2, (m - 69) / 12);
+    // An equal-power fade: the sum of a track fading out and one fading in
+    // stays at the same loudness, so a switch has no dip in the middle.
+    const xfade = (param, to, secs) => {
+      const now = ctx.currentTime;
+      const from = param.value;
+      const n = 64;
+      const curve = new Float32Array(n);
+      for (let i = 0; i < n; i++) {
+        const p = i / (n - 1);
+        curve[i] = to > from ? from + (to - from) * Math.sin(p * Math.PI / 2) : to + (from - to) * Math.cos(p * Math.PI / 2);
+      }
+      param.cancelScheduledValues(now);
+      param.setValueCurveAtTime(curve, now, secs);
+    };
     const ramp = (param, to, secs) => {
       const now = ctx.currentTime;
       param.cancelScheduledValues(now);
@@ -147,8 +188,8 @@
         return {
           track, bus,
           get pos() { return audio.currentTime; },
-          stop(fade) {
-            ramp(bus.gain, 0, fade);
+          stop(fade, smooth) {
+            (smooth ? xfade : ramp)(bus.gain, 0, fade);
             setTimeout(() => { stops.forEach((f) => f()); bus.disconnect(); }, fade * 1000 + 200);
           },
         };
@@ -236,6 +277,48 @@
       };
 
       // background textures
+      // the sea: noise through a filter that opens and closes like waves
+      if (track.texture === "waves") {
+        const src = ctx.createBufferSource();
+        src.buffer = noise;
+        src.loop = true;
+        const lp = ctx.createBiquadFilter();
+        lp.type = "lowpass";
+        lp.frequency.value = 500;
+        const swell = ctx.createOscillator();
+        swell.frequency.value = 0.09;
+        const sweep = ctx.createGain();
+        sweep.gain.value = 350;
+        swell.connect(sweep).connect(lp.frequency);
+        const g = ctx.createGain();
+        g.gain.value = 0.05;
+        const lvl = ctx.createGain();
+        lvl.gain.value = 0.03;
+        swell.connect(lvl).connect(g.gain);
+        src.connect(lp).connect(g).connect(bus);
+        src.start();
+        swell.start();
+        stops.push(() => src.stop(), () => swell.stop());
+      }
+      // a faint, high, slowly beating hum under the ripple
+      if (track.texture === "shimmer") {
+        for (const [f, d] of [[1760, -4], [2637, 5]]) {
+          const o = ctx.createOscillator();
+          o.frequency.value = f;
+          o.detune.value = d;
+          const g = ctx.createGain();
+          g.gain.value = 0.004;
+          const lfo = ctx.createOscillator();
+          lfo.frequency.value = 0.13 + Math.random() * 0.1;
+          const depth = ctx.createGain();
+          depth.gain.value = 0.003;
+          lfo.connect(depth).connect(g.gain);
+          o.connect(g).connect(out);
+          o.start();
+          lfo.start();
+          stops.push(() => o.stop(), () => lfo.stop());
+        }
+      }
       if (track.texture === "rain") {
         const src = ctx.createBufferSource();
         src.buffer = noise;
@@ -286,9 +369,9 @@
       return {
         track, bus,
         get pos() { return bar; },
-        stop(fade) {
+        stop(fade, smooth) {
           clearTimeout(timer);
-          ramp(bus.gain, 0, fade);
+          (smooth ? xfade : ramp)(bus.gain, 0, fade);
           setTimeout(() => { stops.forEach((f) => { try { f(); } catch {} }); bus.disconnect(); }, fade * 1000 + 3500);
         },
       };
@@ -309,9 +392,13 @@
         ctx.resume();
         if (!current || current.track !== track) {
           const old = current;
-          current = player(track, from, warm);
-          ramp(current.bus.gain, 1, old ? 2 : 0.05);
-          if (old) old.stop(2);
+          // when switching, the new track starts with its chord already
+          // sounding and the two overlap in a slow equal-power cross-fade
+          current = player(track, from, warm || !!old);
+          if (old) {
+            xfade(current.bus.gain, 1, CROSSFADE);
+            old.stop(CROSSFADE, true);
+          } else ramp(current.bus.gain, 1, 0.05);
         }
         ramp(master.gain, VOLUME, fade);
       },

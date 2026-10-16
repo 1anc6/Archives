@@ -19,7 +19,7 @@ from PIL import Image, ImageDraw, ImageFilter, ImageFont
 
 ROOT = Path(__file__).resolve().parent.parent
 PUBLIC = ROOT / "public"
-VERSION = "39"  # bump to make browsers fetch new CSS/JS
+VERSION = "40"  # bump to make browsers fetch new CSS/JS
 
 books = json.loads((PUBLIC / "data/books.json").read_text(encoding="utf-8"))
 site = json.loads((PUBLIC / "data/site.json").read_text(encoding="utf-8"))
@@ -240,6 +240,8 @@ def head(title, desc, prefix, og, author=None):
     try {{
       const t = localStorage.getItem("books.theme") || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
       document.documentElement.dataset.theme = t;
+      const u = localStorage.getItem("books.ui");
+      if (u && u !== "classic") document.documentElement.dataset.ui = u;
     }} catch (e) {{}}
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -247,6 +249,7 @@ def head(title, desc, prefix, og, author=None):
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=STIX+Two+Text:ital@0;1&family=Noto+Sans+Math&display=swap" rel="stylesheet">
   <link rel="alternate" type="application/rss+xml" title="{e(TITLE)}" href="{prefix}feed.xml">
   <link rel="stylesheet" href="{prefix}css/styles.css?v={VERSION}">
+  <link rel="stylesheet" href="{prefix}css/looks.css?v={VERSION}">
   {stats_tag()}
 </head>"""
 
@@ -281,6 +284,9 @@ def header(prefix, active):
         </button>
         <button class="ib" id="shareBtn" aria-label="Share" title="Share">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3m0 0L7.5 7.5M12 3l4.5 4.5M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7"/></svg>
+        </button>
+        <button class="ib" id="uiBtn" aria-label="Change the look" title="Look">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 9 5-9 5-9-5 9-5Z"/><path d="m3 12.5 9 5 9-5"/><path d="m3 17 9 5 9-5"/></svg>
         </button>
         <button class="ib" id="themeBtn" aria-label="Toggle theme" title="Toggle theme">
           <svg class="ic-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M2 12h2m16 0h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>

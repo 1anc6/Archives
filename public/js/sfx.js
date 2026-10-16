@@ -52,6 +52,37 @@
   // A water droplet: a sine that slides quickly upwards.
   const drop = (f, vol, delay) => blip(f, 0.09, "sine", vol, f * 2.6, delay);
 
+  // Filtered noise: a short burst through a filter. "bandpass" + high
+  // frequency is the snap of a hard switch; "lowpass" is a muffled press.
+  let grain = null;
+  function hiss(type, freq, q, len, vol, delay = 0) {
+    if (muted) return;
+    const a = audio();
+    if (!a) return;
+    if (!grain) {
+      grain = a.createBuffer(1, Math.floor(a.sampleRate * 0.12), a.sampleRate);
+      const d = grain.getChannelData(0);
+      for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
+    }
+    const t = a.currentTime + delay;
+    const src = a.createBufferSource();
+    src.buffer = grain;
+    const f = a.createBiquadFilter();
+    f.type = type;
+    f.frequency.value = freq;
+    f.Q.value = q;
+    const gain = a.createGain();
+    gain.gain.setValueAtTime(vol, t);
+    gain.gain.exponentialRampToValueAtTime(0.0001, t + len);
+    src.connect(f).connect(gain).connect(a.destination);
+    src.start(t);
+    src.stop(t + len + 0.02);
+  }
+  // A mechanical switch: a bright snap over a small, hollow body knock.
+  const snap = (f, vol, delay = 0) => { hiss("bandpass", f, 9, 0.022, vol, delay); blip(f / 9, 0.035, "triangle", vol * 0.35, null, delay); };
+  // A soft press: a low, rounded thud with a little air, like a rubber key.
+  const press = (f, vol, delay = 0) => { blip(f, 0.09, "sine", vol, f * 0.7, delay); hiss("lowpass", 700, 0.7, 0.05, vol * 0.5, delay); };
+
   const PACKS = [
     {
       id: "click", title: "Soft clicks", note: "Crisp little taps, like a keyboard",
@@ -84,6 +115,22 @@
       pop: () => { bell(1319, 0.3, 0.06); bell(1976, 0.35, 0.05, 0.08); },
       unpop: () => { bell(1976, 0.25, 0.05); bell(1319, 0.3, 0.05, 0.08); },
       ding: () => { bell(1047, 0.6, 0.07); bell(1568, 0.6, 0.06, 0.12); bell(2093, 0.8, 0.05, 0.24); },
+    },
+    {
+      id: "switch", title: "Tactile switches", note: "Firm mechanical clicks, for the skeuomorphic look",
+      tick: () => snap(3200, 0.22),
+      soft: () => snap(4200, 0.12),
+      pop: () => { snap(2600, 0.22); snap(3600, 0.16, 0.06); },
+      unpop: () => { snap(3600, 0.18); snap(2400, 0.16, 0.06); },
+      ding: () => { snap(3000, 0.2); bell(988, 0.22, 0.08, 0.06, 2); bell(1319, 0.3, 0.06, 0.14, 2); },
+    },
+    {
+      id: "press", title: "Soft presses", note: "Pillowy, muffled taps, for the neumorphic look",
+      tick: () => press(230, 0.2),
+      soft: () => press(300, 0.11),
+      pop: () => { press(210, 0.2); press(320, 0.15, 0.08); },
+      unpop: () => { press(320, 0.16); press(200, 0.16, 0.08); },
+      ding: () => { press(220, 0.18); blip(392, 0.3, "sine", 0.07, null, 0.08); blip(523, 0.4, "sine", 0.06, null, 0.16); },
     },
   ];
   let pack = PACKS[0];
@@ -164,6 +211,13 @@
       try { localStorage.setItem(PACK_KEY, pack.id); } catch {}
       if (muted) Sfx.toggle();
       else { pack.tick(); setTimeout(() => pack.pop(), 160); }
+    },
+    // The look picker swaps to the set that suits the look, without
+    // switching sounds on; plays a sample only when they are already on.
+    usePack(id) {
+      pack = PACKS.find((p) => p.id === id) || pack;
+      try { localStorage.setItem(PACK_KEY, pack.id); } catch {}
+      if (!muted) pack.tick();
     },
     toggle() {
       muted = !muted;

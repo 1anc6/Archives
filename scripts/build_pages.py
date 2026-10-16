@@ -241,7 +241,7 @@ def head(title, desc, prefix, og, author=None):
       const t = localStorage.getItem("books.theme") || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
       document.documentElement.dataset.theme = t;
       const u = localStorage.getItem("books.ui");
-      if (u && u !== "classic") document.documentElement.dataset.ui = u;
+      if (u === "neu" || u === "glass") document.documentElement.dataset.ui = u;
     }} catch (e) {{}}
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">

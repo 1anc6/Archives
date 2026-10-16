@@ -52,8 +52,8 @@
   // A water droplet: a sine that slides quickly upwards.
   const drop = (f, vol, delay) => blip(f, 0.09, "sine", vol, f * 2.6, delay);
 
-  // Filtered noise: a short burst through a filter. "bandpass" + high
-  // frequency is the snap of a hard switch; "lowpass" is a muffled press.
+  // Filtered noise: a short burst through a filter ("lowpass" gives the
+  // air of a muffled press).
   let grain = null;
   function hiss(type, freq, q, len, vol, delay = 0) {
     if (muted) return;
@@ -78,8 +78,6 @@
     src.start(t);
     src.stop(t + len + 0.02);
   }
-  // A mechanical switch: a bright snap over a small, hollow body knock.
-  const snap = (f, vol, delay = 0) => { hiss("bandpass", f, 9, 0.022, vol, delay); blip(f / 9, 0.035, "triangle", vol * 0.35, null, delay); };
   // A soft press: a low, rounded thud with a little air, like a rubber key.
   const press = (f, vol, delay = 0) => { blip(f, 0.09, "sine", vol, f * 0.7, delay); hiss("lowpass", 700, 0.7, 0.05, vol * 0.5, delay); };
 
@@ -115,14 +113,6 @@
       pop: () => { bell(1319, 0.3, 0.06); bell(1976, 0.35, 0.05, 0.08); },
       unpop: () => { bell(1976, 0.25, 0.05); bell(1319, 0.3, 0.05, 0.08); },
       ding: () => { bell(1047, 0.6, 0.07); bell(1568, 0.6, 0.06, 0.12); bell(2093, 0.8, 0.05, 0.24); },
-    },
-    {
-      id: "switch", title: "Tactile switches", note: "Firm mechanical clicks, for the skeuomorphic look",
-      tick: () => snap(3200, 0.22),
-      soft: () => snap(4200, 0.12),
-      pop: () => { snap(2600, 0.22); snap(3600, 0.16, 0.06); },
-      unpop: () => { snap(3600, 0.18); snap(2400, 0.16, 0.06); },
-      ding: () => { snap(3000, 0.2); bell(988, 0.22, 0.08, 0.06, 2); bell(1319, 0.3, 0.06, 0.14, 2); },
     },
     {
       id: "press", title: "Soft presses", note: "Pillowy, muffled taps, for the neumorphic look",

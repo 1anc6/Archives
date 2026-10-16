@@ -129,13 +129,14 @@
   // that suits it, and picking a look switches to that sound set.
   const LOOKS = [
     { id: "classic", title: "Original", note: "Squared paper, flat and quiet", sound: "click" },
-    { id: "skeuo", title: "Skeuomorphic", note: "Bevelled keys, paper you can almost touch", sound: "switch" },
     { id: "neu", title: "Neumorphic", note: "Soft shapes pressed out of the page", sound: "press" },
     { id: "glass", title: "Glass", note: "Frosted panels floating over colour", sound: "chime" },
   ];
   const uiBtn = $("uiBtn");
   let uiPop = null;
   const look = () => root.dataset.ui || "classic";
+  // a look that no longer exists (or a typo in storage) falls back to the original
+  if (!LOOKS.some((l) => l.id === look())) delete root.dataset.ui;
   function setLook(id) {
     if (id === "classic") delete root.dataset.ui;
     else root.dataset.ui = id;
